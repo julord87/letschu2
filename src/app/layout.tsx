@@ -4,7 +4,7 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "Letschu | Ecommerce",
+  title: "Letschu <3",
   description: "Una tienda virtual de arneses y accesiorios",
 };
 
