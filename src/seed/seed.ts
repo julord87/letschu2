@@ -158,6 +158,29 @@ export const initialData: SeedData = {
 
 
 
+        {
+            "description": "Arnés de cola confeccionado a medida con cinta de polipropileno color negro con detalles y piezas metálicas. No incluye esposas ni conectores. Ajustable en todos sus lados para un calce perfecto. Se requiere medida de contorno de cintura, contorno de pierna (donde sea más grande el muslo) y contorno de cola, o datos de talla de jean o pantalón.",
+            "images": [
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/img_20210916_182539_145-7b9bf1797106b598fa16318811381566-640-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/20210916_150303-eceb3abc0244ed477316318811382852-640-0.webp"
+            ],
+            "price": 34700,
+            "slug": "arnes-inferior-rush",
+            "type": "arnes-inferior",
+            "tags": ["arnés", "inferior", "ajustable", "a medida", "negro"],
+            "title": "ARNÉS INFERIOR RUSH",
+            "category": "arnes",
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+        },
+        
+
+
+
+
+
+
+
+
 
 
         {
@@ -255,6 +278,35 @@ export const initialData: SeedData = {
             "category": "tirador",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
+
+
+
+
+
+
+
+
+
+
+
+        {
+            "description": "Choker con correa corta, confeccionado en cinta de polipropileno de 30mm con base negra o bordó y detalles en color a elección, acompañado de piezas metálicas. Ajustable para un calce perfecto. Puedes comprar el set arnés + choker + correa en la categoría 'Conjuntos'.",
+            "images": [
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/20221014_150812-42a613585993e61c1416657733541254-640-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/20221014_150922-ca26186be0e33a202616657733541482-640-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/20221014_150934-58b0a9c76394022ce116657733541481-640-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/chokerpet051-4baa77def0f5c3dd0016177435029356-640-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/chokerpet041-5727afb4218b66b15316177435029498-640-0.webp"
+            ],
+            "price": 12500,
+            "slug": "choker-pet-correa",
+            "type": "chookers",
+            "tags": ["choker", "regulable", "correa", "a medida", "negro", "bordó"],
+            "title": "CHOKER PET + CORREA",
+            "category": "arnes",
+            "colors": ["negro", "bordo"]
+        }
+        
         
     ]
 }
