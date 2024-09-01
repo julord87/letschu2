@@ -303,10 +303,59 @@ export const initialData: SeedData = {
             "type": "chookers",
             "tags": ["choker", "regulable", "correa", "a medida", "negro", "bordó"],
             "title": "CHOKER PET + CORREA",
-            "category": "arnes",
+            "category": "chokers",
             "colors": ["negro", "bordo"]
-        }
+        },
+
+
+
+
+
+
+
+
+
+
+
+        {
+            "description": "Arnés de una pierna confeccionado a medida con cinta de polipropileno de 30mm color negro, con detalles en color a elección y piezas metálicas. Ajustable para un calce perfecto. Se requiere medida de contorno de pierna (donde sea más grande el muslo) o datos de talla de pantalón o jean.",
+            "images": [
+                "arnes_1_pierna_alone_1.jpg",
+                "arnes_1_pierna_alone_2.jpg"
+            ],
+            "price": 20500,
+            "slug": "arnes-1-pierna-alone",
+            "type": "ligas",
+            "tags": ["arnés", "inferior", "una pierna", "ajustable", "a medida", "negro"],
+            "title": "ARNÉS 1 PIERNA ALONE",
+            "category": "ligas",
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+        },
         
+        
+        
+        
+
+
+
+
+
+
+        {
+            "description": "Set de 2 esposas con mosquetón y 1 conector, ideal para conectar con arneses, lencería y correas. Confeccionado con cinta de polipropileno color negro con detalles en color a elección, piezas metálicas y hebillas plásticas. Ajustable para un calce perfecto.",
+            "images": [
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/esposas0511-2ea840568af9191daf16177624117982-640-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/esposasola1-b7d39167f13830622a16177624116587-640-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/esposas0211-c0eee4cbd3c7b5fcd616177624117520-640-0.webp"
+            ],
+            "price": 26500,
+            "slug": "2-esposas-1-conector",
+            "type": "extras",
+            "tags": ["esposas", "conector", "ajustable", "a medida", "negro"],
+            "title": "2 ESOSAS + 1 CONECTOR",
+            "category": "extras",
+            "colors": ["negro"]
+        }
         
     ]
 }
