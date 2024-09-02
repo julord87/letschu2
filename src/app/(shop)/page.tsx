@@ -1,5 +1,8 @@
 import Title from "@/components/ui/title/Title";
-import { titleFont } from "@/config/fonts";
+import { initialData } from "@/seed/seed";
+
+
+const products = initialData.products
 
 
 export default function Home() {
