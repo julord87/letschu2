@@ -33,7 +33,7 @@ export const initialData: SeedData = {
                 "https://acdn.mitiendanube.com/stores/001/477/757/products/pet031-d6dea5eaedf25a5e8016176494610908-240-0.webp"
             ],  
             "price": 31500,
-            "slug": "arnes-superior",
+            "slug": "arnes-pet",
             "type": "arnes-superior",
             "tags": ["arnés", "superior", "ajustable", "hecho a medida"],
             "title": "ARNÉS PET",
@@ -320,8 +320,9 @@ export const initialData: SeedData = {
         {
             "description": "Arnés de una pierna confeccionado a medida con cinta de polipropileno de 30mm color negro, con detalles en color a elección y piezas metálicas. Ajustable para un calce perfecto. Se requiere medida de contorno de pierna (donde sea más grande el muslo) o datos de talla de pantalón o jean.",
             "images": [
-                "arnes_1_pierna_alone_1.jpg",
-                "arnes_1_pierna_alone_2.jpg"
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/20221103_1135311-786daa59871f6d178816690814097002-640-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/20221103_1134101-51c90d11945dd896af16690814092455-640-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/lonely041-25a2fa9bcd4176e32216176669829575-640-0.webp"
             ],
             "price": 20500,
             "slug": "arnes-1-pierna-alone",
