@@ -1,6 +1,7 @@
 import ProductGrid from "@/components/products/product-grid/ProductGrid";
 import Title from "@/components/ui/title/Title";
 import { initialData } from "@/seed/seed";
+import { notFound } from "next/navigation";
 
 
 interface Props {
@@ -16,9 +17,9 @@ export default function({ params }: Props) {
 const { id } = params;
 const filteredProducts = products.filter((product) => product.category === id)
 
-// if( id === 'extras') {
-//   notFound();
-// }
+if( id === 'extras') {
+  notFound();
+}
 
 return (
   <>
