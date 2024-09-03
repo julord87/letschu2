@@ -11,7 +11,7 @@ interface SeedProduct {
 }
 
 type ValidColors = 'negro'|'blanco'|'rojo'|'azul'|'verde'|'rosa'|'amarillo'|'gris'|'naranja'|'violeta'|'bordo'|'fucsia'|'beige'|'celeste'|'arcoiris'|'animal print'|'amarillo fluo'|'naranja fluo';
-type ValidTypes = 'arnes-superior'|'arnes-inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'ligas'|'extras';
+type ValidTypes = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'ligas'|'extras';
 
 interface SeedData {
     products: SeedProduct[],
@@ -34,7 +34,7 @@ export const initialData: SeedData = {
             ],  
             "price": 31500,
             "slug": "arnes-pet",
-            "type": "arnes-superior",
+            "type": "superior",
             "tags": ["arnés", "superior", "ajustable", "hecho a medida"],
             "title": "Arnés Pet",
             "category": "arnes",
@@ -70,7 +70,7 @@ export const initialData: SeedData = {
             ],
             "price": 32000,
             "slug": "arnes-holo",
-            "type": "arnes-superior",
+            "type": "superior",
             "tags": ["arnés", "superior", "ajustable", "a medida"],
             "title": "Arnés Holo",
             "category": "arnes",
@@ -83,7 +83,7 @@ export const initialData: SeedData = {
             ],
             "price": 54500,
             "slug": "arnes-vadik",
-            "type": "arnes-superior",
+            "type": "superior",
             "tags": ["arnés", "pecho", "hombros desmontables", "ajustable", "a medida"],
             "title": "Arnés Vadik",
             "category": "arnes",
@@ -98,7 +98,7 @@ export const initialData: SeedData = {
             ],
             "price": 36500,
             "slug": "arnes-xena",
-            "type": "arnes-superior",
+            "type": "superior",
             "tags": ["arnés", "superior", "ajustable", "a medida"],
             "title": "Arnés Xena",
             "category": "arnes",
@@ -114,7 +114,7 @@ export const initialData: SeedData = {
             ],
             "price": 28000,
             "slug": "arnes-bomb",
-            "type": "arnes-superior",
+            "type": "superior",
             "tags": ["arnés", "superior", "ajustable", "a medida"],
             "title": "Arnés Bomb",
             "category": "arnes",
@@ -129,7 +129,7 @@ export const initialData: SeedData = {
             ],
             "price": 32200,
             "slug": "arnes-superior-black",
-            "type": "arnes-superior",
+            "type": "superior",
             "tags": ["arnés", "superior", "ajustable", "a medida", "negro"],
             "title": "Arnés Superior Black",
             "category": "arnes",
@@ -144,7 +144,7 @@ export const initialData: SeedData = {
             ],
             "price": 41500,
             "slug": "arnes-superior-viko",
-            "type": "arnes-superior",
+            "type": "superior",
             "tags": ["arnés", "superior", "ajustable", "a medida"],
             "title": "Arnés Superior Viko",
             "category": "arnes",
@@ -166,7 +166,7 @@ export const initialData: SeedData = {
             ],
             "price": 34700,
             "slug": "arnes-inferior-rush",
-            "type": "arnes-inferior",
+            "type": "inferior",
             "tags": ["arnés", "inferior", "ajustable", "a medida", "negro"],
             "title": "Arnés Inferior Rush",
             "category": "arnes",

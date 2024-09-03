@@ -3,10 +3,11 @@ import Link from "next/link";
 import { titleFont } from "@/config/fonts";
 import { IoCartOutline, IoSearchOutline } from "react-icons/io5";
 import { useUIStore } from "@/store";
+import { useState } from "react";
 
 export const TopMenu = () => {
-
   const openMenu = useUIStore(state => state.openSideMenu);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
     <nav className="flex px-5 justify-between items-center w-full">
@@ -21,13 +22,47 @@ export const TopMenu = () => {
       </div>
 
       {/* Center Menu */}
-      <div className="hidden sm:block">
-        <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href={"/category/arnes"}
+      <div className="hidden sm:flex items-center">
+        <div
+          className="relative"
+          onMouseEnter={() => setIsDropdownOpen(true)}
+          onMouseLeave={() => setIsDropdownOpen(false)}
         >
-          Arnes
-        </Link>
+          <Link
+            className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
+            href={"/category/arnes"}
+          >
+            Arnes
+          </Link>
+          {isDropdownOpen && (
+            <div className="absolute left-0 mt-2 w-40 bg-white border rounded-md shadow-lg">
+              <Link
+                className="block px-4 py-2 hover:bg-gray-100"
+                href={"/category/arnes/superior"}
+              >
+                Superior
+              </Link>
+              <Link
+                className="block px-4 py-2 hover:bg-gray-100"
+                href={"/category/arnes/inferior"}
+              >
+                Inferior
+              </Link>
+              <Link
+                className="block px-4 py-2 hover:bg-gray-100"
+                href={"/category/arnes/body"}
+              >
+                Body
+              </Link>
+              <Link
+                className="block px-4 py-2 hover:bg-gray-100"
+                href={"/category/arnes/conjunto"}
+              >
+                Conjunto
+              </Link>
+            </div>
+          )}
+        </div>
         <Link
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
           href={"/category/tiradores"}
