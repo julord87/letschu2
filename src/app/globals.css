@@ -57,3 +57,67 @@ body {
 .btn-secondary {
   @apply bg-gray-200 hover:bg-gray-300 text-black py-2 px-4 rounded transition-all;
 }
+
+/* Custom colors classes */
+
+.bg-rojo {
+  background-color: #ff0000;
+}
+
+.bg-azul {
+  background-color: #0000ff;
+}
+
+.bg-verde {
+  background-color: #008f39;
+}
+
+.bg-rosa {
+  background-color: #ea899a;
+}
+
+.bg-amarillo {
+  background-color: #ffea00;
+}
+
+.bg-arcoiris {
+  background: url('https://img.freepik.com/free-vector/spectrum-gradient-abstract-background_1048-17050.jpg?semt=ais_hybrid');
+  background-size: cover;
+}
+
+.bg-animal-print {
+  background: url('https://st2.depositphotos.com/5448718/8959/i/950/depositphotos_89592420-stock-illustration-hand-drawing-orange-brown-leopard.jpg');
+  background-size: cover;
+}
+
+.bg-fucsia {
+  background-color: #ff0080;
+}
+
+.bg-beige {
+  background-color: #eae6ca;
+}
+
+.bg-amarillo-fluo {
+  background-color: #ccff00;
+}
+
+.bg-naranja {
+  background-color: #ff8c00;
+}
+
+.bg-bordo {
+  background-color: #800000;
+}
+
+.bg-violeta {
+  background-color: #8a2be2;
+}
+
+.bg-naranja-fluo {
+  background-color: #ff6700;
+}
+
+.bg-celeste {
+  background-color: #00aaff;
+}

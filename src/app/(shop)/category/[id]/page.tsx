@@ -1,13 +1,13 @@
 import ProductGrid from "@/components/products/product-grid/ProductGrid";
 import Title from "@/components/ui/title/Title";
-import { ValidCategories } from "@/interfaces";
+import { Category } from "@/interfaces";
 import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
 
 
 interface Props {
   params: {
-    id: ValidCategories
+    id: Category
   }
 }
 

@@ -1,12 +1,12 @@
 import ProductGrid from "@/components/products/product-grid/ProductGrid";
 import Title from "@/components/ui/title/Title";
-import { ValidTypes } from "@/interfaces";
+import { Types } from "@/interfaces";
 import { initialData } from "@/seed/seed";
 
 
 interface Props {
   params: {
-    type: ValidTypes
+    type: Types
   }
 }
 

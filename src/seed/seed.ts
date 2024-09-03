@@ -6,13 +6,13 @@ interface SeedProduct {
     slug: string;
     tags: string[];
     title: string;
-    type: ValidTypes;
-    category: ValidCategories;
+    type: Types;
+    category: Categories;
 }
 
-type ValidCategories = 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
+type Categories = 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
 type ValidColors = 'negro'|'blanco'|'rojo'|'azul'|'verde'|'rosa'|'amarillo'|'gris'|'naranja'|'violeta'|'bordo'|'fucsia'|'beige'|'celeste'|'arcoiris'|'animal print'|'amarillo fluo'|'naranja fluo';
-type ValidTypes = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'ligas'|'extras';
+type Types = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'ligas'|'extras';
 
 interface SeedData {
     products: SeedProduct[],

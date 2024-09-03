@@ -16,15 +16,15 @@ export default function Title({ title, subtitle, classname }: Props) {
           alt="logo"
           width={250}
           height={250}
-          className="inline-block cursor-pointer mb-1"
+          className="inline-block cursor-pointer"
         />
       </a>
       
-      <h1 className={ `${ titleFont.className } capitalize antialiased text-4xl font-semibold my-7` }>
+      <h1 className={ `${ titleFont.className } capitalize antialiased text-4xl font-semibold mt-7 mb-4` }>
         { title }
       </h1>
 
-      <span>{subtitle && <h3 className="text-xl mb-5">{subtitle}</h3>}</span>
+      <span>{subtitle && <h3 className="text-xl mb-6">{subtitle}</h3>}</span>
     </div>
 
   );
