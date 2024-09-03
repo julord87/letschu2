@@ -1,12 +1,13 @@
 import ProductGrid from "@/components/products/product-grid/ProductGrid";
 import Title from "@/components/ui/title/Title";
+import { ValidCategories } from "@/interfaces";
 import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
 
 
 interface Props {
   params: {
-    id: string
+    id: ValidCategories
   }
 }
 
@@ -24,9 +25,9 @@ const filteredProducts = products.filter((product) => product.category === id)
 return (
   <>
     <Title 
-      title="Tienda"
-      subtitle={`${id}`}
-      classname="mb-2 capitalize"
+      title={`${id}`}
+      subtitle={`Todos los productos`}
+      classname="mb-2"
     />
 
     <ProductGrid

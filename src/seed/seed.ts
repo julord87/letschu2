@@ -7,9 +7,10 @@ interface SeedProduct {
     tags: string[];
     title: string;
     type: ValidTypes;
-    category: 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
+    category: ValidCategories;
 }
 
+type ValidCategories = 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
 type ValidColors = 'negro'|'blanco'|'rojo'|'azul'|'verde'|'rosa'|'amarillo'|'gris'|'naranja'|'violeta'|'bordo'|'fucsia'|'beige'|'celeste'|'arcoiris'|'animal print'|'amarillo fluo'|'naranja fluo';
 type ValidTypes = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'ligas'|'extras';
 
