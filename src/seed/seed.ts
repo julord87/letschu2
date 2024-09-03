@@ -7,11 +7,11 @@ interface SeedProduct {
     tags: string[];
     title: string;
     type: ValidTypes;
-    category: 'arnes'|'tirador'|'chokers'|'ligas'|'extras';
+    category: 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
 }
 
 type ValidColors = 'negro'|'blanco'|'rojo'|'azul'|'verde'|'rosa'|'amarillo'|'gris'|'naranja'|'violeta'|'bordo'|'fucsia'|'beige'|'celeste'|'arcoiris'|'animal print'|'amarillo fluo'|'naranja fluo';
-type ValidTypes = 'arnes-superior'|'arnes-inferior'|'body'|'conjunto'|'tirador'|'chookers'|'ligas'|'extras';
+type ValidTypes = 'arnes-superior'|'arnes-inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'ligas'|'extras';
 
 interface SeedData {
     products: SeedProduct[],
@@ -36,7 +36,7 @@ export const initialData: SeedData = {
             "slug": "arnes-pet",
             "type": "arnes-superior",
             "tags": ["arnés", "superior", "ajustable", "hecho a medida"],
-            "title": "ARNÉS PET",
+            "title": "Arnés Pet",
             "category": "arnes",
             "colors": [
                 "negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", 
@@ -54,9 +54,9 @@ export const initialData: SeedData = {
             ],
             "price": 53900,
             "slug": "arnes-body-amnesia",
-            "type": "arnes-superior",
+            "type": "body",
             "tags": ["arnés", "body", "ajustable", "a medida"],
-            "title": "ARNÉS BODY AMNESIA",
+            "title": "Arnés Body Amnesia",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"],
         },      
@@ -72,7 +72,7 @@ export const initialData: SeedData = {
             "slug": "arnes-holo",
             "type": "arnes-superior",
             "tags": ["arnés", "superior", "ajustable", "a medida"],
-            "title": "ARNÉS HOLO",
+            "title": "Arnés Holo",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
@@ -85,7 +85,7 @@ export const initialData: SeedData = {
             "slug": "arnes-vadik",
             "type": "arnes-superior",
             "tags": ["arnés", "pecho", "hombros desmontables", "ajustable", "a medida"],
-            "title": "ARNÉS VADIK",
+            "title": "Arnés Vadik",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
@@ -100,7 +100,7 @@ export const initialData: SeedData = {
             "slug": "arnes-xena",
             "type": "arnes-superior",
             "tags": ["arnés", "superior", "ajustable", "a medida"],
-            "title": "ARNÉS XENA",
+            "title": "Arnés Xena",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
@@ -116,7 +116,7 @@ export const initialData: SeedData = {
             "slug": "arnes-bomb",
             "type": "arnes-superior",
             "tags": ["arnés", "superior", "ajustable", "a medida"],
-            "title": "ARNÉS BOMB",
+            "title": "Arnés Bomb",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
@@ -131,7 +131,7 @@ export const initialData: SeedData = {
             "slug": "arnes-superior-black",
             "type": "arnes-superior",
             "tags": ["arnés", "superior", "ajustable", "a medida", "negro"],
-            "title": "ARNÉS SUPERIOR BLACK",
+            "title": "Arnés Superior Black",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
@@ -146,7 +146,7 @@ export const initialData: SeedData = {
             "slug": "arnes-superior-viko",
             "type": "arnes-superior",
             "tags": ["arnés", "superior", "ajustable", "a medida"],
-            "title": "ARNÉS SUPERIOR VIKO",
+            "title": "Arnés Superior Viko",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
@@ -168,7 +168,7 @@ export const initialData: SeedData = {
             "slug": "arnes-inferior-rush",
             "type": "arnes-inferior",
             "tags": ["arnés", "inferior", "ajustable", "a medida", "negro"],
-            "title": "ARNÉS INFERIOR RUSH",
+            "title": "Arnés Inferior Rush",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
@@ -195,7 +195,7 @@ export const initialData: SeedData = {
             "slug": "arnes-body-gema",
             "type": "body",
             "tags": ["arnés", "body", "ajustable", "a medida", "una sola pieza"],
-            "title": "ARNÉS BODY GEMA",
+            "title": "Arnés Body Gema",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"],
         },
@@ -213,7 +213,7 @@ export const initialData: SeedData = {
             "slug": "arnes-body-olivia",
             "type": "body",
             "tags": ["arnés", "body", "ajustable", "a medida"],
-            "title": "ARNÉS BODY OLIVIA",
+            "title": "Arnés Body Olivia",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
@@ -233,18 +233,18 @@ export const initialData: SeedData = {
         {
             "description": "Conjunto de arnés superior, collar y correa corta, hecho con cinta de polipropileno de 30 mm en color negro y detalles en color a elección. Ajustable en todos sus lados para un calce perfecto. Se requiere medida de contorno de bajobusto o datos de talla de ropa.",
             "images": [
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/pet011-54523d7c49ad0dbe5216176488416692-240-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/petsolo1-0cac75832310da1e2b16176660930397-240-0.webp",
+                "https://acdn.mitiendanube.com/stores/001/477/757/products/pet031-d6dea5eaedf25a5e8016176494610908-240-0.webp",
                 "https://acdn.mitiendanube.com/stores/001/477/757/products/pet071-e7e11f46dfbb3ba2bd16176498132105-240-0.webp",
                 "https://acdn.mitiendanube.com/stores/001/477/757/products/pet061-626c49b3f9520e397516176488417776-240-0.webp",
                 "https://acdn.mitiendanube.com/stores/001/477/757/products/pet091-b271203cbf6e18e95d16176488417712-240-0.webp",
-                "https://acdn.mitiendanube.com/stores/001/477/757/products/pet011-54523d7c49ad0dbe5216176488416692-240-0.webp",
-                "https://acdn.mitiendanube.com/stores/001/477/757/products/petsolo1-0cac75832310da1e2b16176660930397-240-0.webp",
-                "https://acdn.mitiendanube.com/stores/001/477/757/products/pet031-d6dea5eaedf25a5e8016176494610908-240-0.webp"
             ],  
             "price": 42000,
             "slug": "conjunto-pet",
             "type": "conjunto",
             "tags": ["arnés", "conjunto", "collar", "correa corta", "ajustable", "a medida"],
-            "title": "CONJUNTO PET",
+            "title": "Conjunto Pet",
             "category": "arnes",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"],
         },
@@ -272,10 +272,10 @@ export const initialData: SeedData = {
             ],
             "price": 28000,
             "slug": "tirador-ringo",
-            "type": "tirador",
+            "type": "tiradores",
             "tags": ["tirador", "ajustable", "a medida", "detalle metálico"],
-            "title": "TIRADOR RINGO",
-            "category": "tirador",
+            "title": "Tirador Ringo",
+            "category": "tiradores",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
 
@@ -302,7 +302,7 @@ export const initialData: SeedData = {
             "slug": "choker-pet-correa",
             "type": "chookers",
             "tags": ["choker", "regulable", "correa", "a medida", "negro", "bordó"],
-            "title": "CHOKER PET + CORREA",
+            "title": "Choker Pet + Correa",
             "category": "chokers",
             "colors": ["negro", "bordo"]
         },
@@ -328,7 +328,7 @@ export const initialData: SeedData = {
             "slug": "arnes-1-pierna-alone",
             "type": "ligas",
             "tags": ["arnés", "inferior", "una pierna", "ajustable", "a medida", "negro"],
-            "title": "ARNÉS 1 PIERNA ALONE",
+            "title": "Arnés 1 Pierna Alone",
             "category": "ligas",
             "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
         },
@@ -353,7 +353,7 @@ export const initialData: SeedData = {
             "slug": "2-esposas-1-conector",
             "type": "extras",
             "tags": ["esposas", "conector", "ajustable", "a medida", "negro"],
-            "title": "2 ESOSAS + 1 CONECTOR",
+            "title": "2 Esposas + 1 Conector",
             "category": "extras",
             "colors": ["negro"]
         }
