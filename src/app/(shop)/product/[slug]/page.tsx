@@ -1,7 +1,7 @@
 import { titleFont } from "@/config/fonts";
 import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
-import { ColorSelector } from "@/components";
+import { ColorSelector, ProductSlideshow, QuantitySelector } from "@/components";
 
 interface Props {
   params: {
@@ -22,7 +22,7 @@ if( !product ) {
     <div className="mt-5 mb-20 grid md:grid-cols-3 gap-3">
       {/* Slideshow */} 
       <div className="col-span-1 md:col-span-2">
-        Hoola
+        <ProductSlideshow title={product.title} images={product.images} />
       </div>
 
 
@@ -38,6 +38,7 @@ if( !product ) {
         <ColorSelector availableColors={product.colors} selectedColor="rojo"/>
 
         {/* Select quantity */}
+        <QuantitySelector quantity={2}/>
 
         {/* Add to cart */}
         <button className="btn-primary my-5">

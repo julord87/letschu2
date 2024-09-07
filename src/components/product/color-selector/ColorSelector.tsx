@@ -7,7 +7,6 @@ interface Props {
 }
 
 export const ColorSelector = ({ selectedColor, availableColors }: Props) => {
-  console.log(getTailwindBgClass(availableColors[3]));
 
   return (
     <>
