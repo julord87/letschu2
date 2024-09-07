@@ -35,33 +35,22 @@ export const TopMenu = () => {
             Arnes
           </Link>
           {isDropdownOpen && (
-            <div className="absolute left-0 mt-2 w-40 bg-white border rounded-md shadow-lg">
-              <Link
-                className="block px-4 py-2 hover:bg-gray-100"
-                href={"/category/arnes/superior"}
-              >
+            <div className="absolute left-0 mt-2 w-40 bg-white border rounded-md shadow-lg z-50">
+              <Link className="block px-4 py-2 hover:bg-gray-100" href={"/category/arnes/superior"}>
                 Superior
               </Link>
-              <Link
-                className="block px-4 py-2 hover:bg-gray-100"
-                href={"/category/arnes/inferior"}
-              >
+              <Link className="block px-4 py-2 hover:bg-gray-100" href={"/category/arnes/inferior"}>
                 Inferior
               </Link>
-              <Link
-                className="block px-4 py-2 hover:bg-gray-100"
-                href={"/category/arnes/body"}
-              >
+              <Link className="block px-4 py-2 hover:bg-gray-100" href={"/category/arnes/body"}>
                 Body
               </Link>
-              <Link
-                className="block px-4 py-2 hover:bg-gray-100"
-                href={"/category/arnes/conjunto"}
-              >
+              <Link className="block px-4 py-2 hover:bg-gray-100" href={"/category/arnes/conjunto"}>
                 Conjunto
               </Link>
             </div>
           )}
+
         </div>
         <Link
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
