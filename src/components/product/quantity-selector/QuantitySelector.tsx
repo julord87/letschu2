@@ -17,19 +17,19 @@ export const QuantitySelector = ({ quantity } : Props) => {
 
   return (
     <>
-        <h3 className="font-bold my-3">Cantidad</h3>
+        <h3 className="font-bold mt-2">Cantidad</h3>
 
         <div className="flex">
             <button onClick={() => onQuantityChange(-1)}>
-                <IoRemoveOutline size={20} /> 
+                <IoRemoveOutline size={18} /> 
             </button>
 
-            <span className="w-14 mx-1 px-3 bg-gray-200 text-center rounded">
+            <span className="w-10 mx-1 bg-gray-200 text-center rounded">
                 {count}
             </span>
 
             <button onClick={() => onQuantityChange(+1)}>
-                <IoAddOutline size={20} /> 
+                <IoAddOutline size={18} /> 
             </button>
         </div>
     </>
