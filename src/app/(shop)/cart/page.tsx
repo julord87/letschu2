@@ -25,36 +25,61 @@ export default function() {
             <span className="text-xl">Agregar más productos</span>
             <Link href="/" className="underline mb-5">Continúa comprando</Link>
 
-          </div>
+        
 
           {/* Items */}
           {
             productsInCart.map(product => (
-              <div key={product.slug} className="flex">
+              <div key={product.slug} className="flex mb-5">
                 <Image 
                   src={product.images[0]}
                   alt={product.title}
                   width={130}
                   height={130}
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                  }}
                   className="mr-5 rounded object-cover"
                 />
 
                 <div>
-                  <p>{product.title}</p>
-                  <p>${product.price}</p>
-                  <QuantitySelector quantity={3} />
+                  <p className="text-sm">{product.title}</p>
+                  <p className="text-sm mb-0">${product.price}</p>
+                  <div className="text-sm mb-0 mt-0">
+                    <QuantitySelector quantity={3} />
+                  </div>
 
-                  <button className="underline mt-2">Eliminar</button>
+                  <button className="underline text-sm">Eliminar</button>
                 </div>
               </div>  
             ))
           }
+          </div>
 
 
 
 
 
-          {/* Checkout */}
+          {/* Checkout - Resumen de orden*/}
+          <div className="bg-white rounded-xl shadow-xl p-7 max-h-64">
+            <h2 className="text-2xl mb-2 font-bold">Resumen de orden</h2>
+
+            <div className="grid grid-cols-2">
+              <span>No. Productos</span>
+              <span className="text-right">artículos</span>
+
+              <span>Subtotal</span>
+              <span className="text-right">$10000</span>
+
+              <span className="text-2xl mt-5 font-semibold">Total</span>
+              <span className="text-2xl mt-5 text-right font-semibold">$10000</span>
+            </div>
+
+            <div className="mt-5 mb-2 w-full">
+              <Link href="/checkout/address" className="flex btn-primary justify-center">Continuar</Link>
+            </div>
+          </div>
 
         </div>
         
