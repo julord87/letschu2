@@ -11,7 +11,7 @@ interface SeedProduct {
 }
 
 type Categories = 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
-type ValidColors = 'negro'|'blanco'|'rojo'|'azul'|'verde'|'rosa'|'amarillo'|'gris'|'naranja'|'violeta'|'bordo'|'fucsia'|'beige'|'celeste'|'arcoiris'|'animal print'|'amarillo fluo'|'naranja fluo';
+type ValidColors = 'negro'|'blanco'|'rojo'|'azul'|'verde'|'rosa'|'amarillo'|'gris'|'naranja'|'violeta'|'bordo'|'fucsia'|'beige'|'celeste'|'arcoiris'|'animal_print'|'amarillo_fluo'|'naranja_fluo';
 type Types = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'ligas'|'extras';
 
 interface SeedData {
@@ -49,7 +49,7 @@ export const initialData: SeedData = {
             "colors": [
                 "negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", 
                 "gris", "naranja", "violeta", "bordo", "fucsia", "beige", 
-                "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"
+                "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"
             ]
         },
         {
@@ -66,7 +66,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "body", "ajustable", "a medida"],
             "title": "Arnés Body Amnesia",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"],
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"],
         },      
         {
             "description": "Arnés superior confeccionado a medida con cinta de polipropileno color negro y piezas metálicas. No incluye choker. Ajustable en todos sus lados para un calce perfecto. Se requiere medida de contorno de busto/pecho o datos de talla de ropa.",
@@ -82,7 +82,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "superior", "ajustable", "a medida"],
             "title": "Arnés Holo",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"]
         },
         {
             "description": "Arnés de pecho con hombros desmontables, regulable y con opción de color a elección. Ajustable en todos sus lados para un calce perfecto.",
@@ -95,7 +95,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "pecho", "hombros desmontables", "ajustable", "a medida"],
             "title": "Arnés Vadik",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"]
         },
         {
             "description": "Arnés superior confeccionado a medida con cinta de polipropileno de 30 mm en color negro y detalles en color a elección, junto con piezas metálicas. Ajustable en todos sus lados para un calce perfecto. Se requiere medida de contorno de bajobusto o datos de talla de ropa.",
@@ -110,7 +110,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "superior", "ajustable", "a medida"],
             "title": "Arnés Xena",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"]
         },
         {
             "description": "Arnés superior confeccionado a medida con elástico afelpado y piezas metálicas. Ajustable en todos sus lados para un calce perfecto. Se requiere medida de contorno de bajobusto o datos de talla de ropa.",
@@ -126,7 +126,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "superior", "ajustable", "a medida"],
             "title": "Arnés Bomb",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"]
         },
         {
             "description": "Arnés superior confeccionado a medida con cinta de polipropileno color negro y detalles en color a elección, junto con piezas metálicas. No incluye esposas ni arnés de piernas. Ajustable en todos sus lados para un calce perfecto. Se requiere medida de contorno de busto/pecho y cuello o datos de talla de ropa.",
@@ -141,7 +141,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "superior", "ajustable", "a medida", "negro"],
             "title": "Arnés Superior Black",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"]
         },
         {
             "description": "Arnés superior confeccionado a medida con cinta de polipropileno de 30 mm en color negro y detalles en color a elección, junto con piezas metálicas. Ajustable en todos sus lados para un calce perfecto. Se requiere medida de contorno de bajobusto o datos de talla de ropa.",
@@ -156,7 +156,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "superior", "ajustable", "a medida"],
             "title": "Arnés Superior Viko",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"]
         },
 
 
@@ -178,7 +178,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "inferior", "ajustable", "a medida", "negro"],
             "title": "Arnés Inferior Rush",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"]
         },
         
 
@@ -205,7 +205,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "body", "ajustable", "a medida", "una sola pieza"],
             "title": "Arnés Body Gema",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"],
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"],
         },
         {
             "description": "Arnés body confeccionado a medida con elástico afelpado y piezas metálicas. No incluye choker ni ligas. Ajustable para un calce perfecto. Se requiere medida de contorno de bajobusto y cintura o datos de talla de ropa.",
@@ -223,7 +223,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "body", "ajustable", "a medida"],
             "title": "Arnés Body Olivia",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"]
         },
 
 
@@ -254,7 +254,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "conjunto", "collar", "correa corta", "ajustable", "a medida"],
             "title": "Conjunto Pet",
             "category": "arnes",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"],
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"],
         },
 
 
@@ -284,7 +284,7 @@ export const initialData: SeedData = {
             "tags": ["tirador", "ajustable", "a medida", "detalle metálico"],
             "title": "Tirador Ringo",
             "category": "tiradores",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"]
         },
 
 
@@ -338,7 +338,7 @@ export const initialData: SeedData = {
             "tags": ["arnés", "inferior", "una pierna", "ajustable", "a medida", "negro"],
             "title": "Arnés 1 Pierna Alone",
             "category": "ligas",
-            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal print", "amarillo fluo", "naranja fluo"]
+            "colors": ["negro", "blanco", "rojo", "azul", "verde", "rosa", "amarillo", "gris", "naranja", "violeta", "bordo", "fucsia", "beige", "celeste", "arcoiris", "animal_print", "amarillo_fluo", "naranja_fluo"]
         },
         
         

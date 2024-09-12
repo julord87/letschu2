@@ -31,11 +31,37 @@ async function main() {
     })
 
     // Products
-    const productsData = products.map((product) => ({
-        ...product,
-        categoryId: product.category,
-        typeId: product.type
-    }))
+    const categoriesDB = await prisma.category.findMany();
+    const typesDB = await prisma.type.findMany();
+
+    const categoriesMap = categoriesDB.reduce((map, category) => {
+        map[category.name.toLowerCase()] = category.id;
+        return map;
+    }, {} as Record<string, string>);
+
+    const typesMap = typesDB.reduce((map, type) => {
+        map[type.name.toLowerCase()] = type.id;
+        return map;
+    }, {} as Record<string, string>);
+
+
+
+
+    products.forEach(async (product) => {
+        const { images, type, category, ...rest } = product;
+        const dbProduct = await prisma.product.create({
+            data: {
+                ...rest,
+                categoryId: categoriesMap[category.toLowerCase()],
+                typeId: typesMap[type.toLowerCase()]
+            }
+        })
+
+        // Images
+
+
+    })
+
 
     
     console.log('seed-database ejecutado!');
