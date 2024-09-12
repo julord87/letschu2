@@ -34,6 +34,12 @@ model Category {
   Product Product[]
 }
 
+model Type {
+  id String @id @default(uuid())
+  name String @unique
+  Product Product[]
+}
+
 model Product {
   id String @id @default(uuid())
   title String
@@ -42,10 +48,10 @@ model Product {
   colors Color[] @default([])
   slug String @unique
   tags String[] @default([])
-  type String
 
   category Category @relation(fields: [categoryId], references: [id])
   categoryId String
 
-  @@index([type])
+  type Type @relation(fields: [typeId], references: [id])
+  typeId String
 }
