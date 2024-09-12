@@ -16,12 +16,19 @@ type Types = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'lig
 
 interface SeedData {
     products: SeedProduct[],
+    categories: string[],
+    types: string[]
 }
 
 
 
 
 export const initialData: SeedData = {
+
+    categories: ['Arnes', 'Tiradores', 'Chokers', 'Ligas', 'Extras'],
+
+    types: ['Superior', 'Inferior', 'Body', 'Conjunto', 'Tiradores', 'Chookers', 'Ligas', 'Extras'],
+
     products: [
         {
             "description": "Arnés superior confeccionado a medida, hecho de cinta de polipropileno de 30 mm en color negro con detalles en color a elección y piezas metálicas. Ajustable en todos sus lados para un calce perfecto.",
