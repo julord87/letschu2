@@ -1,4 +1,4 @@
-type ValidColors = 'negro' | 'blanco' | 'rojo' | 'azul' | 'verde' | 'rosa' | 'amarillo' | 'gris' | 'naranja' | 'violeta' | 'bordo' | 'fucsia' | 'beige' | 'celeste' | 'arcoiris' | 'animal print' | 'amarillo fluo' | 'naranja fluo';
+type ValidColors = 'negro' | 'blanco' | 'rojo' | 'azul' | 'verde' | 'rosa' | 'amarillo' | 'gris' | 'naranja' | 'violeta' | 'bordo' | 'fucsia' | 'beige' | 'celeste' | 'arcoiris' | 'animal_print' | 'amarillo_fluo' | 'naranja_fluo';
 
 export function getTailwindBgClass(color: ValidColors): string {
   switch (color) {
@@ -32,11 +32,11 @@ export function getTailwindBgClass(color: ValidColors): string {
       return 'bg-celeste';
     case 'arcoiris':
       return 'bg-arcoiris';
-    case 'animal print':
+    case 'animal_print':
       return 'bg-animal-print';
-    case 'amarillo fluo':
+    case 'amarillo_fluo':
       return 'bg-amarillo-fluo';
-    case 'naranja fluo':
+    case 'naranja_fluo':
       return 'bg-naranja-fluo';
     default:
       return '';
