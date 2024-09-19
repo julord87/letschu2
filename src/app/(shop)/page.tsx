@@ -1,14 +1,23 @@
 import { getPaginatedProductsWithImages } from "@/actions";
 import ProductGrid from "@/components/products/product-grid/ProductGrid";
 import Title from "@/components/ui/title/Title";
+import { redirect } from "next/navigation";
 
+interface Props {
+  searchParams: {
+    page?: number;
+  }
+}
 
+export default async function Home({ searchParams }: Props) {
 
-export default async function Home() {
+  const page = searchParams.page ? Number(searchParams.page) : 1;
 
-  const { products } = await getPaginatedProductsWithImages();
+  const { products } = await getPaginatedProductsWithImages({page});
 
-  console.log(products)
+  if (products.length === 0) {
+    redirect('/')
+  }
 
   return (
     <>
