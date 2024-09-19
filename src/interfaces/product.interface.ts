@@ -1,5 +1,5 @@
 export interface Product {
-    //todo: id: string
+    id: string
     description: string;
     images: string[];
     price: number;
@@ -7,8 +7,8 @@ export interface Product {
     slug: string;
     tags: string[];
     title: string;
-    type: Types;
-    category: Category;
+    //todo: type: Types;
+    //todo: category: Category;
 }
 
 export type Category = 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
