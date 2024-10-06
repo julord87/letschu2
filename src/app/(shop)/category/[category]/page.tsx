@@ -2,30 +2,29 @@ import { getAllPaginatedProductsWithImagesByCategory } from "@/actions";
 import { Pagination } from "@/components";
 import ProductGrid from "@/components/products/product-grid/ProductGrid";
 import Title from "@/components/ui/title/Title";
-import { Category } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 interface Props {
   params: {
-    category: string; // Cambiar a string si solo estás pasando el nombre de la categoría
+    category: string;
   };
   searchParams: {
     page?: string; 
+    take?: string; // Agregar take como parámetro opcional
   };
 }
-
 
 export default async function CategoryByPage({ params, searchParams }: Props) {
   const { category } = params;
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
+  const take = searchParams.take ? parseInt(searchParams.take) : 10; // Valor por defecto
 
-  console.log("Category object:", category);
+  console.log("Category:", category);
 
-
-  // Asegúrate de pasar el nombre de la categoría correctamente
   const { products, currentPage, totalPages } = await getAllPaginatedProductsWithImagesByCategory({ 
     page, 
-    categoryName: category, // Aquí estás pasando correctamente el nombre de la categoría
+    take, // Pasar el valor de take
+    categoryName: category,
   });
 
   if (products.length === 0) {
