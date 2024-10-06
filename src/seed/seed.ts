@@ -25,9 +25,9 @@ interface SeedData {
 
 export const initialData: SeedData = {
 
-    categories: ['Arnes', 'Tiradores', 'Chokers', 'Ligas', 'Extras'],
+    categories: ['arnes', 'tiradores', 'chokers', 'ligas', 'extras'],
 
-    types: ['Superior', 'Inferior', 'Body', 'Conjunto', 'Tiradores', 'Chookers', 'Ligas', 'Extras'],
+    types: ['superior', 'inferior', 'body', 'conjunto', 'tiradores', 'chookers', 'ligas', 'extras'],
 
     products: [
         {
