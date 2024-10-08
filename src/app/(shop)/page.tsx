@@ -12,7 +12,7 @@ interface Props {
 
 export default async function Home({ searchParams }: Props) {
 
-  const page = searchParams.page ? Number(searchParams.page) : 1;
+  const page = searchParams.page ? Number(searchParams.page) : 6;
 
   const { products, currentPage, totalPages } = await getAllPaginatedProductsWithImages({page});
 

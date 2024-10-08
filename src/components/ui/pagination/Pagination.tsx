@@ -59,18 +59,27 @@ export const Pagination = ({totalPages} : Props) => {
 
 
             {allPages.map((page, index) => (
-                    <li key={page + '-' + index} className="page-item"><Link
-                    className={
-                        clsx(
-                            "page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none",
-                            {
-                                'text-blue-600 hover:text-blue-600': page === currentPage
-                            }
-                        )
-                    }
-                    href={createPageUrl(page)}>{page}</Link></li>
-                ))
-            }
+                <li key={page + '-' + index} className="page-item">
+                    {page === '...' ? (
+                        <span className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 text-gray-400 cursor-default">
+                            {page}
+                        </span>
+                    ) : (
+                        <Link
+                            className={clsx(
+                                "page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none",
+                                {
+                                    'text-blue-600 hover:text-blue-600': page === currentPage
+                                }
+                            )}
+                            href={createPageUrl(page)}
+                        >
+                            {page}
+                        </Link>
+                    )}
+                </li>
+            ))}
+
 
             {
                 currentPage < totalPages && (
