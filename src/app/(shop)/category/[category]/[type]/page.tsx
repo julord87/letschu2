@@ -1,34 +1,48 @@
+import { getAllPaginatedProductsWithImagesByType } from "@/actions";
+import { Pagination } from "@/components";
 import ProductGrid from "@/components/products/product-grid/ProductGrid";
 import Title from "@/components/ui/title/Title";
-import { Types } from "@/interfaces";
-import { initialData } from "@/seed/seed";
-
+import { redirect } from "next/navigation";
 
 interface Props {
   params: {
-    type: Types
-  }
+    type: string;
+  };
+  searchParams: {
+    page?: string; 
+    take?: string; // Agregar take como parámetro opcional
+  };
 }
 
-const products = initialData.products
+export default async function TypeByPage({ params, searchParams }: Props) {
+  const { type } = params;
+  const page = searchParams.page ? parseInt(searchParams.page) : 1;
+  const take = searchParams.take ? Math.min(parseInt(searchParams.take), 100) : 1; // Limitar a 100 como máximo
 
-export default function({ params }: Props) {
+  console.log("Type:", type);
 
-const { type } = params;
-const filteredProducts = products.filter((product) => product.type === type)
+  const { products, currentPage, totalPages } = await getAllPaginatedProductsWithImagesByType({ 
+    page, 
+    take, // Pasar el valor de take
+    typeName: type,
+  });
 
+  if (products.length === 0) {
+    // Considera redirigir a una página que muestre un mensaje de error o lista de tipos
+    redirect(`/type/${type}`);
+  }
 
-return (
-  <>
-    <Title 
-      title={`Arnes - ${type}`}
-      subtitle={`Todos los productos`}
-      classname="mb-2 capitalize"
-    />
+  return (
+    <>
+      <Title 
+        title={`Arnes - ${type}`}
+        subtitle="Todos los productos"
+        classname="mb-2"
+      />
 
-    <ProductGrid
-      products={filteredProducts}
-    />
-  </>
-);
+      <ProductGrid products={products} />
+
+      <Pagination totalPages={totalPages} />
+    </>
+  );
 }
