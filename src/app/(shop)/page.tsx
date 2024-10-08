@@ -12,7 +12,7 @@ interface Props {
   }
 }
 
-export default async function Home({ searchParams }: Props) {
+export default async function HomePage({ searchParams }: Props) {
 
   const page = searchParams.page ? Number(searchParams.page) : 6;
 

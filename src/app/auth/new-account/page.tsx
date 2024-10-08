@@ -2,7 +2,7 @@ import { titleFont } from '@/config/fonts';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function () {
+export default function NewAccountPage() {
   return (
     <div className="flex flex-col min-h-screen pt-32 sm:pt-52">
 
