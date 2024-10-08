@@ -1,3 +1,5 @@
+export const revalidate = 60; // 60 segundos
+
 import { getAllPaginatedProductsWithImages } from "@/actions";
 import { Pagination } from "@/components";
 import ProductGrid from "@/components/products/product-grid/ProductGrid";
