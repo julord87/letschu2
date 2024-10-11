@@ -4,8 +4,11 @@ import "./globals.css";
 
 
 export const metadata: Metadata = {
-  title: "Letschu <3",
-  description: "Una tienda virtual de arneses y accesiorios",
+  title: {
+    template: "%s - Letschu <3",
+    default: 'Home - Letschu <3'
+  },
+  description: "Tienda virtual de arneses y accesiorios",
 };
 
 export default function RootLayout({

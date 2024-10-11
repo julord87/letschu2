@@ -4,6 +4,7 @@ import { titleFont } from "@/config/fonts";
 import { notFound } from "next/navigation";
 import { ColorSelector, ProductMobileSlideshow, ProductSlideshow, QuantitySelector } from "@/components";
 import { getProductBySlug } from "@/actions";
+import { Metadata, ResolvingMetadata } from "next";
 
 
 interface Props {
@@ -12,12 +13,38 @@ interface Props {
   }
 }
 
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = params.slug;
+
+  // fetch data
+  const product = await getProductBySlug(slug);
+
+  // optionally access and extend (rather than replace) parent metadata
+  // const previousImages = (await parent).openGraph?.images || []
+  // console.log(product?.title)
+  // console.log(product?.description)
+  // console.log([ `/${ product?.images[1] }`])
+  return {
+    title: product?.title ?? "Producto no encontrado",
+    description: product?.description ?? "",
+    openGraph: {
+      title: product?.title ?? "Producto no encontrado",
+      description: product?.description ?? "",
+      // images: [], // https://misitioweb.com/products/image.png
+      images: [`/${ product?.images[1] }`],
+    },
+  };
+}
+
 export default async function ProductsBySlugPage({ params }: Props) {
 
 const { slug } = params;
 
 const product = await getProductBySlug(slug);
-console.log(product)
 
 if( !product ) {
   notFound();
