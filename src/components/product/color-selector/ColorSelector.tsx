@@ -2,11 +2,13 @@ import { getTailwindBgClass } from "@/helpers/color-translate";
 import { Colors } from "@/interfaces";
 
 interface Props {
-  selectedColor: Colors;
+  selectedColor?: Colors;
   availableColors: Colors[];
+
+  onColorChange: (color: Colors) => void;
 }
 
-export const ColorSelector = ({ selectedColor, availableColors }: Props) => {
+export const ColorSelector = ({ selectedColor, availableColors, onColorChange }: Props) => {
 
   return (
     <>
@@ -18,6 +20,7 @@ export const ColorSelector = ({ selectedColor, availableColors }: Props) => {
         {availableColors.map((color) => (
           <div
             key={color}
+            onClick={() => onColorChange(color)}
             className={`inline-block p-0.5 rounded-full cursor-pointer ${
               color === selectedColor ? "ring-1 ring-blue-600" : ""
             }`}

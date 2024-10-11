@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ColorSelector, ProductMobileSlideshow, ProductSlideshow, QuantitySelector } from "@/components";
 import { getProductBySlug } from "@/actions";
 import { Metadata, ResolvingMetadata } from "next";
+import { AddToCart } from "./ui/AddToCart";
 
 
 interface Props {
@@ -71,16 +72,7 @@ if( !product ) {
         </h1>
         <p className="text-lg mb-5">${ product.price }</p>
 
-        {/* Select color */}
-        <ColorSelector availableColors={product.colors} selectedColor="rojo"/>
-
-        {/* Select quantity */}
-        <QuantitySelector quantity={2}/>
-
-        {/* Add to cart */}
-        <button className="btn-primary my-5">
-          Agregar al carrito
-        </button>
+        <AddToCart product={product} />
 
         {/* Description */}
         <h3 className="font-bold text-sm mb-1">Descripción</h3>
