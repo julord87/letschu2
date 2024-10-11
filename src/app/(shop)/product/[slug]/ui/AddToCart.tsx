@@ -3,13 +3,17 @@
 import { useState } from "react";
 
 import { ColorSelector, QuantitySelector } from "@/components";
-import { Colors, Product } from "@/interfaces";
+import { CartProduct, Colors, Product } from "@/interfaces";
+import { useCartStore } from "@/store";
 
 interface Props {
   product: Product;
 }
 
 export const AddToCart = ({ product }: Props) => {
+
+    const addProductToCart = useCartStore((state) => state.addProductToCart);
+
   const [color, setColor] = useState<Colors | undefined>();
   const [quantity, setQuantity] = useState<number>(1);
   const [posted, setPosted] = useState(false);
@@ -19,7 +23,20 @@ export const AddToCart = ({ product }: Props) => {
 
     if (!color || !quantity) return;
 
-    console.log({ color, quantity });
+    const cartProduct: CartProduct = {
+      id: product.id,
+      slug: product.slug,
+      title: product.title,
+      price: product.price,
+      color,
+      quantity,
+      image: product.images[0],
+    }
+
+    addProductToCart(cartProduct);
+    setPosted(false);
+    setQuantity(1);
+    setColor(undefined);
   };
 
   return (
