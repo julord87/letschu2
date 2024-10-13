@@ -2,6 +2,7 @@
 import Title from "@/components/ui/title/Title";
 import Link from "next/link";
 import { ProductsInCart } from "./ui/ProductsInCart";
+import { OrderSummary } from "./ui/OrderSummary";
 
 export default function CartPage() {
 
@@ -32,14 +33,7 @@ export default function CartPage() {
             <h2 className="text-2xl mb-2 font-bold">Resumen de orden</h2>
 
             <div className="grid grid-cols-2">
-              <span>No. Productos</span>
-              <span className="text-right">artículos</span>
-
-              <span>Subtotal</span>
-              <span className="text-right">$10000</span>
-
-              <span className="text-2xl mt-5 font-semibold">Total</span>
-              <span className="text-2xl mt-5 text-right font-semibold">$10000</span>
+              <OrderSummary />
             </div>
 
             <div className="mt-5 mb-2 w-full">
