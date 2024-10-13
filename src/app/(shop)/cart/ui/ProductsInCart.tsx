@@ -8,6 +8,7 @@ import Link from 'next/link';
 
 export const ProductsInCart = () => {
     const updateProductQuantity = useCartStore(state => state.updateProductQuantity);
+    const removeProduct = useCartStore(state => state.removeProduct);
     const [loaded, setLoaded] = useState(false);
     const productsInCart = useCartStore(state => state.cart);
 
@@ -42,7 +43,7 @@ export const ProductsInCart = () => {
               <QuantitySelector quantity={product.quantity} onQuantityChange={ (value) => updateProductQuantity(product, value) } />
             </div>
 
-            <button className="underline text-sm">Eliminar</button>
+            <button className="underline text-sm" onClick={() => removeProduct(product.id, product.color)}>Eliminar</button>
           </div>
         </div>
       ))}
