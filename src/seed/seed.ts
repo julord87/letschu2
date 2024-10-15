@@ -1,3 +1,5 @@
+import bcryptjs from 'bcryptjs';
+
 interface SeedProduct {
     description: string;
     images: string[];
@@ -10,6 +12,13 @@ interface SeedProduct {
     category: Categories;
 }
 
+interface SeedUser {
+    name: string;
+    password: string;
+    email: string;
+    role: 'admin' | 'user';
+}
+
 type Categories = 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
 type ValidColors = 'negro'|'blanco'|'rojo'|'azul'|'verde'|'rosa'|'amarillo'|'gris'|'naranja'|'violeta'|'bordo'|'fucsia'|'beige'|'celeste'|'arcoiris'|'animal_print'|'amarillo_fluo'|'naranja_fluo';
 type Types = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'ligas'|'extras';
@@ -17,13 +26,29 @@ type Types = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'lig
 interface SeedData {
     products: SeedProduct[],
     categories: string[],
-    types: string[]
+    types: string[],
+    users: SeedUser[]
 }
 
 
 
 
 export const initialData: SeedData = {
+
+    users: [
+        {
+            email: 'julianmzg@gmail.com',
+            name: 'Julian',
+            password: bcryptjs.hashSync('123456'),
+            role: 'user'
+        },
+        {
+            email: 'ingridchu@gmail.com',
+            name: 'Chu',
+            password: bcryptjs.hashSync('123456'),
+            role: 'admin'
+        }
+    ],
 
     categories: ['arnes', 'tiradores', 'chokers', 'ligas', 'extras'],
 
