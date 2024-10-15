@@ -1,14 +1,20 @@
+'use client'
 
 import Title from "@/components/ui/title/Title";
 import Link from "next/link";
 import { ProductsInCart } from "./ui/ProductsInCart";
 import { OrderSummary } from "./ui/OrderSummary";
+import { useCartStore } from "@/store";
+import { redirect } from "next/navigation";
 
 export default function CartPage() {
 
-  // redirect("/empty")
+  const {total} = useCartStore(state => state.getSummaryInformation());
+  if(total === 0) {redirect('/empty');}
+
 
   return (
+    
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
       <div className="flex flex-col w-[1000px]">
         
