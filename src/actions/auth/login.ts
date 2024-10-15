@@ -1,5 +1,6 @@
 'use server';
 
+import { sleep } from '@/helpers';
 import { signIn } from '../../../auth.config';
 import { AuthError } from 'next-auth';
  
@@ -11,7 +12,8 @@ export async function authenticate(
 ) {
   try {
 
-    console.log({ fromData: Object.fromEntries(formData)});
+    // await sleep(2000);
+    
     await signIn('credentials', formData);
 
   } catch (error) {
