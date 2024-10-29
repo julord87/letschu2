@@ -14,23 +14,19 @@ export async function authenticate(
 
     // await sleep(2000);
     
-    await signIn('credentials', formData);
+    await signIn('credentials', {
+      ...Object.fromEntries(formData),
+      redirect: false,
+    });
+
+    return 'Success'
 
   } catch (error) {
-    // if (error instanceof AuthError) {
-    //   switch (error.type) {
-    //     case 'CredentialsSignin':
-    //       return 'Invalid credentials.';
-    //     default:
-    //       return 'Something went wrong.';
-    // if (error instanceof AuthError) {
-    //   switch (error.type) {
-    //     case 'CredentialsSignin':
-    //       return 'Invalid credentials.';
-    //     default:
-    //       return 'Something went wrong.';
-    return 'CredentialsSignin';
-    // }
-    // throw error;
+
+    if((error as any).type === 'CredentialsSignin') {
+      return 'CredentialsSignin';
+    }
+
+    return 'Unknow Error';
   }
 }
