@@ -30,7 +30,6 @@ export const authConfig = {
             // Si todo sale bien, retornar el usuario (excepto el password)
             const { password: _, ...userWithoutPassword } = user;
             return userWithoutPassword;
-            
         },
       }),
 
@@ -38,6 +37,22 @@ export const authConfig = {
   pages: {
     signIn: '/auth/login',
     newUser: '/auth/new-account',
+  },
+
+  callbacks: {
+    jwt( {token, user} ) {
+      if( user ) {
+        token.data = user
+      }
+      
+      return token
+    },
+
+    session( {session, token, user} ) {
+      session.user = token.data as any;
+
+      return session
+    },
   }
 } satisfies NextAuthConfig;
 
