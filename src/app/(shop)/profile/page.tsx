@@ -1,6 +1,6 @@
 import Title from "@/components/ui/title/Title";
 import React from "react";
-import { auth } from "../../../../auth.config";
+import { auth } from "../../../auth.config";
 import { redirect } from "next/navigation";
 
 export default async function ProfilePage() {

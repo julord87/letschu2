@@ -1,7 +1,7 @@
 'use server';
 
 import { sleep } from '@/helpers';
-import { signIn } from '../../../auth.config';
+import { signIn } from '../../auth.config';
 import { AuthError } from 'next-auth';
  
 // ...
