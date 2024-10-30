@@ -1,8 +1,9 @@
 "use client";
 
+import { registerUser } from "@/actions";
 import clsx from "clsx";
-import { errorToJSON } from "next/dist/server/render";
 import Link from "next/link";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 type FormInputs = {
@@ -12,6 +13,7 @@ type FormInputs = {
 };
 
 export const RegisterForm = () => {
+  const [errorMessage, setErrorMessage] = useState('');
   const {
     register,
     handleSubmit,
@@ -19,22 +21,23 @@ export const RegisterForm = () => {
   } = useForm<FormInputs>();
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    setErrorMessage('');
     const { name, email, password } = data;
-    console.log({ name, email, password });
+
+    // Server action
+    const resp = await registerUser( name, email, password );
+
+    if( !resp.ok ) {
+      setErrorMessage( resp.message ?? 'An unknown error occurred' );
+      return;
+    }
+
+    console.log({resp})
+
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      {
-        /* mensajes de error */
-        // errors.name?.type === "required" && (
-        //   <p className="text-red-500 text-sm text-center">
-        //     El nombre es obligatorio
-        //   </p>
-        // )
-
-        /* mensajes de exito */
-      }
 
       <label htmlFor="name">Nombre</label>
       <input
@@ -63,6 +66,13 @@ export const RegisterForm = () => {
         type="password"
         {...register("password", { required: true, minLength: 6 })}
       />
+
+      {
+        /* mensajes de error */
+          <span className="text-red-500 text-sm text-center mb-3">
+            {errorMessage}
+          </span>
+      }
 
       <button className="btn-primary">Crear cuenta</button>
 
