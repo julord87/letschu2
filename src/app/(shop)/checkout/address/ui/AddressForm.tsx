@@ -1,6 +1,6 @@
 "use client";
 
-import { setUserAddress } from "@/actions";
+import { deleteUserAddress, setUserAddress } from "@/actions";
 import { Country } from "@/interfaces";
 import { useAddressStore } from "@/store/address/address-store";
 import clsx from "clsx";
@@ -52,10 +52,9 @@ export const AddressForm = ({ countries }: Props) => {
         const { rememberAddress, ...restAddress } = data
 
         if( data.rememberAddress ) {
-          // Todo: Server Actions
           setUserAddress(restAddress, session!.user.id );
         } else {
-          // Todo: Server Actions
+          deleteUserAddress(session!.user.id);
         }
     }
 
