@@ -3,7 +3,7 @@
 import type { Address } from "@/interfaces"
 import prisma from "@/lib/prisma";
 
-export const serUserAddress = async (address: Address, userId: string) => {
+export const setUserAddress = async (address: Address, userId: string) => {
     try {
 
         const newAddress = await createOrReplaceAddress(address, userId);
