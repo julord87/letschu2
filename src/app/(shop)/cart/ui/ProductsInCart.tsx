@@ -20,10 +20,15 @@ export const ProductsInCart = () => {
         return <p>Cargando...</p>
     }
 
+    const colorNameFormater = (color: string): string => {
+      return color.replace(/_/g, ' ');
+   };
+  
+
   return (
     <>
       {productsInCart.map((product) => (
-        <div key={`${product.slug} - ${product.color}`} className="flex mb-5">
+        <div key={`${product.slug}`} className="flex mb-5">
           <Image
             src={product.image}
             alt={product.title}
@@ -37,7 +42,7 @@ export const ProductsInCart = () => {
           />
 
           <div>
-            <Link href={`/product/${product.slug}`} className="text-sm hover:text-blue-700 transition-all capitalize">{`${product.title} - ${product.color}`}</Link>
+            <Link href={`/product/${product.slug}`} className="text-sm hover:text-blue-700 transition-all capitalize">{`${product.title} - ${colorNameFormater(product.color)}`}</Link>
             <p className="text-sm mb-0">${product.price}</p>
             <div className="text-sm mb-0 mt-0">
               <QuantitySelector quantity={product.quantity} onQuantityChange={ (value) => updateProductQuantity(product, value) } />

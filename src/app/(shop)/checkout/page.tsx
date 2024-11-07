@@ -1,8 +1,7 @@
-import { QuantitySelector } from "@/components";
 import Title from "@/components/ui/title/Title";
 import { initialData } from "@/seed/seed";
-import Image from "next/image";
 import Link from "next/link";
+import { ProductsInCart } from "../cart/ui/ProductsInCart";
 
 const productsInCart = [
   initialData.products[0],
@@ -25,40 +24,9 @@ export default function CheckoutPage() {
             <span className="text-xl">Ajustar elementos</span>
             <Link href="/cart" className="underline mb-5">Editar compra</Link>
 
-        
-
           {/* Items */}
-          {
-            productsInCart.map(product => (
-              <div key={product.slug} className="flex mb-5">
-                <Image 
-                  src={product.images[0]}
-                  alt={product.title}
-                  width={130}
-                  height={130}
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                  }}
-                  className="mr-5 rounded object-cover"
-                />
-
-                <div>
-                  <p className="text-sm">{product.title}</p>
-                  <p className="text-sm mb-0">${product.price} x 3</p>
-                  <p className="text-sm mt-1 font-semibold mb-2">Subtotal: ${product.price * 3}</p>
-
-
-                  <button className="underline text-sm">Eliminar</button>
-                </div>
-              </div>  
-            ))
-          }
+            <ProductsInCart />
           </div>
-
-
-
-
 
           {/* Checkout - Resumen de orden*/}
           <div className="bg-white rounded-xl shadow-xl p-7">
