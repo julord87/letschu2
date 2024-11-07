@@ -1,7 +1,8 @@
 import Title from "@/components/ui/title/Title";
 import { initialData } from "@/seed/seed";
 import Link from "next/link";
-import { ProductsInCart } from "../cart/ui/ProductsInCart";
+import { ProductsInCheckout } from "./ui/ProductsInCheckout";
+
 
 const productsInCart = [
   initialData.products[0],
@@ -25,7 +26,7 @@ export default function CheckoutPage() {
             <Link href="/cart" className="underline mb-5">Editar compra</Link>
 
           {/* Items */}
-            <ProductsInCart />
+            <ProductsInCheckout />
           </div>
 
           {/* Checkout - Resumen de orden*/}
