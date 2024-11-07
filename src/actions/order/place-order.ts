@@ -98,10 +98,14 @@ export const placeOrder = async (productIds: ProductToOrder[], address: Address)
       });
 
       return {
-        updatedProducts: [],
         order: order,
         orderAddress: orderAddress,
       };
     });
 
+    return {
+      ok: true,
+      order: prismaTx.order,
+      prismaTx: prismaTx,
+    };
 }
