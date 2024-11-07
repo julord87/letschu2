@@ -34,11 +34,11 @@ export const PlaceOrder = () => {
                 color: product.color,
             }
         });
+        const restAddress = 'userId' in address ? { ...address, userId: undefined } : address;
 
-        console.log(address, orderProducts);
-
-        const resp = await placeOrder(orderProducts, address);
-        console.log({resp});
+        // Pasar la dirección limpia a `placeOrder`
+        const resp = await placeOrder(orderProducts, restAddress);
+        console.log({ resp });
 
         setIsPlacingOrder(false);
     }

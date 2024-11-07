@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 
 interface State {
   address: {
+    userId?: string;
     firstName: string;
     lastName: string;
     address: string;

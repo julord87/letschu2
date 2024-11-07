@@ -54,50 +54,54 @@ export const placeOrder = async (productIds: ProductToOrder[], address: Address)
     }, {subTotal: 0, total: 0});
 
     // Crear la transacción de base de datos
-    const prismaTx = await prisma.$transaction( async (tx) => {
-        // 1. Actualizar el stock de los productos
-        
+    const prismaTx = await prisma.$transaction(async (tx) => {
+      // 1. Actualizar el stock de los productos
 
-        // 2. Crear la orden - Encabezado - Detalles
-        const order = await tx.order.create({
-            data: {
-                userId: userId,
-                subtotal: subTotal,
-                total: total,
-                itemsInOrder: itemsInOrder,
-                
-                OrderItem: {
-                    createMany: {
-                        data: productIds.map( p => ({
-                            quantity: p.quantity,
-                            color: p.color,
-                            productId: p.productId,
-                            price: products.find(pr => pr.id === p.productId)?.price ?? 0
-                        }))
-                    }
-                }
-            }
-        })
+      // 2. Crear la orden - Encabezado - Detalles
+      const order = await tx.order.create({
+        data: {
+          userId: userId,
+          subtotal: subTotal,
+          total: total,
+          itemsInOrder: itemsInOrder,
 
-        // Validar si el price es cero, entonces lanzar un error
+          OrderItem: {
+            createMany: {
+              data: productIds.map((p) => ({
+                quantity: p.quantity,
+                color: p.color,
+                productId: p.productId,
+                price: products.find((pr) => pr.id === p.productId)?.price ?? 0,
+              })),
+            },
+          },
+        },
+      });
 
-        // 3. Crear la dirección de envío 
-        const { country, ...restAddress } = address;
+      // Validar si el price es cero, entonces lanzar un error
 
-        const orderAddress = await tx.orderAddress.create({
-            data: {
-                ...restAddress,
-                countryId: country,
-                orderId: order.id // Sin userId
-            }
-        });
+      // 3. Crear la direccion de la orden
+      // Address
 
+      const orderAddress = await tx.orderAddress.create({
+        data: {
+          address: address.address,
+          address2: address.address2,
+          city: address.city,
+          countryId: address.country,
+          firstName: address.firstName,
+          lastName: address.lastName,
+          zip: address.zip,
+          phone: address.phone,
+          orderId: order.id,
+        },
+      });
 
-        return {
-            order: order,
-            address: orderAddress
-        }
-        
+      return {
+        updatedProducts: [],
+        order: order,
+        orderAddress: orderAddress,
+      };
     });
 
 }
