@@ -4,11 +4,15 @@ import Image from 'next/image';
 import { useCartStore } from "@/store";
 import { useEffect, useState } from 'react';
 import { currencyFormat } from '@/helpers/currencyFormat';
+import { redirect } from 'next/navigation';
 
 export const ProductsInCheckout = () => {
     const [loaded, setLoaded] = useState(false);
     const productsInCart = useCartStore(state => state.cart);
-
+    const {total} = useCartStore(state => state.getSummaryInformation());
+    
+    if(total === 0) {redirect('/empty');}
+    
     useEffect(() => {
         setLoaded(true);
     }, [])

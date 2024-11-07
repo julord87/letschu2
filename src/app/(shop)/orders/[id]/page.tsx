@@ -1,8 +1,10 @@
+import { getOrderById } from "@/actions";
 import Title from "@/components/ui/title/Title";
+import { currencyFormat } from "@/helpers/currencyFormat";
 import { initialData } from "@/seed/seed";
 import clsx from "clsx";
 import Image from "next/image";
-import Link from "next/link";
+import { redirect } from "next/navigation";
 import { IoCardOutline } from "react-icons/io5";
 
 const productsInCart = [
@@ -17,48 +19,58 @@ interface Props {
   }
 }
 
-export default function OrdersByIdPage({ params }: Props) {
+export default async function OrdersByIdPage({ params }: Props) {
 
   const { id } = params;
 
-  // Todo: veificar
-  // redirect()
+  // Todo: Llamar el server action
+
+  const { ok, order } = await getOrderById(id);
+
+  if (!ok) {
+    redirect("/");
+  }
+
+  const address = order!.OrderAddress;
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
       <div className="flex flex-col w-[1000px]">
         
         <Title 
-          title={`Orden #${id}`}
+          title={`Orden #${id.split("-")[0]}`}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           {/* Carrito */}
           <div className="flex flex-col mt-5">
-            <div className={
-              clsx(
-                "flex items-center rounded-lg py-2 px3.5 font-bold text-xs text-white mb-5",
+            <div
+              className={clsx(
+                "flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5",
                 {
-                  'bg-red-500': false,
-                  'bg-green-700': true
+                  "bg-red-500": !order!.isPaid,
+                  "bg-green-700": order!.isPaid,
                 }
-              )
-            }>
-              <IoCardOutline size={30} className="ml-2"/>
+              )}
+            >
+              <IoCardOutline size={30} />
               {/* <span className="mx-2">Pendiente de pago</span> */}
-              <span className="mx-2">Pago confirmado</span>
-
+              <span className="mx-2">
+                {order?.isPaid ? "Pagada" : "No pagada"}
+              </span>
             </div>
 
         
 
-          {/* Items */}
-          {
-            productsInCart.map(product => (
-              <div key={product.slug} className="flex mb-5">
-                <Image 
-                  src={product.images[0]}
-                  alt={product.title}
+            {/* Items */}
+            {order!.OrderItem.map((item) => (
+              <div
+                key={item.product.slug + "-" + item.color}
+                className="flex mb-5"
+              >
+                <Image
+                  src={item.product.ProductImage[0].url}
+                  alt={item.product.title}
                   width={130}
                   height={130}
                   style={{
@@ -69,13 +81,16 @@ export default function OrdersByIdPage({ params }: Props) {
                 />
 
                 <div>
-                  <p className="text-sm">{product.title}</p>
-                  <p className="text-sm mb-0">${product.price} x 3</p>
-                  <p className="text-sm mt-1 font-semibold mb-2">Subtotal: ${product.price * 3}</p>
+                  <p>{item.product.title}</p>
+                  <p>
+                    ${item.price} x {item.quantity}
+                  </p>
+                  <p className="font-bold">
+                    Subtotal: {currencyFormat(item.price * item.quantity)}
+                  </p>
                 </div>
-              </div>  
-            ))
-          }
+              </div>
+            ))}
           </div>
 
 
@@ -87,13 +102,16 @@ export default function OrdersByIdPage({ params }: Props) {
 
             <h2 className="text-2xl mb-2 font-bold">Dirección de entrega</h2>
             <div className="mb-10">
-              <p className="text-xl mb-1">Fernando Herrera</p>
-              <p>Av. Siempre Viva 123</p>
-              <p>Col. Centro</p>
-              <p>Alcaldía Cuautemoc</p>
-              <p>Ciudad de México</p>
-              <p>CP 11400</p>
-              <p>+54 1131234567</p>
+              <p className="text-xl">
+                {address!.firstName} {address!.lastName}
+              </p>
+              <p>{address!.address}</p>
+              <p>{address!.address2}</p>
+              <p>{address!.zip}</p>
+              <p>
+                {address!.city}, {address!.countryId}
+              </p>
+              <p>{address!.phone}</p>
             </div>
 
             {/* Divider */}
@@ -105,30 +123,34 @@ export default function OrdersByIdPage({ params }: Props) {
 
             <div className="grid grid-cols-2">
               <span>No. Productos</span>
-              <span className="text-right">artículos</span>
+              <span className="text-right">
+                {order?.itemsInOrder === 1
+                  ? "1 artículo"
+                  : `${order?.itemsInOrder} artículos`}
+              </span>
 
               <span>Subtotal</span>
-              <span className="text-right">$10000</span>
+              <span className="text-right">{currencyFormat(order!.subtotal)}</span>
 
               <span className="text-2xl mt-5 font-semibold">Total</span>
-              <span className="text-2xl mt-5 text-right font-semibold">$10000</span>
+              <span className="text-2xl mt-5 text-right font-semibold">{currencyFormat(order!.total)}</span>
             </div>
 
             <div className="mt-5 mb-2 w-full">
-
-              <div className={
-                clsx(
-                  "flex items-center rounded-lg py-2 px3.5 font-bold text-xs text-white mb-5",
+              <div
+                className={clsx(
+                  "flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5",
                   {
-                    'bg-red-500': false,
-                    'bg-green-700': true
+                    "bg-red-500": !order!.isPaid,
+                    "bg-green-700": order!.isPaid,
                   }
-                )
-              }>
-                <IoCardOutline size={30} className="ml-2"/>
+                )}
+              >
+                <IoCardOutline size={30} />
                 {/* <span className="mx-2">Pendiente de pago</span> */}
-                <span className="mx-2">Pago confirmado</span>
-
+                <span className="mx-2">
+                  {order?.isPaid ? "Pagada" : "No pagada"}
+                </span>
               </div>
             </div>
           </div>

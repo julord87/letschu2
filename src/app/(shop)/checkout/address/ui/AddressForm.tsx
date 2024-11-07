@@ -2,11 +2,12 @@
 
 import { deleteUserAddress, setUserAddress } from "@/actions";
 import { Address, Country } from "@/interfaces";
+import { useCartStore } from "@/store";
 import { useAddressStore } from "@/store/address/address-store";
 
 import clsx from "clsx";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -28,6 +29,10 @@ interface Props {
 }
 
 export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
+
+    const {total} = useCartStore(state => state.getSummaryInformation());
+      
+    if(total === 0) {redirect('/empty');}
 
     const router = useRouter();
     const { handleSubmit, register, formState: { isValid }, reset } = useForm<FormInputs>({
