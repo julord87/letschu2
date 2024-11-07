@@ -1,6 +1,6 @@
 "use client";
 
-import { sleep } from "@/helpers";
+import { placeOrder } from "@/actions";
 import { currencyFormat } from "@/helpers/currencyFormat";
 import { useCartStore } from "@/store";
 import { useAddressStore } from "@/store/address/address-store";
@@ -36,6 +36,9 @@ export const PlaceOrder = () => {
         });
 
         console.log(address, orderProducts);
+
+        const resp = await placeOrder(orderProducts, address);
+        console.log({resp});
 
         setIsPlacingOrder(false);
     }
