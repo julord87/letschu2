@@ -39,7 +39,7 @@ export const ProductsInCheckout = () => {
           />
 
           <div>
-            <span className='text-sm'>{`${product.quantity} ${product.title} - ${colorNameFormater(product.color)}`}</span>
+            <span className='text-sm capitalize'>{`${product.quantity} ${product.title} - ${colorNameFormater(product.color)}`}</span>
             <p className="font-bold text-sm mb-0">${currencyFormat(product.price * product.quantity)}</p>
           </div>
         </div>
