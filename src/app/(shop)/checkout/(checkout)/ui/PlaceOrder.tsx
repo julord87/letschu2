@@ -1,63 +1,63 @@
 "use client";
 
-import { placeOrder } from "@/actions";
-import { currencyFormat } from "@/helpers/currencyFormat";
-import { useCartStore } from "@/store";
-import { useAddressStore } from "@/store/address/address-store";
-import clsx from "clsx";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
+
+import { placeOrder } from '@/actions';
+import { useAddressStore, useCartStore } from "@/store";
+import { currencyFormat } from '@/helpers/currencyFormat';
 
 export const PlaceOrder = () => {
 
-    const router = useRouter();
-    const [loaded, setLoaded] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+  const router = useRouter();
+  const [loaded, setLoaded] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
-    const address = useAddressStore((state) => state.address);
 
-    const {subtotal, total, totalItems} = useCartStore(state => state.getSummaryInformation());
-    
-    const cart = useCartStore(state => state.cart);
-    const clearCart = useCartStore(state => state.clearCart);
 
-    useEffect(() => {
-        setLoaded(true);
-    }, []);
+  const address = useAddressStore((state) => state.address);
 
-    const onPlaceOrder = async () => {
-        setIsPlacingOrder(true);
+  const { totalItems, subtotal, total } = useCartStore((state) =>
+    state.getSummaryInformation()
+  );
+  const cart = useCartStore( state => state.cart );
+  const clearCart = useCartStore( state => state.clearCart );
 
-        // await sleep(2000);
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
-        const orderProducts = cart.map((product) => {
-            return {
-                productId: product.id,
-                quantity: product.quantity,
-                color: product.color,
-            }
-        });
-        const restAddress = 'userId' in address ? { ...address, userId: undefined } : address;
+  const onPlaceOrder = async() => {
+    setIsPlacingOrder(true);
+    // await sleep(2);
 
-        // Pasar la dirección limpia a `placeOrder`
-        const resp = await placeOrder(orderProducts, restAddress);
+    const productsToOrder = cart.map( product => ({
+      productId: product.id,
+      quantity: product.quantity,
+      color: product.color,
+    }))
 
-        if (!resp || !resp.ok) {
-            setIsPlacingOrder(false);
-            setErrorMessage(resp?.message || "Error al realizar la compra");
-            return;
-        }
 
-        // Salió bien
-        clearCart();
-        router.replace(`/orders/${resp.order?.id}`);
+    //! Server Action
+    const resp = await placeOrder( productsToOrder, address);
+    if ( !resp.ok ) {
+      setIsPlacingOrder(false);
+      setErrorMessage(resp.message || 'An unexpected error occurred');
+      return;
     }
 
-    if( !loaded ) {
-        return <p>Cargando...</p>
-    }
-    
+    //* Todo salio bien!
+    clearCart();
+    setTimeout(() => {
+      router.replace('/orders/' + resp.order?.id);
+    }, 0);
+  }
+
+  if (!loaded) {
+    return <p>Cargando...</p>;
+  }
 
 
   return (
@@ -88,8 +88,8 @@ export const PlaceOrder = () => {
         <span>Subtotal</span>
         <span className="text-right">${currencyFormat(subtotal)}</span>
 
-        <span className="text-xl mt-5 font-semibold">Total</span>
-        <span className="text-xl mt-5 text-right font-semibold">
+        <span className="text-lg mt-5 font-semibold">Total</span>
+        <span className="text-lg mt-5 text-right font-semibold">
           ${currencyFormat(total)}
         </span>
       </div>
