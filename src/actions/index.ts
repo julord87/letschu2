@@ -15,3 +15,5 @@ export { getOrderById } from './order/get-order-by-id'
 
 export { getAllPaginatedProductsWithImages } from './products/product-pagination'
 export { getProductBySlug } from './products/get-product-by-slug'
+
+export { setTransactionId } from './payments/set-transaction-id'
