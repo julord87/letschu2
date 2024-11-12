@@ -1,6 +1,7 @@
 // https://tailwindcomponents.com/component/hoverable-table
 
 import { getPaginatedOrders } from '@/actions';
+import { Pagination } from '@/components';
 import Title from '@/components/ui/title/Title';
 
 import Link from 'next/link';
@@ -72,6 +73,8 @@ export default async function OrdersPage() {
             ))}
           </tbody>
         </table>
+
+        <Pagination totalPages={1} />
       </div>
     </>
   );
