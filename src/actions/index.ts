@@ -3,7 +3,7 @@ export { setUserAddress } from './address/set-user-address'
 export { deleteUserAddress } from './address/delete-user-address'
 export { getUserAdddress } from './address/get-user-address'
 
-export { authenticate } from './auth/login'
+export { authenticate, login } from './auth/login'
 export { logout } from './auth/logout'
 export { registerUser } from './auth/register'
 
