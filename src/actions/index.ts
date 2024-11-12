@@ -12,6 +12,7 @@ export { getCountries } from './country/get-countries'
 export { placeOrder } from './order/place-order'
 export { getOrdersByUser } from './order/get-orders-by-user'
 export { getOrderById } from './order/get-order-by-id'
+export { getPaginatedOrders } from './order/get-paginated-orders'
 
 export { getAllPaginatedProductsWithImages } from './products/product-pagination'
 export { getProductBySlug } from './products/get-product-by-slug'
