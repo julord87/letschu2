@@ -1,6 +1,8 @@
 "use server";
 
 import { PayPalOrderStatusResponse } from "@/interfaces";
+import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 
 
@@ -25,12 +27,37 @@ export const payPalCheckPayment = async ( payPalTransactionId: string) => {
     }
 
     const { status, purchase_units } = resp;
-    // const {} = purchase_units[0]
+    const {  invoice_id: orderId } = purchase_units[0]
 
     if( status !== "COMPLETED" ) {
         return {
             ok: false,
             message: "El pago no fue completado"
+        }
+    }
+
+    try {
+        await prisma.order.update({
+            where: {
+                id: orderId
+            },
+            data: {
+                isPaid: true,
+                paidAt: new Date()
+            }
+        })
+
+        revalidatePath(`/orders/${orderId}`);
+
+        return {
+            ok: true,
+        }
+
+    } catch (error) {
+        console.error(error);
+        return {
+            ok: false,
+            message: "500 - Error al verificar el pago con PayPal"
         }
     }
 
@@ -57,7 +84,10 @@ const getPayPalBearerToken = async (): Promise<string | null> => {
     };
 
     try {
-        const response = await fetch(`${process.env.PAYPAL_OAUTH_URL}`, requestOptions).then((res) => res.json());
+        const response = await fetch(`${process.env.PAYPAL_OAUTH_URL}`, {
+            ...requestOptions,
+            cache: "no-store"
+        }).then((res) => res.json());
         return response.access_token;
     } catch (error) {
         console.error(error);
@@ -80,7 +110,10 @@ const verifyPayPalPayment = async (
     };
     
     try {
-        const response = await fetch(payPalOrderUrl, requestOptions).then((res) => res.json());
+        const response = await fetch(payPalOrderUrl, {
+            ...requestOptions,
+            cache: "no-store"
+        }).then((res) => res.json());
         return response;
     } catch (error) {
         console.error(error);

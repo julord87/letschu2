@@ -28,6 +28,7 @@ export const PayPalButton = ({orderId, amount}: Props) => {
     const transactionId = await actions.order.create({
       purchase_units: [
         {
+          invoice_id: orderId,
           amount: {
             currency_code: "USD", // Aquí defines la moneda como ARS
             value: `${roundedAmount}` // El valor en ARS que has calculado
