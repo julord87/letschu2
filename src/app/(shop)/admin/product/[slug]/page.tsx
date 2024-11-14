@@ -21,7 +21,7 @@ export default async function ProductPage( { params }: Props ) {
     ]);
 
     // TODO: new
-    if( !product ) {
+    if( !product && slug !== 'new' ) {
         redirect('admin/products');
     }
 
@@ -31,7 +31,7 @@ export default async function ProductPage( { params }: Props ) {
     <>
         <Title title={ title } />
         
-        <ProductForm product={ product } categories={ categories } types={ types } />
+        <ProductForm product={ product ?? {}} categories={ categories } types={ types } />
     </>
   );
 }

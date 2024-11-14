@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { createUpdateProduct } from "@/actions";
 
 interface Props {
-  product: Product & { ProductImage?: ProductImage[] };
+  product: Partial<Product> & { ProductImage?: ProductImage[] };
   categories: Category[];
   types: Type[];
 }
@@ -60,7 +60,7 @@ export const ProductForm = ({ product, categories, types }: Props) => {
   } = useForm<FormInputs>({
     defaultValues: {
       ...product,
-      tags: product.tags.join(", "),
+      tags: product.tags?.join(", "),
       colors: product.colors ?? [],
 
       // Todo: images
@@ -94,7 +94,8 @@ export const ProductForm = ({ product, categories, types }: Props) => {
     formData.append('categoryId', productToSave.categoryId);
     formData.append('typeId', productToSave.typeId);
 
-    const { ok } = await createUpdateProduct(formData);
+    const response = await createUpdateProduct(formData);
+    const ok = response?.ok ?? false;
 
     console.log({ok})
   }
