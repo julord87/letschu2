@@ -1,10 +1,12 @@
 "use client";
 
 import { Category, Product } from "@/interfaces";
+import { Type } from "@prisma/client";
 
 interface Props {
   product: Product;
   categories: Category[];
+  types: Type[];
 }
 
 const colors = [
@@ -28,7 +30,7 @@ const colors = [
   "naranja_fluo",
 ];
 
-export const ProductForm = ({ product, categories }: Props) => {
+export const ProductForm = ({ product, categories, types }: Props) => {
   return (
     <form className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3">
       {/* Textos */}
@@ -63,8 +65,8 @@ export const ProductForm = ({ product, categories }: Props) => {
 
         <div className="flex flex-col mb-2">
           <span>Categoria</span>
-          <select className="p-2 border rounded-md bg-gray-200">
-            <option value="">[Seleccione]</option>
+          <select className="p-2 border rounded-md bg-gray-200 capitalize">
+            <option value="" >[Seleccione]</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id} className="capitalize">
                 {category.name}
@@ -75,8 +77,13 @@ export const ProductForm = ({ product, categories }: Props) => {
 
         <div className="flex flex-col mb-2">
           <span>Tipo</span>
-          <select className="p-2 border rounded-md bg-gray-200">
+          <select className="p-2 border rounded-md bg-gray-200 capitalize">
             <option value="">[Seleccione]</option>
+            {types.map((type) => (
+              <option key={type.id} value={type.id} className="capitalize">
+                {type.name}
+              </option>
+            ))}
           </select>
         </div>
 
