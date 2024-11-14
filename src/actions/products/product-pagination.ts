@@ -12,7 +12,7 @@ interface PaginationOptions {
 // Paginar todos los productos sin filtrar por categoría
 export const getAllPaginatedProductsWithImages = async ({
   page = 1,
-  take = 1,
+  take = 3,
 }: PaginationOptions) => {
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
