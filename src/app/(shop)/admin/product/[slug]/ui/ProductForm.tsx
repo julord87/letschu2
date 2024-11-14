@@ -1,9 +1,10 @@
 "use client";
 
-import { Product } from "@/interfaces";
+import { Category, Product } from "@/interfaces";
 
 interface Props {
   product: Product;
+  categories: Category[];
 }
 
 const colors = [
@@ -27,7 +28,7 @@ const colors = [
   "naranja_fluo",
 ];
 
-export const ProductForm = ({ product }: Props) => {
+export const ProductForm = ({ product, categories }: Props) => {
   return (
     <form className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3">
       {/* Textos */}
@@ -64,6 +65,11 @@ export const ProductForm = ({ product }: Props) => {
           <span>Categoria</span>
           <select className="p-2 border rounded-md bg-gray-200">
             <option value="">[Seleccione]</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id} className="capitalize">
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
 
