@@ -16,6 +16,7 @@ export { getPaginatedOrders } from './order/get-paginated-orders'
 
 export { getAllPaginatedProductsWithImages } from './products/product-pagination'
 export { getProductBySlug } from './products/get-product-by-slug'
+export { createUpdateProduct } from './products/create-update-product'
 
 export { setTransactionId } from './payments/set-transaction-id'
 export { payPalCheckPayment } from './payments/paypal-check-payment'
