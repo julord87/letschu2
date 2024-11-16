@@ -1,15 +1,16 @@
 "use client";
 
-import { Category, Product, ProductImage, Type } from "@/interfaces";
+import { Category, Product, ProductImage as ProductWithImage, Type } from "@/interfaces";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import clsx from "clsx";
 import { createUpdateProduct } from "@/actions";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { ProductImage } from "@/components";
 
 interface Props {
-  product: Partial<Product> & { ProductImage?: ProductImage[] };
+  product: Partial<Product> & { ProductImage?: ProductWithImage[] };
   categories: Category[];
   types: Type[];
 }
@@ -279,7 +280,7 @@ export const ProductForm = ({ product, categories, types }: Props) => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {product.ProductImage?.map((image) => (
               <div key={image.id}>
-                <Image
+                <ProductImage
                   alt={product.title ?? ""}
                   src={`${image.url}`}
                   width={300}
