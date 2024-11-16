@@ -83,8 +83,7 @@ export const ProductForm = ({ product, categories, types }: Props) => {
     const formData = new FormData();
 
     const { ...productToSave } = data;
-
-    formData.append('id', product.id ?? '');
+    if(product.id) formData.append('id', product.id ?? '');
     formData.append('title', productToSave.title);
     formData.append('slug', productToSave.slug);
     formData.append('description', productToSave.description);

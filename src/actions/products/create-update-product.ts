@@ -2,6 +2,7 @@
 
 import prisma from '@/lib/prisma';
 import { Color, Product } from '@prisma/client';
+import { ok } from 'assert';
 import { z } from 'zod';
 
 const productSchema = z.object({
@@ -58,18 +59,35 @@ export const createUpdateProduct = async ( formData: FormData) => {
                     }
                 }
             });
-
-            console.log({updatedProduct: product});
         } else {
-
+            // Crear producto
+            product = await prisma.product.create({
+                data: {
+                    ...rest,
+                    colors: {
+                        set: rest.colors as Color[]
+                    },
+                    tags: {
+                        set: tagsArray
+                    }
+                }
+            })
         }
 
-        // TODO: revalidate paths
+        console.log({product});
+
 
         return {
-            ok: true
+            product
         }
     })
+
+    
+    // TODO: revalidate paths
+
+    return {
+        ok: true
+    }
 
 
 }
