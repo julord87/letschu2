@@ -67,6 +67,19 @@ export const ProductForm = ({ product, categories, types }: Props) => {
   });
 
   watch("colors");
+  const title = watch("title"); // Observar cambios en el título
+
+  // Generar slug automáticamente basado en el título
+  React.useEffect(() => {
+    if (title) {
+      const slug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "") // Elimina caracteres especiales
+        .replace(/\s+/g, "-") // Reemplaza espacios por guiones
+        .replace(/-+/g, "-"); // Evita múltiples guiones consecutivos
+      setValue("slug", slug); // Actualiza el campo de slug
+    }
+  }, [title, setValue]);
 
   // Observar el cambio en la categoría seleccionada
   const selectedCategoryId = watch("categoryId");
@@ -127,23 +140,24 @@ export const ProductForm = ({ product, categories, types }: Props) => {
     >
       {/* Textos */}
       <div className="w-full">
-        <div className="flex flex-col mb-2">
-          <span>Título</span>
-          <input
-            type="text"
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("title", { required: true })}
-          />
-        </div>
+      <div className="flex flex-col mb-2">
+        <span>Título</span>
+        <input
+          type="text"
+          className="p-2 border rounded-md bg-gray-200"
+          {...register("title", { required: true })}
+        />
+      </div>
 
-        <div className="flex flex-col mb-2">
-          <span>Slug</span>
-          <input
-            type="text"
-            className="p-2 border rounded-md bg-gray-200"
-            {...register("slug", { required: true })}
-          />
-        </div>
+      <div className="flex flex-col mb-2">
+        <span>Slug</span>
+        <input
+          type="text"
+          className="p-2 border rounded-md bg-gray-200"
+          disabled // Hace que el campo no sea editable
+          {...register("slug", { required: true })}
+        />
+      </div>
 
         <div className="flex flex-col mb-2">
           <span>Descripción</span>
