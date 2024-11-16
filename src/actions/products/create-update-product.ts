@@ -3,6 +3,7 @@
 import prisma from '@/lib/prisma';
 import { Color, Product } from '@prisma/client';
 import { ok } from 'assert';
+import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 const productSchema = z.object({
@@ -39,51 +40,69 @@ export const createUpdateProduct = async ( formData: FormData) => {
 
     const { id, ...rest} = product;
 
-    const prismaTx = await prisma.$transaction( async (tx) => {
-
-        let product: Product;
-        const tagsArray = rest.tags.split(',').map(tag => tag.trim().toLowerCase());
-
-        if( id ) {
-            product = await prisma.product.update({
-                where: {
-                    id
-                },
-                data: {
-                    ...rest,
-                    colors: {
-                        set: rest.colors as Color[]
+    try {
+        const prismaTx = await prisma.$transaction( async (tx) => {
+    
+            let product: Product;
+            const tagsArray = rest.tags.split(',').map(tag => tag.trim().toLowerCase());
+    
+            if( id ) {
+                product = await prisma.product.update({
+                    where: {
+                        id
                     },
-                    tags: {
-                        set: tagsArray
+                    data: {
+                        ...rest,
+                        colors: {
+                            set: rest.colors as Color[]
+                        },
+                        tags: {
+                            set: tagsArray
+                        }
                     }
-                }
-            });
-        } else {
-            // Crear producto
-            product = await prisma.product.create({
-                data: {
-                    ...rest,
-                    colors: {
-                        set: rest.colors as Color[]
-                    },
-                    tags: {
-                        set: tagsArray
+                });
+            } else {
+                // Crear producto
+                product = await prisma.product.create({
+                    data: {
+                        ...rest,
+                        colors: {
+                            set: rest.colors as Color[]
+                        },
+                        tags: {
+                            set: tagsArray
+                        }
                     }
-                }
-            })
-        }
-
-        console.log({product});
-
+                })
+            }
+    
+            console.log({product});
+    
+    
+            return {
+                product
+            }
+        });
+        
+        revalidatePath('/admin/products');
+        revalidatePath(`/admin/product/${product.slug}`);
+        revalidatePath(`/products/${product.slug}`);
 
         return {
-            product
+            ok: true,
+            product: prismaTx.product
         }
-    })
+        
+    } catch (error) {
+
+        return {
+            ok: false,
+            message: 'Revisar los logs, no se pudo actualizar el producto'
+        }
+    }
+
 
     
-    // TODO: revalidate paths
 
     return {
         ok: true

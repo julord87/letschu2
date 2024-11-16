@@ -6,6 +6,7 @@ import Image from "next/image";
 import clsx from "clsx";
 import { createUpdateProduct } from "@/actions";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   product: Partial<Product> & { ProductImage?: ProductImage[] };
@@ -49,6 +50,9 @@ const colors = [
 ];
 
 export const ProductForm = ({ product, categories, types }: Props) => {
+
+  const router = useRouter();
+
   const {
     handleSubmit,
     register,
@@ -130,7 +134,12 @@ export const ProductForm = ({ product, categories, types }: Props) => {
     const response = await createUpdateProduct(formData);
     const ok = response?.ok ?? false;
 
-    console.log({ ok });
+    if( !ok ) {
+      alert('Error al guardar el producto');
+      return;
+    }
+
+    router.replace(`/product/${productToSave.slug}`);
   };
 
   return (
