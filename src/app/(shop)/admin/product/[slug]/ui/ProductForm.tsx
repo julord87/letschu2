@@ -26,6 +26,7 @@ interface FormInputs {
   typeId: string;
 
   // Todo: Images
+  images?: FileList;
 }
 
 const colors = [
@@ -66,7 +67,7 @@ export const ProductForm = ({ product, categories, types }: Props) => {
       tags: product.tags?.join(", "),
       colors: product.colors ?? [],
 
-      // Todo: images
+      images: undefined,
     },
   });
 
@@ -120,7 +121,7 @@ export const ProductForm = ({ product, categories, types }: Props) => {
   const onSubmit = async (data: FormInputs) => {
     const formData = new FormData();
 
-    const { ...productToSave } = data;
+    const { images, ...productToSave } = data;
     if (product.id) formData.append("id", product.id ?? "");
     formData.append("title", productToSave.title);
     formData.append("slug", productToSave.slug);
@@ -130,6 +131,12 @@ export const ProductForm = ({ product, categories, types }: Props) => {
     formData.append("tags", productToSave.tags);
     formData.append("categoryId", productToSave.categoryId);
     formData.append("typeId", productToSave.typeId);
+
+    if( images ) {
+      for( let i = 0; i < images.length; i++ ) {
+        formData.append("images", images[i]);
+      }
+    }
 
     const response = await createUpdateProduct(formData);
     const ok = response?.ok ?? false;
@@ -262,9 +269,10 @@ export const ProductForm = ({ product, categories, types }: Props) => {
             <span>Imagenes</span>
             <input
               type="file"
+              { ...register("images") }
               multiple
               className="p-2 border rounded-md bg-gray-200"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, image/webp, image/avif"
             />
           </div>
 
