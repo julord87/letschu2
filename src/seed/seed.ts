@@ -21,7 +21,7 @@ interface SeedUser {
 
 type Categories = 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
 type ValidColors = 'negro'|'blanco'|'rojo'|'azul'|'verde'|'rosa'|'amarillo'|'gris'|'naranja'|'violeta'|'bordo'|'fucsia'|'beige'|'celeste'|'arcoiris'|'animal_print'|'amarillo_fluo'|'naranja_fluo';
-type Types = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'ligas'|'extras';
+type Types = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chokers'|'ligas'|'extras';
 
 interface SeedData {
     products: SeedProduct[],
@@ -52,7 +52,7 @@ export const initialData: SeedData = {
 
     categories: ['arnes', 'tiradores', 'chokers', 'ligas', 'extras'],
 
-    types: ['superior', 'inferior', 'body', 'conjunto', 'tiradores', 'chookers', 'ligas', 'extras'],
+    types: ['superior', 'inferior', 'body', 'conjunto', 'tiradores', 'chokers', 'ligas', 'extras'],
 
     products: [
         {
@@ -333,7 +333,7 @@ export const initialData: SeedData = {
             ],
             "price": 12500,
             "slug": "choker-pet-correa",
-            "type": "chookers",
+            "type": "chokers",
             "tags": ["choker", "regulable", "correa", "a medida", "negro", "bordó"],
             "title": "Choker Pet + Correa",
             "category": "chokers",

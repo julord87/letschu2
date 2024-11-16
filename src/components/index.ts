@@ -17,6 +17,7 @@ export * from './product/color-selector/ColorSelector';
 export * from './product/quantity-selector/QuantitySelector';
 export * from './product/slideshow/ProductSlideshow';
 export * from './product/slideshow/ProductMobileSlideshow';
+export * from './product/product-image/ProductImage';
 
 export * from "./products/product-grid/ProductGrid";
 export * from "./products/product-grid/ProductGridItem";
