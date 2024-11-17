@@ -1,11 +1,16 @@
 "use client";
 
-import { Category, Product, ProductImage as ProductWithImage, Type } from "@/interfaces";
+import {
+  Category,
+  Product,
+  ProductImage as ProductWithImage,
+  Type,
+} from "@/interfaces";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import clsx from "clsx";
-import { createUpdateProduct } from "@/actions";
-import React from "react";
+import { createUpdateProduct, deleteProductImage } from "@/actions";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ProductImage } from "@/components";
 
@@ -52,8 +57,9 @@ const colors = [
 ];
 
 export const ProductForm = ({ product, categories, types }: Props) => {
-
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
   const {
     handleSubmit,
@@ -120,6 +126,9 @@ export const ProductForm = ({ product, categories, types }: Props) => {
   };
 
   const onSubmit = async (data: FormInputs) => {
+    setIsSubmitting(true);
+    setFeedbackMessage(null);
+
     const formData = new FormData();
 
     const { images, ...productToSave } = data;
@@ -133,21 +142,23 @@ export const ProductForm = ({ product, categories, types }: Props) => {
     formData.append("categoryId", productToSave.categoryId);
     formData.append("typeId", productToSave.typeId);
 
-    if( images ) {
-      for( let i = 0; i < images.length; i++ ) {
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
         formData.append("images", images[i]);
       }
     }
 
     const response = await createUpdateProduct(formData);
     const ok = response?.ok ?? false;
+    setIsSubmitting(false);
 
-    if( !ok ) {
-      alert('Error al guardar el producto');
+    if (!ok) {
+      setFeedbackMessage("Error al guardar el producto. Intente nuevamente.");
       return;
     }
 
-    router.replace(`/product/${productToSave.slug}`);
+    setFeedbackMessage("Producto guardado con éxito");
+    setTimeout(() => router.push(`/product/${productToSave.slug}`), 2000);
   };
 
   return (
@@ -157,24 +168,24 @@ export const ProductForm = ({ product, categories, types }: Props) => {
     >
       {/* Textos */}
       <div className="w-full">
-      <div className="flex flex-col mb-2">
-        <span>Título</span>
-        <input
-          type="text"
-          className="p-2 border rounded-md bg-gray-200"
-          {...register("title", { required: true })}
-        />
-      </div>
+        <div className="flex flex-col mb-2">
+          <span>Título</span>
+          <input
+            type="text"
+            className="p-2 border rounded-md bg-gray-200"
+            {...register("title", { required: true })}
+          />
+        </div>
 
-      <div className="flex flex-col mb-2">
-        <span>Slug</span>
-        <input
-          type="text"
-          className="p-2 border rounded-md bg-gray-200"
-          disabled // Hace que el campo no sea editable
-          {...register("slug", { required: true })}
-        />
-      </div>
+        <div className="flex flex-col mb-2">
+          <span>Slug</span>
+          <input
+            type="text"
+            className="p-2 border rounded-md bg-gray-200"
+            disabled // Hace que el campo no sea editable
+            {...register("slug", { required: true })}
+          />
+        </div>
 
         <div className="flex flex-col mb-2">
           <span>Descripción</span>
@@ -270,7 +281,7 @@ export const ProductForm = ({ product, categories, types }: Props) => {
             <span>Imagenes</span>
             <input
               type="file"
-              { ...register("images") }
+              {...register("images")}
               multiple
               className="p-2 border rounded-md bg-gray-200"
               accept="image/png, image/jpeg, image/webp, image/avif"
@@ -291,7 +302,7 @@ export const ProductForm = ({ product, categories, types }: Props) => {
                 <button
                   type="button"
                   className="btn-danger rounded-b-xl md:w-full"
-                  onClick={() => console.log(image.id)}
+                  onClick={() => deleteProductImage(image.id, image.url)}
                 >
                   Eliminar
                 </button>
@@ -301,7 +312,27 @@ export const ProductForm = ({ product, categories, types }: Props) => {
         </div>
       </div>
 
-      <button className="btn-primary w-full">Guardar</button>
+      <button
+        type="submit"
+        className={clsx("btn-primary w-full", {
+          "opacity-50 cursor-not-allowed": isSubmitting,
+        })}
+        disabled={isSubmitting || feedbackMessage?.includes("éxito")}
+        style={{ display: feedbackMessage ? "none" : "block" }} // Oculta el botón si hay feedback
+      >
+        {isSubmitting ? "Guardando..." : "Guardar"}
+      </button>
+
+      {feedbackMessage && (
+        <div
+          className={clsx("w-full p-2 text-center rounded-md", {
+            "bg-green-600 text-white": feedbackMessage.includes("éxito"),
+            "bg-red-600 text-white": feedbackMessage.includes("Error"),
+          })}
+        >
+          {feedbackMessage}
+        </div>
+      )}
     </form>
   );
 };
