@@ -2,11 +2,8 @@ import { getOrderById } from "@/actions";
 import { OrderStatus, PayPalButton } from "@/components";
 import Title from "@/components/ui/title/Title";
 import { currencyFormat } from "@/helpers/currencyFormat";
-import { initialData } from "@/seed/seed";
-import clsx from "clsx";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { IoCardOutline } from "react-icons/io5";
 
 interface Props {
   params: {

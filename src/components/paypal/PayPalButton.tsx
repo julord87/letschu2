@@ -1,8 +1,9 @@
 "use client";
 
-import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { PayPalButtons, usePayPalScriptReducer, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { CreateOrderActions, CreateOrderData, OnApproveActions, OnApproveData } from "@paypal/paypal-js";
 import { payPalCheckPayment, setTransactionId } from "@/actions";
+import { constants } from "os";
 
 interface Props {
   orderId: string;
@@ -30,8 +31,8 @@ export const PayPalButton = ({orderId, amount}: Props) => {
         {
           invoice_id: orderId,
           amount: {
-            currency_code: "USD", // Aquí defines la moneda como ARS
-            value: `${roundedAmount}` // El valor en ARS que has calculado
+            currency_code: "USD",
+            value: `${roundedAmount}`
           }
         }
       ],
@@ -59,12 +60,23 @@ export const PayPalButton = ({orderId, amount}: Props) => {
   }
   
 
-  return (
-    <div className="relative z-0">
-      <PayPalButtons 
-        createOrder={ createOrder }
-        onApprove={ onApprove }
-      />
-    </div>
-  )
-}
+    return (
+      <div className="relative z-0">
+        <PayPalButtons 
+          createOrder={ createOrder }
+          onApprove={ onApprove }
+        />
+      </div>
+    )
+  }
+  
+  export default function App() {
+    return (
+      <div style={{ maxWidth: "750px", minHeight: "200px" }}>
+        <PayPalScriptProvider options={{ clientId: "test", components: "buttons", currency: "ARS" }}>
+          <PayPalButtons />
+        </PayPalScriptProvider>
+      </div>
+    );
+  }
+
