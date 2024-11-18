@@ -1,10 +1,16 @@
 "use server";
 
+import { currencyFormat } from "@/helpers/currencyFormat";
 import prisma from "@/lib/prisma";
 import nodemailer from "nodemailer";
 import path from "path";
 
 export const sendOrderConfirmationEmail = async (orderId: string) => {
+
+  const colorNameFormater = (color: string): string => {
+    return color.replace(/_/g, ' ');
+  };
+
   try {
     const order = await prisma.order.findUnique({
       where: { id: orderId },
@@ -42,7 +48,7 @@ export const sendOrderConfirmationEmail = async (orderId: string) => {
     const itemsHtml = order.OrderItem.map(
       (item) => `
         <tr>
-          <td>${item.product.title}</td>
+          <td>${item.product.title} - ${colorNameFormater(item.color)}</td>
           <td>${item.quantity}</td>
           <td>${item.price}</td>
           <td>${item.quantity * item.price}</td>
@@ -67,10 +73,11 @@ export const sendOrderConfirmationEmail = async (orderId: string) => {
           ${itemsHtml}
         </tbody>
       </table>
-      <h3>Total: ${order.total}</h3>
+      <h3>Total: $${currencyFormat(order.total)}</h3>
       <p>Dirección de envío:</p>
-      <p>${order} ${address?.firstName}</p>
       <p>${address?.address}, ${address?.city}, ${address?.countryId}</p>
+      <p>Código postal: ${address?.zip}</p>
+      <p>A nombre de: ${address?.firstName} ${address?.lastName}</p>
       <p>Teléfono: ${address?.phone}</p>
       <br/>
         <p>Si realizaste una compra con envio incluído, enviaremos un correo con el enlace de seguimiento en los próximos días. Si no recibiste el correo, revisa tu bandeja de spam.</p>
@@ -93,6 +100,43 @@ export const sendOrderConfirmationEmail = async (orderId: string) => {
         },
       ],
     });
+
+        // Generar HTML del correo para el administrador
+        const htmlAdmin = `
+        <h1>Notificación de nuevo pago recibido</h1>
+        <p>Se ha recibido un nuevo pago de la orden #${orderId.split("-")[0]}.</p>
+        <h2>Detalles del comprador:</h2>
+        <p>Nombre: ${user.name}</p>
+        <p>Correo: ${user.email}</p>
+        <h2>Detalles de la orden:</h2>
+        <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${itemsHtml}
+          </tbody>
+        </table>
+        <h3>Total: ${currencyFormat(order.total)}</h3>
+        <p>Dirección de envío:</p>
+        <p>${address?.address}, ${address?.city}, ${address?.countryId}</p>
+        <p>Código postal: ${address?.zip}</p>
+        <p>A nombre de: ${address?.firstName} ${address?.lastName}</p>
+        <p>Teléfono: ${address?.phone}</p>
+      `;
+  
+      // Enviar correo al dueño del ecommerce
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_USER, // Correo del administrador
+        subject: "Nuevo pago recibido",
+        html: htmlAdmin,
+      });
 
     // Actualizar la orden después de enviar el correo
     await prisma.order.update({
