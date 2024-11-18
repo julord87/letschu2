@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 import nodemailer from "nodemailer";
 import { randomUUID } from "crypto";
+import path from "path";
 
 export const sendResetEmail = async (
   state: { ok: boolean; message?: string } | undefined,
@@ -37,7 +38,17 @@ export const sendResetEmail = async (
       to: email,
       subject: "Recuperación de contraseña",
       html: `<p>Haz clic en el enlace para resetear tu contraseña:</p>
-      <a href="${resetLink}">${resetLink}</a>`,
+      <a href="${resetLink}">${resetLink}</a>
+      <br/><br/>
+      <img src="cid:logo" alt="Logo" style="width: 150px; height: auto;" />`,
+
+      attachments: [
+        {
+          filename: "logo.png",
+          path: path.join(process.cwd(), "public/imgs/logo.png"),
+          cid: "logo", // CID debe coincidir con el valor en el atributo src del HTML
+        },
+      ],
     });
 
     return { ok: true, message: "Correo enviado con éxito" };

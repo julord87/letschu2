@@ -3,8 +3,11 @@
 import { useFormState, useFormStatus } from "react-dom";
 import { resetPassword } from "@/actions";
 import clsx from "clsx";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export const ResetPasswordForm = ({ token }: { token: string }) => {
+  const router = useRouter();
   const [state, dispatch] = useFormState(resetPassword, undefined);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -19,6 +22,15 @@ export const ResetPasswordForm = ({ token }: { token: string }) => {
     dispatch({ token, password });
   };
 
+  useEffect(() => {
+    if (state?.ok) {
+      const timer = setTimeout(() => {
+        router.push("/auth/login");
+      }, 2000); // Redirigir después de 2 segundos
+      return () => clearTimeout(timer); // Limpiar timeout si el componente se desmonta
+    }
+  }, [state?.ok, router]);
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col">
       <label htmlFor="password">Nueva contraseña</label>
@@ -30,14 +42,16 @@ export const ResetPasswordForm = ({ token }: { token: string }) => {
         required
       />
 
-      {state?.ok && (
-        <p className="text-sm text-green-500">
-          ¡Contraseña restablecida! Ahora puedes iniciar sesión.
+      {state?.ok === true &&
+        <p className="text-sm text-green-500 mb-2">
+          Pasword reestablecido! Ahora serás redirigido al login.
         </p>
-      )}
+      }
 
-      {state?.message && (
-        <p className="text-sm text-red-500">{state.message}</p>
+      {state?.ok === false && (
+        <p className="text-sm text-red-500 mb-2">
+          No se pudo reestablecer la contraseña. {state.message}
+        </p>
       )}
 
       <button

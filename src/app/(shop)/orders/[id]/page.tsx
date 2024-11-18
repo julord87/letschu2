@@ -1,4 +1,4 @@
-import { getOrderById } from "@/actions";
+import { getOrderById, sendOrderConfirmationEmail } from "@/actions";
 import { OrderStatus, PayPalButton } from "@/components";
 import Title from "@/components/ui/title/Title";
 import { currencyFormat } from "@/helpers/currencyFormat";
@@ -15,12 +15,14 @@ export default async function OrdersByIdPage({ params }: Props) {
 
   const { id } = params;
 
-  // Todo: Llamar el server action
-
   const { ok, order } = await getOrderById(id);
 
   if (!ok) {
     redirect("/");
+  }
+
+  if(order?.isPaid) {
+    await sendOrderConfirmationEmail(order!.id);
   }
 
   const address = order!.OrderAddress;
