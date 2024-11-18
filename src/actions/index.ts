@@ -6,6 +6,8 @@ export { getUserAdddress } from './address/get-user-address'
 export { authenticate, login } from './auth/login'
 export { logout } from './auth/logout'
 export { registerUser } from './auth/register'
+export { sendResetEmail } from './auth/send-reset-email'
+export { resetPassword } from './auth/reset-password'
 
 export { getCountries } from './country/get-countries'
 

@@ -50,6 +50,10 @@ export const LoginForm = () => {
 
       <LoginButton />
 
+      <Link href="/auth/forgot-password" className="btn-secondary text-center text-sm mt-2">
+        Olvidaste tu contraseña?
+      </Link>
+
       {/* divisor l ine */}
       <div className="flex items-center my-5">
         <div className="flex-1 border-t border-gray-500"></div>
