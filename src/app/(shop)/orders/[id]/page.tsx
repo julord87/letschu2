@@ -1,4 +1,4 @@
-import { getOrderById, sendOrderConfirmationEmail } from "@/actions";
+import { convertToUSD, getOrderById, sendOrderConfirmationEmail } from "@/actions";
 import { OrderStatus, PayPalButton } from "@/components";
 import Title from "@/components/ui/title/Title";
 import { currencyFormat } from "@/helpers/currencyFormat";
@@ -26,6 +26,21 @@ export default async function OrdersByIdPage({ params }: Props) {
   }
 
   const address = order!.OrderAddress;
+
+  // Convertir el monto total a USD
+  let convertedAmount: number | null = null;
+  let conversionError = null;
+
+  try {
+    const USDOrderResult = await convertToUSD(order!.total);
+    if (USDOrderResult.ok) {
+      convertedAmount = USDOrderResult.convertedAmount ?? null;
+    } else {
+      conversionError = USDOrderResult.message;
+    }
+  } catch (error) {
+    conversionError = "Error inesperado al convertir el monto. Inténtalo más tarde.";
+  }
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
@@ -73,10 +88,6 @@ export default async function OrdersByIdPage({ params }: Props) {
             ))}
           </div>
 
-
-
-
-
           {/* Checkout - Resumen de orden*/}
           <div className="bg-white rounded-xl shadow-xl p-7">
 
@@ -117,19 +128,17 @@ export default async function OrdersByIdPage({ params }: Props) {
             </div>
 
             <div className="mt-5 mb-2 w-full">
-
-              {
-                order?.isPaid ? (
-                  <OrderStatus isPaid={order?.isPaid ?? false} />
-                ) : (
-                  <PayPalButton
-                    amount={order!.total}
-                    orderId={order!.id}
-                  />
-                )
-              }
-
+              {order?.isPaid ? (
+                <OrderStatus isPaid={order?.isPaid ?? false} />
+              ) : conversionError ? (
+                // Mostrar mensaje de error si la conversión falla
+                <p className="text-red-500 text-center">{conversionError}</p>
+              ) : (
+                // Renderizar PayPalButton con el monto convertido
+                <PayPalButton amount={convertedAmount!} orderId={order!.id} />
+              )}
             </div>
+
           </div>
 
         </div>

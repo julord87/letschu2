@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","src/**/*.ts", "src/**/*.d.ts", "src/actions/payments/currency-converter-lt.js", "src/actions/payments/currency-converter-lt.js"],
   "exclude": ["node_modules"]
 }

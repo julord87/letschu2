@@ -1,3 +1,4 @@
+import { convertToUSD } from './payments/currency-converter-lt';
 
 export { setUserAddress } from './address/set-user-address'
 export { deleteUserAddress } from './address/delete-user-address'
@@ -20,10 +21,10 @@ export { sendOrderConfirmationEmail } from './order/send-order-confirmation-emai
 export { getAllPaginatedProductsWithImages } from './products/product-pagination'
 export { getProductBySlug } from './products/get-product-by-slug'
 export { createUpdateProduct } from './products/create-update-product'
-export { deleteProductImage } from './products/delete-product-image'
 
 export { setTransactionId } from './payments/set-transaction-id'
 export { payPalCheckPayment } from './payments/paypal-check-payment'
+export { convertToUSD } from './payments/currency-converter-lt'
 
 export { getPaginatedUsers } from './users/get-paginated-users'
 export { changeUserRole } from './users/change-user-role'
