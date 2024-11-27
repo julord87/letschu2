@@ -1,4 +1,9 @@
-import { convertToUSD, getOrderById, sendOrderConfirmationEmail } from "@/actions";
+import {
+  calculateShippingCost,
+  convertToUSD,
+  getOrderById,
+  sendOrderConfirmationEmail,
+} from "@/actions";
 import { OrderStatus, PayPalButton } from "@/components";
 import Title from "@/components/ui/title/Title";
 import { currencyFormat } from "@/helpers/currencyFormat";
@@ -7,55 +12,56 @@ import { redirect } from "next/navigation";
 
 interface Props {
   params: {
-    id: string
-  }
+    id: string;
+  };
 }
 
 export default async function OrdersByIdPage({ params }: Props) {
-
   const { id } = params;
-
   const { ok, order } = await getOrderById(id);
 
-  if (!ok) {
+  if (!ok || !order) {
     redirect("/");
+    return null;
   }
 
-  if(order?.isPaid) {
-    await sendOrderConfirmationEmail(order!.id);
+  if (order.isPaid) {
+    await sendOrderConfirmationEmail(order.id);
   }
 
   const address = order!.OrderAddress;
-
-  // Convertir el monto total a USD
   let convertedAmount: number | null = null;
   let conversionError = null;
 
   try {
-    const USDOrderResult = await convertToUSD(order!.total);
+    const USDOrderResult = await convertToUSD(order.total);
     if (USDOrderResult.ok) {
       convertedAmount = USDOrderResult.convertedAmount ?? null;
     } else {
       conversionError = USDOrderResult.message;
     }
-  } catch (error) {
-    conversionError = "Error inesperado al convertir el monto. Inténtalo más tarde.";
+  } catch {
+    conversionError = "Error inesperado al convertir el monto.";
   }
+
+  const validShippingMethod =
+  order.shippingMethod === "argentina" ||
+  order.shippingMethod === "international" ||
+  order.shippingMethod === "showroom"
+    ? order.shippingMethod
+    : "argentina";
+  const shippingCost = await calculateShippingCost(validShippingMethod);
+  const totalWithShipping = order.total + shippingCost;
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
       <div className="flex flex-col w-[1000px]">
-        
-        <Title 
-          title={`Orden #${id.split("-")[0]}`}
-        />
+        <Title title={`Orden #${id.split("-")[0]}`} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           {/* Carrito */}
           <div className="flex flex-col mt-5">
-
-          <OrderStatus isPaid={order?.isPaid ?? false} />
-        
+            <OrderStatus isPaid={order?.isPaid ?? false} />
 
             {/* Items */}
             {order!.OrderItem.map((item) => (
@@ -90,7 +96,6 @@ export default async function OrdersByIdPage({ params }: Props) {
 
           {/* Checkout - Resumen de orden*/}
           <div className="bg-white rounded-xl shadow-xl p-7">
-
             <h2 className="text-2xl mb-2 font-bold">Dirección de entrega</h2>
             <div className="mb-10">
               <p className="text-xl">
@@ -106,9 +111,7 @@ export default async function OrdersByIdPage({ params }: Props) {
             </div>
 
             {/* Divider */}
-            <div className="w-full h-[1px] bg-gray-200 rounded mb-10">
-
-            </div>
+            <div className="w-full h-[1px] bg-gray-200 rounded mb-10"></div>
 
             <h2 className="text-2xl mb-2 font-bold">Resumen de orden</h2>
 
@@ -121,10 +124,16 @@ export default async function OrdersByIdPage({ params }: Props) {
               </span>
 
               <span>Subtotal</span>
-              <span className="text-right">{currencyFormat(order!.subtotal)}</span>
+              <span className="text-right">{currencyFormat(order!.total)}</span>
 
-              <span className="text-2xl mt-5 font-semibold">Total</span>
-              <span className="text-2xl mt-5 text-right font-semibold">{currencyFormat(order!.total)}</span>
+              <div className="summary">
+                <p>Total: {currencyFormat(totalWithShipping)}</p>
+                <p>Costo de envío: {order.shippingCost ? currencyFormat(order.shippingCost) : "Gratis"}</p>
+                <p>Método de envío: {order.shippingMethod}</p>
+                {order.shippingMethod === "showroom" && (
+                  <p>Dirección: Piedras 325, 4to 3, San Telmo</p>
+                )}
+              </div>
             </div>
 
             <div className="mt-5 mb-2 w-full">
@@ -138,11 +147,8 @@ export default async function OrdersByIdPage({ params }: Props) {
                 <PayPalButton amount={convertedAmount!} orderId={order!.id} />
               )}
             </div>
-
           </div>
-
         </div>
-        
       </div>
     </div>
   );

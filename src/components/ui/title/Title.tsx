@@ -16,7 +16,7 @@ export default function Title({ title, subtitle, classname }: Props) {
           alt="logo"
           width={250}
           height={250}
-          className="inline-block cursor-pointer"
+          className="inline-block cursor-pointer my-4"
         />
       </a>
       

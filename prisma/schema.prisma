@@ -75,14 +75,14 @@ model ProductImage {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  name          String
-  email         String    @unique
-  emailverified DateTime?
-  password      String
-  role          Role      @default(user)
-  image         String?
-  resetToken    String?
+  id               String    @id @default(uuid())
+  name             String
+  email            String    @unique
+  emailverified    DateTime?
+  password         String
+  role             Role      @default(user)
+  image            String?
+  resetToken       String?
   resetTokenExpiry DateTime?
 
   // Relations
@@ -119,19 +119,21 @@ model UserAddress {
 
 // Orden de compras
 model Order {
-  id           String    @id @default(uuid())
-  itemsInOrder Int
-  subtotal     Float
-  total        Float
-  isPaid       Boolean  @default(false)
-  paidAt       DateTime?
-  confirmationEmailSent Boolean @default(false)
+  id                    String    @id @default(uuid())
+  itemsInOrder          Int
+  subtotal              Float
+  total                 Float
+  isPaid                Boolean   @default(false)
+  paidAt                DateTime?
+  confirmationEmailSent Boolean   @default(false)
+  shippingMethod String   @default("showroom")
+  shippingCost          Float     @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
-  user         User           @relation(fields: [userId], references: [id])
+  user         User          @relation(fields: [userId], references: [id])
   userId       String
   OrderItem    OrderItem[]
   OrderAddress OrderAddress?
@@ -154,14 +156,14 @@ model OrderItem {
 }
 
 model OrderAddress {
-  id         String  @id @default(uuid())
-  firstName  String
-  lastName   String
-  address    String
-  address2   String?
-  zip        String
-  city       String
-  phone      String
+  id        String  @id @default(uuid())
+  firstName String
+  lastName  String
+  address   String
+  address2  String?
+  zip       String
+  city      String
+  phone     String
 
   // Relaciones
   country   Country @relation(fields: [countryId], references: [id])

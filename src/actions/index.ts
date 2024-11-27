@@ -1,4 +1,4 @@
-import { convertToUSD } from './payments/currency-converter-lt';
+
 
 export { setUserAddress } from './address/set-user-address'
 export { deleteUserAddress } from './address/delete-user-address'
@@ -32,3 +32,5 @@ export { changeUserRole } from './users/change-user-role'
 export { getCategories } from './categories/get-categories'
 
 export { getTypes } from './typeses/get-types'
+
+export { calculateShippingCost } from './shipping/calculate-shipping-cost'

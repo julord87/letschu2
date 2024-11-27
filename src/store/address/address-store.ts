@@ -30,6 +30,7 @@ export const useAddressStore = create<State>()(
         city: "",
         country: "",
         phone: "",
+        shippingMethod: "",
       },
 
       //Methods
