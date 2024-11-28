@@ -16,6 +16,7 @@ export const placeOrder = async (
   address: Address,
   shippingMethod: "argentina" | "international" | "showroom"
 ) => {
+  console.log("placeOrder called with:", { productIds, address, shippingMethod });
   const session = await auth();
   const userId = session?.user.id;
 
@@ -64,56 +65,62 @@ export const placeOrder = async (
   const total = subTotal + shippingCost;
 
   // Transacción en Prisma
-  const prismaTx = await prisma.$transaction(async (tx) => {
-    const order = await tx.order.create({
-      data: {
-        userId,
-        subtotal: subTotal,
-        total,
-        itemsInOrder,
-        shippingMethod,
-        shippingCost,
-        OrderItem: {
-          createMany: {
-            data: productIds.map((p) => ({
-              quantity: p.quantity,
-              color: p.color,
-              productId: p.productId,
-              price: products.find((pr) => pr.id === p.productId)?.price ?? 0,
-            })),
+  try {
+    const prismaTx = await prisma.$transaction(async (tx) => {
+      const order = await tx.order.create({
+        data: {
+          userId,
+          subtotal: subTotal,
+          total,
+          itemsInOrder,
+          shippingMethod,
+          shippingCost,
+          OrderItem: {
+            createMany: {
+              data: productIds.map((p) => ({
+                quantity: p.quantity,
+                color: p.color,
+                productId: p.productId,
+                price: products.find((pr) => pr.id === p.productId)?.price ?? 0,
+              })),
+            },
           },
         },
-      },
+      });
+  
+      
+      const orderAddress = await tx.orderAddress.create({
+        data: {
+          address: address.address,
+          address2: address.address2,
+          city: address.city,
+          countryId: address.country,
+          firstName: address.firstName,
+          lastName: address.lastName,
+          zip: address.zip,
+          phone: address.phone,
+          orderId: order.id,
+        },
+      });
+  
+      return {
+        order,
+        orderAddress,
+      };
     });
-
-    const orderAddress = await tx.orderAddress.create({
-      data: {
-        address: address.address,
-        address2: address.address2,
-        city: address.city,
-        countryId: address.country,
-        firstName: address.firstName,
-        lastName: address.lastName,
-        zip: address.zip,
-        phone: address.phone,
-        orderId: order.id,
-      },
-    });
-
+  
     return {
-      order,
-      orderAddress,
+      ok: true,
+      order: prismaTx.order,
+      breakdown: {
+        subtotal: subTotal,
+        shippingCost,
+        total,
+      },
+      prismaTx,
     };
-  });
-
-  return {
-    ok: true,
-    order: prismaTx.order,
-    breakdown: {
-      subtotal: subTotal,
-      shippingCost,
-      total,
-    },
-    prismaTx,
-  };
-};
+  } catch (error) {
+    console.error("Error en Prisma transaction:", error);
+    return { ok: false, message: "Error interno al procesar la orden." };
+  }
+}

@@ -7,51 +7,50 @@ import clsx from "clsx";
 import { placeOrder } from "@/actions";
 import { useAddressStore, useCartStore } from "@/store";
 import { currencyFormat } from "@/helpers/currencyFormat";
+import { useShippingMethodStore } from "@/store/shipping/shipping-method-store";
 
 export const PlaceOrder = () => {
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
-  const [shippingMethod, setShippingMethod] = useState("Standard");
-  const [shippingCost, setShippingCost] = useState(500); // Ejemplo: costo fijo o dinámico
 
+  // Datos de la dirección y el carrito
   const address = useAddressStore((state) => state.address);
-
+  const shippingMethod = useShippingMethodStore((state) => state.shippingMethod);
   const { totalItems, subtotal, total } = useCartStore((state) =>
     state.getSummaryInformation()
   );
   const cart = useCartStore((state) => state.cart);
   const clearCart = useCartStore((state) => state.clearCart);
 
+  // Efecto para cargar el estado inicial
   useEffect(() => {
     setLoaded(true);
   }, []);
 
+  // Manejar la acción de realizar la orden
   const onPlaceOrder = async () => {
     setIsPlacingOrder(true);
-    // await sleep(2);
 
+    // Preparar productos para la orden
     const productsToOrder = cart.map((product) => ({
       productId: product.id,
       quantity: product.quantity,
       color: product.color,
     }));
 
-    //! Server Action
-    const resp = await placeOrder(
-      productsToOrder,
-      address,
-      shippingMethod,
-      shippingCost: number
-    );
+    console.log(address);
+
+    // Llamar a la acción del servidor, incluyendo el shippingMethod
+    const resp = await placeOrder(productsToOrder, address, shippingMethod);
     if (!resp.ok) {
       setIsPlacingOrder(false);
       setErrorMessage(resp.message || "An unexpected error occurred");
       return;
     }
 
-    //* Todo salio bien!
+    // Limpiar carrito y redirigir
     clearCart();
     setTimeout(() => {
       router.replace("/orders/" + resp.order?.id);
@@ -70,7 +69,7 @@ export const PlaceOrder = () => {
           {address.firstName} {address.lastName}
         </p>
         <p>{address.address}</p>
-        <p>{address.address2}</p>
+        {address.address2 && <p>{address.address2}</p>}
         <p>
           {address.city}, {address.country}
         </p>
@@ -82,7 +81,6 @@ export const PlaceOrder = () => {
       <div className="w-full h-[1px] bg-gray-200 rounded mb-10"></div>
 
       <h2 className="text-2xl mb-2 font-bold">Resumen de orden</h2>
-
       <div className="grid grid-cols-2">
         <span>No. Productos</span>
         <span className="text-right">{totalItems}</span>
@@ -90,12 +88,9 @@ export const PlaceOrder = () => {
         <span>Subtotal</span>
         <span className="text-right">${currencyFormat(subtotal)}</span>
 
-        <span>Envio</span>
-        <p>Costo de envío: ${currencyFormat(shippingCost)}</p>
-
         <span className="text-lg mt-5 font-semibold">Total</span>
         <span className="text-lg mt-5 text-right font-semibold">
-          ${currencyFormat(subtotal + shippingCost)}
+          ${currencyFormat(total)}
         </span>
       </div>
 
@@ -103,7 +98,7 @@ export const PlaceOrder = () => {
         <p className="mb-5">
           {/* Disclaimer */}
           <span className="text-xs">
-            Al hacer clic en &quot;Realizar pago&quot, aceptas los{" "}
+            Al hacer clic en &quot;Realizar pago&quot;, aceptas los{" "}
             <a href="/terms-and-conditions" className="underline">
               términos y condiciones
             </a>
@@ -118,9 +113,8 @@ export const PlaceOrder = () => {
             "btn-primary": !isPlacingOrder,
             "btn-disabled": isPlacingOrder,
           })}
-          disabled={isPlacingOrder}
         >
-          {isPlacingOrder ? "Procesando..." : "Realizar pago"}
+          Realizar pago
         </button>
       </div>
     </div>

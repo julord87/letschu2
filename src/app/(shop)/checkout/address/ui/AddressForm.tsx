@@ -1,15 +1,16 @@
 "use client";
 
-import { placeOrder } from "@/actions"; // Importamos la función optimizada
 import { Address, Country } from "@/interfaces";
 import { useCartStore } from "@/store";
 import { useAddressStore } from "@/store/address/address-store";
 import { useShippingMethodStore } from "@/store/shipping/shipping-method-store";
+import { placeOrder } from "@/actions";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { redirect, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 type FormInputs = {
   firstName: string;
@@ -30,14 +31,9 @@ interface Props {
 }
 
 export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
-  const { total, totalItems } = useCartStore((state) => state.getSummaryInformation());
-
-  const setShippingMethod = useShippingMethodStore(
-    (state) => state.setShippingMethod
-  );
-  const shippingMethod = useShippingMethodStore(
-    (state) => state.shippingMethod
-  );
+  const { total } = useCartStore((state) => state.getSummaryInformation());
+  const cart = useCartStore((state) => state.cart);
+  const setShippingMethod = useShippingMethodStore((state) => state.setShippingMethod);
 
   const router = useRouter();
 
@@ -63,6 +59,14 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
   const { data: session } = useSession({ required: true });
   const country = watch("country");
 
+  useEffect(() => {
+    if (country === "AR") {
+      setValue("shippingMethod", "argentina");
+    } else if (country) {
+      setValue("shippingMethod", "international");
+    }
+  }, [country, setValue]);
+
   const setAddress = useAddressStore((state) => state.setAddress);
   const storeAddress = useAddressStore((state) => state.address);
 
@@ -72,39 +76,37 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
     }
   }, []);
 
-  // Cambiar método de envío según el país
-  useEffect(() => {
-    if (country === "AR") {
-      setValue("shippingMethod", "argentina");
-    } else if (country) {
-      setValue("shippingMethod", "international");
-    }
-  }, [country, setValue]);
-
   const onSubmit = async (data: FormInputs) => {
     const { rememberAddress, shippingMethod, ...restAddress } = data;
   
     try {
-      setShippingMethod(shippingMethod);
+      // Guardar la dirección en el store
+      setAddress({
+        ...restAddress,
+        shippingMethod, // Aseguramos que este campo también se guarda
+      });
   
-      // `items` viene del carrito
-      const response = await placeOrder(restAddress, shippingMethod);
+      setShippingMethod(shippingMethod); // Establece el método de envío globalmente
+  
+      const productsToOrder = cart.map((product) => ({
+        productId: product.id,
+        quantity: product.quantity,
+        color: product.color,
+      }));
+  
+      const response = await placeOrder(productsToOrder, restAddress, shippingMethod);
   
       if (!response.ok) {
         throw new Error(response.message || "Error al crear la orden.");
       }
   
-      if (rememberAddress && shippingMethod !== "showroom") {
-        // Guardar la dirección (implementación adicional)
-      }
-  
       router.push("/checkout");
     } catch (error) {
-      console.error("Error durante el envío:", error);
-      alert("Hubo un error al procesar tu solicitud. Por favor, intenta nuevamente.");
+      console.error("Error en AddressForm:", error);
+      alert("Hubo un error. Por favor, intenta nuevamente.");
     }
   };
-
+  
   return (
     <>
       <form

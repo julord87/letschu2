@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { AddressForm } from "./ui/AddressForm";
-import { getCountries, getLatestOrder, getUserAdddress } from "@/actions";
+import { getCountries, getUserAdddress } from "@/actions";
 import { auth } from "@/auth.config";
 import { titleFont } from "@/config/fonts";
 import { RetiroEnShowroomButton } from "./ui/RetiroEnShowRoomButton";
@@ -48,7 +48,7 @@ export default async function AddressPage() {
           </h3>
         </span>
 
-        <RetiroEnShowroomButton orderId={"123"} />
+        <RetiroEnShowroomButton />
 
         <h2
           className={`${titleFont.className} capitalize antialiased text-2xl font-semibold mt-7 mb-4`}
