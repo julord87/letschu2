@@ -9,6 +9,8 @@ import Title from "@/components/ui/title/Title";
 import { currencyFormat } from "@/helpers/currencyFormat";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import CopyAddress from "./ui/CopyAddress";
+import { ResumenOrder } from "../../checkout/address/ui/ResumenOrder";
 
 interface Props {
   params: {
@@ -97,35 +99,7 @@ export default async function OrdersByIdPage({ params }: Props) {
           {/* Checkout - Resumen de orden*/}
           <div className="bg-white rounded-xl shadow-xl p-7">
 
-          {order.shippingMethod !== "showroom" ? (
-            <>
-                <h2 className="text-2xl mb-2 font-bold">Dirección de entrega</h2>
-                <div className="mb-3">
-                  <p className="text-xl">
-                    {address!.firstName} {address!.lastName}
-                  </p>
-                  <p>{address!.address}</p>
-                  <p>{address!.address2}</p>
-                  <p>{address!.zip}</p>
-                  <p>
-                    {address!.city}, {address!.countryId}
-                  </p>
-                  <p>{address!.phone}</p>
-                  <p className="mt-2">Método de envío: 
-                    {order.shippingMethod === "argentina" ? " envío a domicilio nacional" : " envío internacional a domicilio"}
-                  </p>
-                </div>
-            </>
-              ) : (
-                <>
-                  <h2 className="text-2xl mb-2 font-bold">Retiro en showroom</h2>
-                  <div className="mb-8">
-                    <p className="text-xl mt-2">Guardá esta dire:</p>
-                    <p>Piedras 325, 4°3 , San Telmo, CABA</p>
-                    <p>Horario de atención: Lunes a Sábados de 10 a 18hs</p>
-                  </div>
-                </>
-          )}
+            {address && <ResumenOrder order={order} address={address} countryId={address.countryId} />}
 
             {/* Divider */}
             <div className="w-full h-[1px] bg-gray-200 rounded mb-8"></div>

@@ -2,18 +2,36 @@
 
 import { useRouter } from "next/navigation";
 import { useShippingMethodStore } from "@/store/shipping/shipping-method-store";
+import { useAddressStore } from "@/store/address/address-store";
 import { useCartStore } from "@/store";
 import { placeOrder } from "@/actions";
+import clsx from "clsx";
 
-export const RetiroEnShowroomButton = () => {
+interface Props {
+    isValid: boolean;
+}
+
+export const RetiroEnShowroomButton = ({ isValid }: Props) => {
   const router = useRouter();
-  const setShippingMethod = useShippingMethodStore(
-    (state) => state.setShippingMethod
-  );
+  const setShippingMethod = useShippingMethodStore((state) => state.setShippingMethod);
   const cart = useCartStore((state) => state.cart);
+  const storeAddress = useAddressStore((state) => state.address);
 
   const handleClick = async () => {
     try {
+      // Verificar que la dirección esté completa
+      if (
+        !storeAddress.firstName ||
+        !storeAddress.lastName ||
+        !storeAddress.address ||
+        !storeAddress.city ||
+        !storeAddress.country ||
+        !storeAddress.zip
+      ) {
+        alert("Por favor, completa todos los datos de envío antes de continuar.");
+        return;
+      }
+
       // Configurar el método de envío
       setShippingMethod("showroom");
 
@@ -24,19 +42,10 @@ export const RetiroEnShowroomButton = () => {
         color: product.color,
       }));
 
-      // Crear la orden
+      // Crear la orden usando la dirección ingresada
       const response = await placeOrder(
         productsToOrder,
-        {
-          address: "Retiro en showroom",
-          address2: undefined, // Opcional
-          city: "Caballito",
-          country: "AR", // ID válido
-          firstName: "Retiro en",
-          lastName: "Showroom",
-          phone: "N/A",
-          zip: "N/A",
-        },
+        storeAddress, // Usar la dirección almacenada
         "showroom"
       );
 
@@ -53,8 +62,15 @@ export const RetiroEnShowroomButton = () => {
   };
 
   return (
-    <button onClick={handleClick} className="btn-primary mb-7 mt-3 max-w-sm">
-      Retirar en showroom
+    <button
+      onClick={handleClick}
+      disabled={!isValid} // Sólo habilitado cuando el formulario es válido
+      className={clsx({
+        "btn-primary flex w-min sm:w-1/2 justify-center": isValid,
+        "btn-disabled flex w-min sm:w-1/2 justify-center cursor-not-allowed": !isValid,
+      })}
+    >
+      Retiro en showroom
     </button>
   );
 };

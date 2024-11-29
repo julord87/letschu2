@@ -63,7 +63,7 @@ export const PlaceOrder = () => {
 
   return (
     <div className="bg-white rounded-xl shadow-xl p-7">
-      <h2 className="text-2xl mb-2 font-bold">Dirección de entrega</h2>
+      <h2 className="text-2xl mb-2 font-bold">Dirección</h2>
       <div className="mb-10">
         <p className="text-xl mb-1">
           {address.firstName} {address.lastName}

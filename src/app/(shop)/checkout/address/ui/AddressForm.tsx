@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { RetiroEnShowroomButton } from "./RetiroEnShowRoomButton";
 
 type FormInputs = {
   firstName: string;
@@ -33,7 +34,9 @@ interface Props {
 export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
   const { total } = useCartStore((state) => state.getSummaryInformation());
   const cart = useCartStore((state) => state.cart);
-  const setShippingMethod = useShippingMethodStore((state) => state.setShippingMethod);
+  const setShippingMethod = useShippingMethodStore(
+    (state) => state.setShippingMethod
+  );
 
   const router = useRouter();
 
@@ -78,35 +81,39 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
 
   const onSubmit = async (data: FormInputs) => {
     const { rememberAddress, shippingMethod, ...restAddress } = data;
-  
+
     try {
       // Guardar la dirección en el store
       setAddress({
         ...restAddress,
         shippingMethod, // Aseguramos que este campo también se guarda
       });
-  
+
       setShippingMethod(shippingMethod); // Establece el método de envío globalmente
-  
+
       const productsToOrder = cart.map((product) => ({
         productId: product.id,
         quantity: product.quantity,
         color: product.color,
       }));
-  
-      const response = await placeOrder(productsToOrder, restAddress, shippingMethod);
-  
+
+      const response = await placeOrder(
+        productsToOrder,
+        restAddress,
+        shippingMethod
+      );
+
       if (!response.ok) {
         throw new Error(response.message || "Error al crear la orden.");
       }
-  
+
       router.push("/checkout");
     } catch (error) {
       console.error("Error en AddressForm:", error);
       alert("Hubo un error. Por favor, intenta nuevamente.");
     }
   };
-  
+
   return (
     <>
       <form
@@ -235,16 +242,21 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
 
         <div className="flex flex-col mb-2"></div>
 
-        <button
-          disabled={!isValid}
-          type="submit"
-          className={clsx({
-            "btn-primary flex w-full sm:w-1/2 justify-center": isValid,
-            "btn-disabled cursor-not-allowed": !isValid,
-          })}
-        >
-          Siguiente
-        </button>
+        <div className="flex space-x-2">
+          <button
+            disabled={!isValid}
+            type="submit"
+            className={clsx({
+              "btn-primary flex w-min sm:w-1/2 justify-center": isValid,
+              "btn-disabled flex w-min sm:w-1/2 justify-center cursor-not-allowed":
+                !isValid,
+            })}
+          >
+            Envío a domicilio
+          </button>
+
+          <RetiroEnShowroomButton isValid={isValid} />
+        </div>
       </form>
     </>
   );

@@ -35,33 +35,18 @@ export default async function AddressPage() {
           Opciones de envio y retiro
         </h1>
 
-        <h2
-          className={`${titleFont.className} capitalize antialiased text-2xl font-semibold mt-7 mb-4`}
-        >
-          Retirar en showroom
-        </h2>
-
         <span>
           {" "}
           <h3 className="text-lg mb-6">
-            Retirá en nuestro showroom de San Telmo, CABA.
+            Completá el formulario con tu dirección y luego podrás elegir entre envío a domicilio o retiro en nuestro showroom de San Telmo, CABA.
           </h3>
         </span>
-
-        <RetiroEnShowroomButton />
 
         <h2
           className={`${titleFont.className} capitalize antialiased text-2xl font-semibold mt-7 mb-4`}
         >
-          Envío a domicilio
+          Dirección
         </h2>
-
-        <span>
-          {" "}
-          <h3 className="text-lg mb-6">
-            Completá los datos de entrega para realizar el envío!
-          </h3>
-        </span>
 
         <AddressForm countries={countries} userStoredAddress={userAddress} />
       </div>
