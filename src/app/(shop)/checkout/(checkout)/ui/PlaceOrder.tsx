@@ -17,7 +17,12 @@ export const PlaceOrder = () => {
 
   // Datos de la dirección y el carrito
   const address = useAddressStore((state) => state.address);
-  const shippingMethod = useShippingMethodStore((state) => state.shippingMethod);
+  const shippingMethod = useShippingMethodStore(
+    (state) => state.shippingMethod
+  );
+
+  console.log("shippingMethod", shippingMethod);
+
   const { totalItems, subtotal, total } = useCartStore((state) =>
     state.getSummaryInformation()
   );
@@ -64,7 +69,7 @@ export const PlaceOrder = () => {
   return (
     <div className="bg-white rounded-xl shadow-xl p-7">
       <h2 className="text-2xl mb-2 font-bold">Dirección</h2>
-      <div className="mb-10">
+      <div className="mb-4">
         <p className="text-xl mb-1">
           {address.firstName} {address.lastName}
         </p>
@@ -76,6 +81,15 @@ export const PlaceOrder = () => {
         <p>{address.zip}</p>
         <p>{address.phone}</p>
       </div>
+
+      <p className="mb-5 font-semibold">
+        Método de envío: 
+        {shippingMethod === "showroom"
+          ? " retiro en showroom"
+          : shippingMethod === "argentina"
+          ? " envío a domicilio nacional"
+          : " envío internacional a domicilio"}
+      </p>
 
       {/* Divider */}
       <div className="w-full h-[1px] bg-gray-200 rounded mb-10"></div>

@@ -6,12 +6,15 @@ import { useAddressStore } from "@/store/address/address-store";
 import { useCartStore } from "@/store";
 import { placeOrder } from "@/actions";
 import clsx from "clsx";
+import { UseFormSetValue } from "react-hook-form";
+import { FormInputs } from "./AddressForm";
 
 interface Props {
     isValid: boolean;
-}
+    setValue: UseFormSetValue<FormInputs>; // Ajustar el tipo al de React Hook Form
+  }
 
-export const RetiroEnShowroomButton = ({ isValid }: Props) => {
+export const RetiroEnShowroomButton = ({ isValid, setValue }: Props) => {
   const router = useRouter();
   const setShippingMethod = useShippingMethodStore((state) => state.setShippingMethod);
   const cart = useCartStore((state) => state.cart);
@@ -34,6 +37,7 @@ export const RetiroEnShowroomButton = ({ isValid }: Props) => {
 
       // Configurar el método de envío
       setShippingMethod("showroom");
+      setValue("shippingMethod", "showroom"); // Esto ahora estará tipado correctamente
 
       // Preparar productos para la orden
       const productsToOrder = cart.map((product) => ({

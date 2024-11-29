@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { RetiroEnShowroomButton } from "./RetiroEnShowRoomButton";
 
-type FormInputs = {
+export type FormInputs = {
   firstName: string;
   lastName: string;
   address: string;
@@ -34,6 +34,7 @@ interface Props {
 export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
   const { total } = useCartStore((state) => state.getSummaryInformation());
   const cart = useCartStore((state) => state.cart);
+  const shippingMethod = useShippingMethodStore((state) => state.shippingMethod);
   const setShippingMethod = useShippingMethodStore(
     (state) => state.setShippingMethod
   );
@@ -69,6 +70,13 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
       setValue("shippingMethod", "international");
     }
   }, [country, setValue]);
+
+  useEffect(() => {
+    // Sincroniza el store con el valor del formulario
+    if (shippingMethod) {
+      setValue("shippingMethod", shippingMethod);
+    }
+  }, [shippingMethod, setValue]);
 
   const setAddress = useAddressStore((state) => state.setAddress);
   const storeAddress = useAddressStore((state) => state.address);
@@ -255,7 +263,7 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
             Envío a domicilio
           </button>
 
-          <RetiroEnShowroomButton isValid={isValid} />
+          <RetiroEnShowroomButton isValid={isValid} setValue={setValue} />
         </div>
       </form>
     </>
