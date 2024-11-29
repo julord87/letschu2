@@ -21,8 +21,6 @@ export const PlaceOrder = () => {
     (state) => state.shippingMethod
   );
 
-  console.log("shippingMethod", shippingMethod);
-
   const { totalItems, subtotal, total } = useCartStore((state) =>
     state.getSummaryInformation()
   );
