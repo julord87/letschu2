@@ -99,6 +99,15 @@ model Country {
   OrderAddress OrderAddress[]
 }
 
+model ProvinceArg {
+  id   String @id
+  name String
+
+  // Relations
+  UserAddress  UserAddress[]
+  OrderAddress OrderAddress[]
+}
+
 model UserAddress {
   id        String @id @default(uuid())
   firstName String
@@ -112,6 +121,9 @@ model UserAddress {
   // Relations
   country   Country @relation(fields: [countryId], references: [id])
   countryId String
+
+  province   ProvinceArg @relation(fields: [provinceId], references: [id])
+  provinceId String
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique
@@ -165,9 +177,11 @@ model OrderAddress {
   city      String
   phone     String
 
-  // Relaciones
   country   Country @relation(fields: [countryId], references: [id])
   countryId String
+
+  province   ProvinceArg? @relation(fields: [provinceId], references: [id]) // <- Hacer opcional
+  provinceId String?
 
   Order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique

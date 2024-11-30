@@ -1,6 +1,7 @@
 import { initialData } from "./seed";
 import prisma from "../lib/prisma";
 import { countries } from './seed-countries';
+import { argProvinces } from "./seed-provincias-arg";
 
 
 async function main() {
@@ -30,6 +31,11 @@ async function main() {
     // Countries
     await prisma.country.createMany({
         data: countries
+    })
+
+    // Arg Provinces
+    await prisma.provinceArg.createMany({
+        data: argProvinces
     })
 
     // Categories
