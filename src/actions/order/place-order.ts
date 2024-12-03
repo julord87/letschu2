@@ -95,6 +95,7 @@ export const placeOrder = async (
           address2: address.address2,
           city: address.city,
           countryId: address.country,
+          provinceId: address.province,
           firstName: address.firstName,
           lastName: address.lastName,
           zip: address.zip,

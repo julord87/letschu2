@@ -79,46 +79,46 @@ export const PlaceOrder = () => {
         <p>{address.zip}</p>
         <p>{address.phone}</p>
       </div>
-
+  
       <p className="mb-5 font-semibold">
-        Método de envío: 
+        Método de envío:
         {shippingMethod === "showroom"
           ? " retiro en showroom"
           : shippingMethod === "argentina"
           ? " envío a domicilio nacional"
           : " envío internacional a domicilio"}
       </p>
-
+  
       {/* Divider */}
       <div className="w-full h-[1px] bg-gray-200 rounded mb-10"></div>
-
+  
       <h2 className="text-2xl mb-2 font-bold">Resumen de orden</h2>
       <div className="grid grid-cols-2">
         <span>No. Productos</span>
         <span className="text-right">{totalItems}</span>
-
+  
         <span>Subtotal</span>
         <span className="text-right">${currencyFormat(subtotal)}</span>
-
+  
         <span className="text-lg mt-5 font-semibold">Total</span>
         <span className="text-lg mt-5 text-right font-semibold">
           ${currencyFormat(total)}
         </span>
       </div>
-
+  
       <div className="mt-5 mb-2 w-full">
         <p className="mb-5">
           {/* Disclaimer */}
           <span className="text-xs">
             Al hacer clic en &quot;Realizar pago&quot;, aceptas los{" "}
             <a href="/terms-and-conditions" className="underline">
-              términos y condiciones
+              términos y condiciones
             </a>
           </span>
         </p>
-
+  
         <p className="text-red-500 text-sm mb-2">{errorMessage}</p>
-
+  
         <button
           onClick={onPlaceOrder}
           className={clsx({
@@ -130,5 +130,5 @@ export const PlaceOrder = () => {
         </button>
       </div>
     </div>
-  );
+  );  
 };
