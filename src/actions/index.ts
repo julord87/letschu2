@@ -36,3 +36,5 @@ export { getTypes } from './typeses/get-types'
 export { calculateShippingCost } from './shipping/calculate-chipping-cost'
 export { calculateShippingCostFlex } from './shipping/calculate-shipping-flex'
 export { calculateShippingCostCorreo } from './shipping/calculate-shipping-cost-correo'
+
+export { getArgProvinces } from './arg-provinces/get-arg-provinces'

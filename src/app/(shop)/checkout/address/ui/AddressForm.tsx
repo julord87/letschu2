@@ -4,13 +4,13 @@ import { Address, Country } from "@/interfaces";
 import { useCartStore } from "@/store";
 import { useAddressStore } from "@/store/address/address-store";
 import { useShippingMethodStore } from "@/store/shipping/shipping-method-store";
-import { placeOrder } from "@/actions";
+import { getArgProvinces, placeOrder } from "@/actions";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { RetiroEnShowroomButton } from "./RetiroEnShowRoomButton";
 
 export type FormInputs = {
@@ -21,6 +21,7 @@ export type FormInputs = {
   zip: string;
   city: string;
   country: string;
+  province?: string;
   phone: string;
   shippingMethod: "argentina" | "international" | "showroom";
   rememberAddress: boolean;
@@ -34,7 +35,9 @@ interface Props {
 export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
   const { total } = useCartStore((state) => state.getSummaryInformation());
   const cart = useCartStore((state) => state.cart);
-  const shippingMethod = useShippingMethodStore((state) => state.shippingMethod);
+  const shippingMethod = useShippingMethodStore(
+    (state) => state.shippingMethod
+  );
   const setShippingMethod = useShippingMethodStore(
     (state) => state.setShippingMethod
   );
@@ -62,6 +65,10 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
 
   const { data: session } = useSession({ required: true });
   const country = watch("country");
+  const province = watch("province"); // Observa cambios en provincia
+  const [provinces, setProvinces] = useState<{ id: string; name: string }[]>(
+    []
+  );
 
   useEffect(() => {
     if (country === "AR") {
@@ -69,6 +76,19 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
     } else if (country) {
       setValue("shippingMethod", "international");
     }
+  }, [country, setValue]);
+
+  useEffect(() => {
+    const fetchProvinces = async () => {
+      if (country === "AR") {
+        const provinces = await getArgProvinces();
+        setProvinces(provinces);
+      } else {
+        setProvinces([]);
+        setValue("province", undefined); // Resetea provincia si el país cambia
+      }
+    };
+    fetchProvinces();
   }, [country, setValue]);
 
   useEffect(() => {
@@ -94,6 +114,7 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
       // Guardar la dirección en el store
       setAddress({
         ...restAddress,
+        province: restAddress.province || "", // Ensure province is always a string
         shippingMethod, // Aseguramos que este campo también se guarda
       });
 
@@ -107,7 +128,7 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
 
       const response = await placeOrder(
         productsToOrder,
-        restAddress,
+        { ...restAddress, province: restAddress.province || "" },
         shippingMethod
       );
 
@@ -210,6 +231,23 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
                 {...register("phone", { required: true })}
               />
             </div>
+
+            {country === "AR" && (
+              <div className="flex flex-col mb-2">
+                <span>Provincia</span>
+                <select
+                  className="p-2 border rounded-md bg-gray-200"
+                  {...register("province", { required: true })}
+                >
+                  <option value="">[ Seleccione ]</option>
+                  {provinces.map((province) => (
+                    <option key={province.id} value={province.id}>
+                      {province.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             <div className="flex flex-col mb-2 sm:mt-1">
               <div className="inline-flex items-center mb-10">

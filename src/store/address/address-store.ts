@@ -11,6 +11,7 @@ interface State {
     zip: string;
     city: string;
     country: string;
+    province: string;
     phone: string;
     shippingMethod?: "argentina" | "international" | "showroom";
   };
@@ -30,6 +31,7 @@ export const useAddressStore = create<State>()(
         zip: "",
         city: "",
         country: "",
+        province: "",
         phone: "",
         shippingMethod: "argentina",
       },

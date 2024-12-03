@@ -15,6 +15,8 @@ export interface Address {
 
   country: string;
 
+  province: string;
+
   phone: string;
 
   shippingMethod?: "argentina" | "international" | "showroom";

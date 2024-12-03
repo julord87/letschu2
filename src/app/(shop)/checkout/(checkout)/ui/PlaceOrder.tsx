@@ -74,7 +74,7 @@ export const PlaceOrder = () => {
         <p>{address.address}</p>
         {address.address2 && <p>{address.address2}</p>}
         <p>
-          {address.city}, {address.country}
+          {address.city}, {address.province}, {address.country}
         </p>
         <p>{address.zip}</p>
         <p>{address.phone}</p>
