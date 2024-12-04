@@ -4,6 +4,7 @@ import { auth } from "@/auth.config";
 import { Address, Colors } from "@/interfaces";
 import prisma from "@/lib/prisma";
 import { calculateShippingCost } from "../shipping/calculate-chipping-cost";
+import { calculateShippingCostCorreo } from "../shipping/calculate-shipping-cost-correo";
 
 interface ProductToOrder {
   productId: string;
@@ -27,14 +28,32 @@ export const placeOrder = async (
     };
   }
 
-  // Calcular el costo de envío basado en el método proporcionado
-  const shippingCost = await calculateShippingCost(shippingMethod);
+  let shippingCost = 0;
 
-  if (!shippingMethod || shippingCost < 0) {
-    return {
-      ok: false,
-      message: "Método de envío inválido o no soportado.",
-    };
+  // Calcular el costo de envío basado en el método proporcionado
+  if (shippingMethod === "argentina") {
+    const correoResult = await calculateShippingCostCorreo({
+      cpDestino: address.zip,
+      provinciaDestino: address.province,
+    });
+
+    if (typeof correoResult === "string") {
+      return {
+        ok: false,
+        message: correoResult, // Manejo de errores
+      };
+    }
+
+    shippingCost = correoResult.aDomicilio; // O puedes usar `aSucursal` según el tipo de envío.
+  } else {
+    shippingCost = await calculateShippingCost(shippingMethod);
+
+    if (!shippingMethod || shippingCost < 0) {
+      return {
+        ok: false,
+        message: "Método de envío inválido o no soportado.",
+      };
+    }
   }
 
   // Obtener la información de los productos

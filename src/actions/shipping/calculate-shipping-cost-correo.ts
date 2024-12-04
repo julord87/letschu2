@@ -13,7 +13,7 @@ export async function calculateShippingCostCorreo({
     "x-rapidapi-host": "correo-argentino1.p.rapidapi.com",
     "x-rapidapi-key": "b4bb4baf84mshe456bc5485d1ea5p176a73jsn453e1a3bf146",
   };
-  const cpOrigen = "C1070";
+  const cpOrigen = "1070";
   const provinciaOrigen = "AR-C";
   const peso = 0.35;
 
