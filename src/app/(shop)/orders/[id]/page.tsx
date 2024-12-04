@@ -115,7 +115,7 @@ export default async function OrdersByIdPage({ params }: Props) {
               </span>
 
               <span>Subtotal</span>
-              <span className="text-right">{currencyFormat(order!.total)}</span>
+              <span className="text-right">{currencyFormat(order!.subtotal)}</span>
 
               <span>Costo de envío</span>
               <span className="text-right">{order.shippingCost ? currencyFormat(order.shippingCost) : "Gratis"}</span>

@@ -99,6 +99,9 @@ export const PlaceOrder = () => {
   
         <span>Subtotal</span>
         <span className="text-right">${currencyFormat(subtotal)}</span>
+
+        <span className="text-sm mt-3">Costo de envío</span>
+        <span className="text-right text-sm mt-3">*El costo de envío se agregará en el siguente paso</span>
   
         <span className="text-lg mt-5 font-semibold">Total</span>
         <span className="text-lg mt-5 text-right font-semibold">
