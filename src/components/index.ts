@@ -9,7 +9,8 @@ export * from "./ui/sidebar/Sidebar";
 export * from "./ui/footer/Footer";
 export * from './ui/pagination/Pagination';
 
-export * from "./paypal/PayPalButton";
+export { MercadoPagoButton } from "./mercadopago/MercadoPagoButton";
+export { PayPalButton } from "./paypal/PayPalButton";
 
 export * from "./providers/Providers";
 
@@ -23,3 +24,5 @@ export * from "./products/product-grid/ProductGrid";
 export * from "./products/product-grid/ProductGridItem";
 
 export * from "./orders/OrderStatus";
+
+

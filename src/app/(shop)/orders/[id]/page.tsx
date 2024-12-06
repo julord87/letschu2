@@ -4,13 +4,13 @@ import {
   getOrderById,
   sendOrderConfirmationEmail,
 } from "@/actions";
-import { OrderStatus, PayPalButton } from "@/components";
+import { MercadoPagoButton, OrderStatus, PayPalButton } from "@/components";
 import Title from "@/components/ui/title/Title";
 import { currencyFormat } from "@/helpers/currencyFormat";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import CopyAddress from "./ui/CopyAddress";
 import { ResumenOrder } from "../../checkout/address/ui/ResumenOrder";
+import api from "@/app/api/mercadopago/api";
 
 interface Props {
   params: {
@@ -98,8 +98,13 @@ export default async function OrdersByIdPage({ params }: Props) {
 
           {/* Checkout - Resumen de orden*/}
           <div className="bg-white rounded-xl shadow-xl p-7">
-
-            {address && <ResumenOrder order={order} address={address} countryId={address.countryId} />}
+            {address && (
+              <ResumenOrder
+                order={order}
+                address={address}
+                countryId={address.countryId}
+              />
+            )}
 
             {/* Divider */}
             <div className="w-full h-[1px] bg-gray-200 rounded mb-8"></div>
@@ -115,14 +120,21 @@ export default async function OrdersByIdPage({ params }: Props) {
               </span>
 
               <span>Subtotal</span>
-              <span className="text-right">{currencyFormat(order!.subtotal)}</span>
+              <span className="text-right">
+                {currencyFormat(order!.subtotal)}
+              </span>
 
               <span>Costo de envío</span>
-              <span className="text-right">{order.shippingCost ? currencyFormat(order.shippingCost) : "Gratis"}</span>
-              
-              <span className="text-2xl font-semibold mt-3">Total</span>
-              <span className="text-right text-2xl font-semibold mt-3">{currencyFormat(totalWithShipping)}</span>
+              <span className="text-right">
+                {order.shippingCost
+                  ? currencyFormat(order.shippingCost)
+                  : "Gratis"}
+              </span>
 
+              <span className="text-2xl font-semibold mt-3">Total</span>
+              <span className="text-right text-2xl font-semibold mt-3">
+                {currencyFormat(totalWithShipping)}
+              </span>
             </div>
 
             <div className="mt-5 mb-2 w-full">
@@ -133,7 +145,13 @@ export default async function OrdersByIdPage({ params }: Props) {
                 <p className="text-red-500 text-center">{conversionError}</p>
               ) : (
                 // Renderizar PayPalButton con el monto convertido
-                <PayPalButton amount={convertedAmount!} orderId={order!.id} />
+                <>
+                  <PayPalButton amount={convertedAmount!} orderId={order!.id} />
+                  <MercadoPagoButton
+                    orderId={order!.id}
+                    amount={totalWithShipping}
+                  />
+                </>
               )}
             </div>
           </div>
