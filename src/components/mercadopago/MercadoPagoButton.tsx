@@ -28,13 +28,29 @@ export const MercadoPagoButton = ({ orderId, amount }: Props) => {
   };
 
   return (
-    <button
-      className="rounded bg-blue-500 text-white py-2 px-4 w-full mt-4"
-      onClick={handleMercadoPagoPayment}
-      disabled={loading}
-    >
-      {loading ? "Cargando..." : "Pagar con Mercado Pago"}
-    </button>
+    <>
+      <button
+        className="rounded bg-blue-500 text-white py-3 px-4 w-full mt-8 mb-4 hover:bg-blue-600 flex items-center justify-center gap-2"
+        onClick={handleMercadoPagoPayment}
+        disabled={loading}
+      >
+        {loading ? (
+          "Cargando..."
+        ) : (
+          <>
+            <span>Pagar con Mercado Pago</span>
+            <img
+              src="/imgs/mercadopago-logo.png"
+              alt="MercadoPago"
+              className="h-6"
+            />
+          </>
+        )}
+      </button>
+
+      {/* Divider */}
+      <div className="w-full h-[1px] bg-gray-200 rounded mb-4"></div>
+    </>
   );
 };
 

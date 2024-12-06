@@ -144,13 +144,13 @@ export default async function OrdersByIdPage({ params }: Props) {
                 // Mostrar mensaje de error si la conversión falla
                 <p className="text-red-500 text-center">{conversionError}</p>
               ) : (
-                // Renderizar PayPalButton con el monto convertido
+                // Renderizar PayPalButton y MercadoPagoButton con el monto convertido
                 <>
-                  <PayPalButton amount={convertedAmount!} orderId={order!.id} />
                   <MercadoPagoButton
                     orderId={order!.id}
                     amount={totalWithShipping}
                   />
+                  <PayPalButton amount={convertedAmount!} orderId={order!.id} />
                 </>
               )}
             </div>
