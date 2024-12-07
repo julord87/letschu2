@@ -10,7 +10,6 @@ import { currencyFormat } from "@/helpers/currencyFormat";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { ResumenOrder } from "../../checkout/address/ui/ResumenOrder";
-import api from "@/app/api/mercadopago/api";
 
 interface Props {
   params: {
