@@ -70,6 +70,9 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
     []
   );
 
+  const whatsappNumber = "+5491138126428";
+  const message = `Hola! :) Necesito ayuda con mi envío internacional de letsChu!`
+
   useEffect(() => {
     if (country === "AR") {
       setValue("shippingMethod", "argentina");
@@ -270,16 +273,35 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
           </>
         )}
 
-        <div className="flex flex-col mb-2"></div>
+        {/* Si el envío es internacional */}
+        {country !== "AR" && (
+          <>
+            <div className="flex flex-col"></div>
+            <p className="text-sm text-red-500 mb-3">
+              Por favor, antes de continuar, comunícate con nosotros a través de{" "}
+              <a
+                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+                  message
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-blue-500"
+              >
+                WhatsApp
+              </a>{" "}
+              para que podamos cotizar el envío a tu país.
+            </p>
+            <div className="flex flex-col mb-3"></div>
+          </>
+        )}
 
-        <div className="flex space-x-2">
+        <div className="flex justify-start space-x-2">
           <button
             disabled={!isValid}
             type="submit"
             className={clsx({
-              "btn-primary flex w-min sm:w-1/2 justify-center": isValid,
-              "btn-disabled flex w-min sm:w-1/2 justify-center cursor-not-allowed":
-                !isValid,
+              "btn-primary": isValid,
+              "btn-disabled cursor-not-allowed": !isValid,
             })}
           >
             Envío a domicilio
