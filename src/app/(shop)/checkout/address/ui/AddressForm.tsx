@@ -120,22 +120,6 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
 
       setShippingMethod(shippingMethod); // Establece el método de envío globalmente
 
-      const productsToOrder = cart.map((product) => ({
-        productId: product.id,
-        quantity: product.quantity,
-        color: product.color,
-      }));
-
-      const response = await placeOrder(
-        productsToOrder,
-        { ...restAddress, province: restAddress.province || "" },
-        shippingMethod
-      );
-
-      if (!response.ok) {
-        throw new Error(response.message || "Error al crear la orden.");
-      }
-
       router.push("/checkout");
     } catch (error) {
       console.error("Error en AddressForm:", error);

@@ -39,24 +39,6 @@ export const RetiroEnShowroomButton = ({ isValid, setValue }: Props) => {
       setShippingMethod("showroom");
       setValue("shippingMethod", "showroom"); // Esto ahora estará tipado correctamente
 
-      // Preparar productos para la orden
-      const productsToOrder = cart.map((product) => ({
-        productId: product.id,
-        quantity: product.quantity,
-        color: product.color,
-      }));
-
-      // Crear la orden usando la dirección ingresada
-      const response = await placeOrder(
-        productsToOrder,
-        storeAddress, // Usar la dirección almacenada
-        "showroom"
-      );
-
-      if (!response.ok) {
-        throw new Error(response.message || "Error al crear la orden.");
-      }
-
       // Navegar al siguiente paso
       router.push("/checkout");
     } catch (error) {
