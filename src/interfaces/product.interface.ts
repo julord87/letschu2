@@ -7,8 +7,7 @@ export interface Product {
     slug: string;
     tags: string[];
     title: string;
-    //todo: type: Types;
-    //todo: category: Category;
+    shippingCompanies: string[];
 }
 
 export interface CartProduct {

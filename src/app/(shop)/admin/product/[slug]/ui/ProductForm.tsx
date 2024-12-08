@@ -30,6 +30,7 @@ interface FormInputs {
   type: number;
   categoryId: string;
   typeId: string;
+  shippingCompanies: string[];
 
   // Todo: Images
   images?: FileList;
@@ -56,6 +57,15 @@ const colors = [
   "naranja_fluo",
 ];
 
+const shippingCompanies = [
+  "correo_argentino",
+  "fedex",
+  "dhl",
+  "oca",
+  "andreani",
+  "ups",
+];
+
 export const ProductForm = ({ product, categories, types }: Props) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,7 +83,7 @@ export const ProductForm = ({ product, categories, types }: Props) => {
       ...product,
       tags: product.tags?.join(", "),
       colors: product.colors ?? [],
-
+      shippingCompanies: product.shippingCompanies ?? [], // Verificar que siempre sea un array
       images: undefined,
     },
   });
@@ -104,6 +114,9 @@ export const ProductForm = ({ product, categories, types }: Props) => {
   // Determinar si el selector de tipo debe estar habilitado
   const isTypeSelectable = selectedCategory?.toLowerCase() === "arnes";
 
+  // Determinar si la categoría seleccionada es de envío
+  const isShippingCategory = selectedCategory?.toLowerCase() === "envios";
+
   // Actualizar dinámicamente el tipo si no es seleccionable
   React.useEffect(() => {
     if (!isTypeSelectable && selectedCategory) {
@@ -125,6 +138,24 @@ export const ProductForm = ({ product, categories, types }: Props) => {
     setValue("colors", Array.from(colors));
   };
 
+  const onCourierChanged = (courier: string) => {
+    const couriers = new Set(getValues("shippingCompanies")); // Usa "shippingCompanies" directamente
+
+    if (couriers.has(courier)) {
+      couriers.delete(courier);
+    } else {
+      couriers.add(courier);
+    }
+
+    const updatedCouriers = Array.from(couriers);
+    console.log("Updated couriers:", updatedCouriers); // Debug: Verifica que se está actualizando correctamente
+    setValue("shippingCompanies", updatedCouriers); // Actualiza "shippingCompanies"
+  };
+
+  const shippingCompaniesSelected = watch("shippingCompanies");
+
+  console.log("Shipping companies selected:", shippingCompaniesSelected); // Debug
+
   const onSubmit = async (data: FormInputs) => {
     setIsSubmitting(true);
     setFeedbackMessage(null);
@@ -137,10 +168,11 @@ export const ProductForm = ({ product, categories, types }: Props) => {
     formData.append("slug", productToSave.slug);
     formData.append("description", productToSave.description);
     formData.append("price", productToSave.price.toString());
-    formData.append("colors", productToSave.colors.toString());
     formData.append("tags", productToSave.tags);
     formData.append("categoryId", productToSave.categoryId);
     formData.append("typeId", productToSave.typeId);
+    formData.append("colors", productToSave.colors.length ? productToSave.colors.toString() : ""); 
+    formData.append("shippingCompanies", productToSave.shippingCompanies.length ? productToSave.shippingCompanies.toString() : "");
 
     if (images) {
       for (let i = 0; i < images.length; i++) {
@@ -255,27 +287,54 @@ export const ProductForm = ({ product, categories, types }: Props) => {
       <div className="w-full">
         {/* As checkboxes */}
         <div className="flex flex-col">
-          <span>Colores o courires (en caso de ser un envío)</span>
-          <div className="flex flex-wrap mb-2">
-            {colors.map((color) => (
-              <div
-                key={color}
-                onClick={() => {
-                  onColorChanged(color);
-                }}
-                className={clsx(
-                  "flex items-center justify-center px-2 py-1 mr-2 cursor-pointer border rounded-md m-1 transition-all capitalize",
-                  {
-                    "bg-blue-500 text-white":
-                      getValues("colors").includes(color),
-                    "bg-gray-200": !getValues("colors").includes(color),
-                  }
-                )}
-              >
-                <span>{color.replace("_", " ")}</span>
+          {!isShippingCategory ? (
+            <>
+              <span>Colores</span>
+              <div className="flex flex-wrap mb-2">
+                {colors.map((color) => (
+                  <div
+                    key={color}
+                    onClick={() => {
+                      onColorChanged(color);
+                    }}
+                    className={clsx(
+                      "flex items-center justify-center px-2 py-1 mr-2 cursor-pointer border rounded-md m-1 transition-all capitalize",
+                      {
+                        "bg-blue-500 text-white":
+                          getValues("colors").includes(color),
+                        "bg-gray-200": !getValues("colors").includes(color),
+                      }
+                    )}
+                  >
+                    <span>{color.replace("_", " ")}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          ) : (
+            <>
+              <span>Courier</span>
+              <div className="flex flex-wrap mb-2">
+                {shippingCompanies.map((courier) => (
+                  <div
+                    key={courier}
+                    onClick={() => onCourierChanged(courier)}
+                    className={clsx(
+                      "flex items-center justify-center px-2 py-1 mr-2 cursor-pointer border rounded-md m-1 transition-all capitalize",
+                      {
+                        "bg-blue-500 text-white":
+                          shippingCompaniesSelected?.includes(courier), // Usa la variable que observa el estado
+                        "bg-gray-200":
+                          !shippingCompaniesSelected?.includes(courier),
+                      }
+                    )}
+                  >
+                    <span>{courier.replace("_", " ")}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
 
           <div className="flex flex-col mb-2">
             <span>Imagenes</span>

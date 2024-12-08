@@ -79,6 +79,7 @@ async function main() {
       slug,
       tags, // Asegúrate de extraer los tags del producto
       colors, // Extrae los colores del producto
+      price, // Extrae el precio del producto
       ...rest
     } = product as {
       images: string[];
@@ -89,6 +90,7 @@ async function main() {
       slug: string;
       tags: string[];
       colors: string[];
+      price: number;
     };
 
     const data = {
@@ -99,6 +101,7 @@ async function main() {
       typeId: typesMap[type.toLowerCase()],
       colors: colors.map((color) => color as Color), // Mapea los colores al enumerado `Color`
       tags, // Usa directamente los tags del producto
+      price,
     };
 
     const dbProduct = await prisma.product.create({
