@@ -1,10 +1,10 @@
 export const revalidate = 60; // 60 segundos
 
-
 import { getAllPaginatedProductsWithImagesByCategory } from "@/actions/products/product-pagination";
 import { Pagination } from "@/components";
 import ProductGrid from "@/components/products/product-grid/ProductGrid";
 import Title from "@/components/ui/title/Title";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
     category: string;
   };
   searchParams: {
-    page?: string; 
+    page?: string;
     take?: string; // Agregar take como parámetro opcional
   };
 }
@@ -24,23 +24,42 @@ export default async function CategoryByPage({ params, searchParams }: Props) {
 
   console.log("Category:", category);
 
-  const { products, currentPage, totalPages } = await getAllPaginatedProductsWithImagesByCategory({ 
-    page, 
-    take, // Pasar el valor de take
-    categoryName: category,
-  });
+  const { products, currentPage, totalPages } =
+    await getAllPaginatedProductsWithImagesByCategory({
+      page,
+      take, // Pasar el valor de take
+      categoryName: category,
+    });
 
   if (products.length === 0) {
     redirect(`/category/${category}`);
   }
 
+  const whatsappNumber = "+5491138126428";
+  const message = `Hola! :) Necesito ayuda con mi envío internacional de letsChu!`;
+  const whatsAppLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    message
+  )}`;
+
   return (
     <>
-      <Title 
+      <Title
         title={category}
-        subtitle="Todos los productos"
+        subtitle={
+          category === "envios"
+            ? (
+                <>
+                  En esta sección cargaremos los costos de envíos internacional, consultanos para cotizar el envío a tu país{" "}
+                  <Link rel="noopener noreferrer" className="underline text-blue-600 hover:text-blue-800" href={whatsAppLink}>aquí</Link>.{" "}
+                  Realizamos envíos a todo el mundo!
+                </>
+              )
+            : "Todos los productos"
+        }
         classname="mb-2"
       />
+
+
 
       <ProductGrid products={products} />
 

@@ -255,7 +255,7 @@ export const ProductForm = ({ product, categories, types }: Props) => {
       <div className="w-full">
         {/* As checkboxes */}
         <div className="flex flex-col">
-          <span>Colores</span>
+          <span>Colores o courires (en caso de ser un envío)</span>
           <div className="flex flex-wrap mb-2">
             {colors.map((color) => (
               <div

@@ -28,6 +28,15 @@ enum Color {
   naranja_fluo
 }
 
+enum ShippingCompany {
+  correo_argentino
+  fedex
+  dhl
+  oca
+  andreani
+  ups
+}
+
 enum Role {
   admin
   user
@@ -46,15 +55,15 @@ model Type {
 }
 
 model Product {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  price       Float    @default(0)
-  colors      Color[]  @default([])
-  slug        String   @unique
-  tags        String[] @default([])
+  id               String           @id @default(uuid())
+  title            String
+  description      String
+  price            Float            @default(0)
+  colors           Color[]          @default([])
+  shippingCompanies ShippingCompany[] @default([])
+  slug             String           @unique
+  tags             String[]         @default([])
 
-  // Relations
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
 
@@ -138,7 +147,7 @@ model Order {
   isPaid                Boolean   @default(false)
   paidAt                DateTime?
   confirmationEmailSent Boolean   @default(false)
-  shippingMethod String   @default("showroom")
+  shippingMethod        String    @default("showroom")
   shippingCost          Float     @default(0)
 
   createdAt DateTime @default(now())

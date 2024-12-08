@@ -19,9 +19,10 @@ interface SeedUser {
     role: 'admin' | 'user';
 }
 
-type Categories = 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
+type Categories = 'arnes'|'tiradores'|'chokers'|'ligas'|'extras'|'envios';
 type ValidColors = 'negro'|'blanco'|'rojo'|'azul'|'verde'|'rosa'|'amarillo'|'gris'|'naranja'|'violeta'|'bordo'|'fucsia'|'beige'|'celeste'|'arcoiris'|'animal_print'|'amarillo_fluo'|'naranja_fluo';
-type Types = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chokers'|'ligas'|'extras';
+type ShippingCompanies = 'correo_argentino'|'fedex'|'dhl'|'oca'|'andreani'|'ups';
+type Types = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chokers'|'ligas'|'extras'|'envios';
 
 interface SeedData {
     products: SeedProduct[],
@@ -29,9 +30,6 @@ interface SeedData {
     types: string[],
     users: SeedUser[]
 }
-
-
-
 
 export const initialData: SeedData = {
 
@@ -50,9 +48,9 @@ export const initialData: SeedData = {
         }
     ],
 
-    categories: ['arnes', 'tiradores', 'chokers', 'ligas', 'extras'],
+    categories: ['arnes', 'tiradores', 'chokers', 'ligas', 'extras', 'envios'],
 
-    types: ['superior', 'inferior', 'body', 'conjunto', 'tiradores', 'chokers', 'ligas', 'extras'],
+    types: ['superior', 'inferior', 'body', 'conjunto', 'tiradores', 'chokers', 'ligas', 'extras', 'envios'],
 
     products: [
         {
