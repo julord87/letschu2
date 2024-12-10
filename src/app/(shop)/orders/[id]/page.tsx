@@ -33,9 +33,18 @@ export default async function OrdersByIdPage({ params }: Props) {
   const address = order!.OrderAddress;
   let convertedAmount: number | null = null;
   let conversionError = null;
+  
+  const validShippingMethod =
+    order.shippingMethod === "argentina" ||
+    order.shippingMethod === "international" ||
+    order.shippingMethod === "showroom"
+      ? order.shippingMethod
+      : "argentina";
+  const shippingCost = await calculateShippingCost(validShippingMethod);
+  const totalWithShipping = order.subtotal + order.shippingCost;
 
   try {
-    const USDOrderResult = await convertToUSD(order.total);
+    const USDOrderResult = await convertToUSD(totalWithShipping);
     if (USDOrderResult.ok) {
       convertedAmount = USDOrderResult.convertedAmount ?? null;
     } else {
@@ -45,14 +54,6 @@ export default async function OrdersByIdPage({ params }: Props) {
     conversionError = "Error inesperado al convertir el monto.";
   }
 
-  const validShippingMethod =
-    order.shippingMethod === "argentina" ||
-    order.shippingMethod === "international" ||
-    order.shippingMethod === "showroom"
-      ? order.shippingMethod
-      : "argentina";
-  const shippingCost = await calculateShippingCost(validShippingMethod);
-  const totalWithShipping = order.total + shippingCost;
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
@@ -132,7 +133,7 @@ export default async function OrdersByIdPage({ params }: Props) {
 
               <span className="text-2xl font-semibold mt-3">Total</span>
               <span className="text-right text-2xl font-semibold mt-3">
-                {currencyFormat(totalWithShipping)}
+                {currencyFormat(totalWithShipping!)}
               </span>
             </div>
 
@@ -147,7 +148,7 @@ export default async function OrdersByIdPage({ params }: Props) {
                 <>
                   <MercadoPagoButton
                     orderId={order!.id}
-                    amount={totalWithShipping}
+                    amount={totalWithShipping!}
                   />
                   <PayPalButton amount={convertedAmount!} orderId={order!.id} />
                 </>
