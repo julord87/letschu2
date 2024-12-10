@@ -8,7 +8,7 @@ export interface Product {
     slug: string;
     tags: string[];
     title: string;
-    shippingCompanies: string[];
+    shippingCompanies: ShippingCompanies[];
 }
 
 export interface CartProduct {
@@ -17,7 +17,8 @@ export interface CartProduct {
     title: string;
     price: number;
     quantity: number;
-    color: Colors;
+    color?: Colors;
+    courier?: ShippingCompanies;
     image: string;
 }
 
@@ -29,4 +30,5 @@ export interface ProductImage {
 
 type Category = 'arnes'|'tiradores'|'chokers'|'ligas'|'extras';
 export type Colors = 'negro'|'blanco'|'rojo'|'azul'|'verde'|'rosa'|'amarillo'|'gris'|'naranja'|'violeta'|'bordo'|'fucsia'|'beige'|'celeste'|'arcoiris'|'animal_print'|'amarillo_fluo'|'naranja_fluo';
+export type ShippingCompanies = 'correo_argentino'|'fedex'|'dhl'|'oca'|'andreani'|'ups';
 type Types = 'superior'|'inferior'|'body'|'conjunto'|'tiradores'|'chookers'|'ligas'|'extras';

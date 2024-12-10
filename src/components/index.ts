@@ -15,6 +15,7 @@ export { PayPalButton } from "./paypal/PayPalButton";
 export * from "./providers/Providers";
 
 export * from './product/color-selector/ColorSelector';
+export * from './product/courier-selector/CourierSelector';
 export * from './product/quantity-selector/QuantitySelector';
 export * from './product/slideshow/ProductSlideshow';
 export * from './product/slideshow/ProductMobileSlideshow';
