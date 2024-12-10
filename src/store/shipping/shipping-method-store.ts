@@ -3,13 +3,15 @@ import { create } from "zustand";
 interface ShippingMethodState {
   shippingMethod: "argentina" | "international" | "showroom";
   shippingCost: number;
+  shippingProductId?: string; // Nuevo campo opcional
   setShippingCost: (cost: number) => void;
   setShippingMethod: (method: "argentina" | "international" | "showroom") => void;
+  setShippingProductId: (id: string) => void; // Nueva función
 }
 
 export const useShippingMethodStore = create<ShippingMethodState>((set) => ({
-  shippingMethod: "argentina", // Valor por defecto
-  shippingCost: 500, // Costo inicial basado en el método por defecto
+  shippingMethod: "argentina",
+  shippingCost: 500,
   setShippingMethod: (method) =>
     set({
       shippingMethod: method,
@@ -18,7 +20,9 @@ export const useShippingMethodStore = create<ShippingMethodState>((set) => ({
           ? 500
           : method === "international"
           ? 1500
-          : 0, // Costo según el método
+          : 0,
     }),
   setShippingCost: (cost) => set({ shippingCost: cost }),
+  setShippingProductId: (id) => set({ shippingProductId: id }), // Implementación
 }));
+

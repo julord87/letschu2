@@ -6,27 +6,28 @@ import { ProductsInCheckout } from "./ui/ProductsInCheckout";
 import { PlaceOrder } from "./ui/PlaceOrder";
 import { useCartStore } from "@/store";
 import { useShippingMethodStore } from "@/store/shipping/shipping-method-store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-interface ShippingMethodState {
-  shippingCost: number;
-  setShippingCost?: (cost: number) => void; // Agregar si es necesario
-}
 export default function CheckoutPage() {
-
   const removeProductsByCategory = useCartStore((state) => state.removeProductsByCategory);
-  const shippingCost = useShippingMethodStore((state) => state.shippingCost);
   const setShippingCost = useShippingMethodStore((state) => state.setShippingCost);
+  const setShippingProductId = useShippingMethodStore((state) => state.setShippingProductId); // Nueva función
   const cart = useCartStore((state) => state.cart);
 
+  const [processedShipping, setProcessedShipping] = useState(false);
+
   useEffect(() => {
-    const hasShippingProduct = cart.some((item) => item.category === "envios");
-  
-    if (hasShippingProduct) {
+    if (processedShipping) return;
+
+    const shippingProduct = cart.find((item) => item.courier);
+
+    if (shippingProduct) {
       const shippingCost = removeProductsByCategory("envios");
-      setShippingCost?.(shippingCost); // Usa el operador opcional si setShippingCost es opcional
+      setShippingCost?.(shippingCost);
+      setShippingProductId?.(shippingProduct.id); // Guardar el ID del producto de envío
+      setProcessedShipping(true); // Marcar como procesado
     }
-  }, [cart, removeProductsByCategory, setShippingCost]);
+  }, [cart, processedShipping, removeProductsByCategory, setShippingCost, setShippingProductId]);
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">

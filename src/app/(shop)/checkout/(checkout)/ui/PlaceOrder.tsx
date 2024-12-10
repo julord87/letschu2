@@ -17,10 +17,8 @@ export const PlaceOrder = () => {
 
   // Datos de la dirección y el carrito
   const address = useAddressStore((state) => state.address);
-  const shippingCost = useShippingMethodStore((state) => state.shippingCost);
-  const shippingMethod = useShippingMethodStore(
-    (state) => state.shippingMethod
-  );
+  const shippingMethod = useShippingMethodStore((state) => state.shippingMethod);
+  const shippingProductId = useShippingMethodStore((state) => state.shippingProductId);
 
   const { totalItems, subtotal, total } = useCartStore((state) =>
     state.getSummaryInformation()
@@ -44,10 +42,8 @@ export const PlaceOrder = () => {
       color: product.color,
     }));
 
-    console.log(address);
-
     // Llamar a la acción del servidor, incluyendo el shippingMethod
-    const resp = await placeOrder(productsToOrder, address, shippingMethod);
+    const resp = await placeOrder(productsToOrder, address, shippingMethod, shippingProductId); // Pasar ID del producto de envío
     if (!resp.ok) {
       setIsPlacingOrder(false);
       setErrorMessage(resp.message || "An unexpected error occurred");

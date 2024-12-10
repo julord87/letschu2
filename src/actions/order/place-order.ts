@@ -15,7 +15,8 @@ interface ProductToOrder {
 export const placeOrder = async (
   productIds: ProductToOrder[],
   address: Address,
-  shippingMethod: "argentina" | "international" | "showroom"
+  shippingMethod: "argentina" | "international" | "showroom",
+  shippingProductId?: string
 ): Promise<{
   ok: boolean;
   order?: any;
@@ -60,12 +61,30 @@ export const placeOrder = async (
 
     shippingCost = correoResult.aDomicilio; // Usar aDomicilio o aSucursal según necesidad
   } else if (shippingMethod === "international") {
-    shippingCost = await calculateShippingCost(shippingMethod);
-    if (shippingCost < 0) {
-      return {
-        ok: false,
-        message: "Error al calcular el costo de envío internacional.",
-      };
+    if (shippingMethod === "international") {
+      if (!shippingProductId) {
+        return {
+          ok: false,
+          message: "Falta el ID del producto de envío para envíos internacionales.",
+        };
+      }
+    
+      const shippingProduct = await prisma.product.findUnique({
+        where: { id: shippingProductId },
+        include: { category: true }, // Cargar la categoría asociada
+      });
+    
+      if (!shippingProduct || shippingProduct.category?.name !== "envios") {
+        return {
+          ok: false,
+          message: "El producto de envío no es válido.",
+        };
+      }
+      shippingCost = shippingProduct.price;
+
+      // Eliminar producto de envío del carrito
+      const updatedProductIds = productIds.filter((item) => item.productId !== shippingProductId);
+      productIds = updatedProductIds;
     }
   } else {
     // Showroom: envío gratis
