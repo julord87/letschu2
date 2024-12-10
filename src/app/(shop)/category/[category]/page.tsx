@@ -22,18 +22,12 @@ export default async function CategoryByPage({ params, searchParams }: Props) {
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
   const take = searchParams.take ? parseInt(searchParams.take) : 1; // Valor por defecto
 
-  console.log("Category:", category);
-
   const { products, currentPage, totalPages } =
     await getAllPaginatedProductsWithImagesByCategory({
       page,
       take, // Pasar el valor de take
       categoryName: category,
     });
-
-  if (products.length === 0) {
-    redirect(`/category/${category}`);
-  }
 
   const whatsappNumber = "+5491138126428";
   const message = `Hola! :) Necesito ayuda con mi envío internacional de letsChu!`;
@@ -50,8 +44,9 @@ export default async function CategoryByPage({ params, searchParams }: Props) {
             ? (
                 <>
                   En esta sección cargaremos los costos de envíos internacional, consultanos para cotizar el envío a tu país{" "}
-                  <Link rel="noopener noreferrer" className="underline text-blue-600 hover:text-blue-800" href={whatsAppLink}>aquí</Link>.{" "}
-                  Realizamos envíos a todo el mundo!
+                  <Link rel="noopener noreferrer" className="underline text-blue-600 hover:text-blue-800" href={whatsAppLink}>aquí</Link>.
+                  <br />
+                  <span className="text-sm"> Realizamos envíos a todo el mundo ;)</span>
                 </>
               )
             : "Todos los productos"

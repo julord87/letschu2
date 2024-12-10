@@ -22,6 +22,7 @@ export { getAllPaginatedProductsWithImages } from './products/product-pagination
 export { getProductBySlug } from './products/get-product-by-slug'
 export { createUpdateProduct } from './products/create-update-product'
 export { deleteProductImage } from './products/delete-product-image'
+export { deleteProduct } from './products/delete-product'
 
 export { setTransactionId } from './payments/set-transaction-id'
 export { payPalCheckPayment } from './payments/paypal-check-payment'
