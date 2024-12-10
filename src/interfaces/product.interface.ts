@@ -1,4 +1,5 @@
 export interface Product {
+    category?: any;
     id: string
     description: string;
     images: string[];
