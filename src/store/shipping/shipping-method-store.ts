@@ -3,6 +3,7 @@ import { create } from "zustand";
 interface ShippingMethodState {
   shippingMethod: "argentina" | "international" | "showroom";
   shippingCost: number;
+  setShippingCost: (cost: number) => void;
   setShippingMethod: (method: "argentina" | "international" | "showroom") => void;
 }
 
@@ -19,4 +20,5 @@ export const useShippingMethodStore = create<ShippingMethodState>((set) => ({
           ? 1500
           : 0, // Costo según el método
     }),
+  setShippingCost: (cost) => set({ shippingCost: cost }),
 }));

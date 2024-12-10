@@ -9,15 +9,29 @@ import { calculateShippingCostCorreo } from "../shipping/calculate-shipping-cost
 interface ProductToOrder {
   productId: string;
   quantity: number;
-  color: Colors;
+  color?: Colors; // Hacer color opcional
 }
 
 export const placeOrder = async (
   productIds: ProductToOrder[],
   address: Address,
   shippingMethod: "argentina" | "international" | "showroom"
-) => {
-  console.log("placeOrder called with:", { productIds, address, shippingMethod });
+): Promise<{
+  ok: boolean;
+  order?: any;
+  breakdown?: {
+    subtotal: number;
+    shippingCost: number;
+    total: number;
+  };
+  message?: string;
+}> => {
+  console.log("placeOrder called with:", {
+    productIds,
+    address,
+    shippingMethod,
+  });
+
   const session = await auth();
   const userId = session?.user.id;
 
@@ -30,7 +44,7 @@ export const placeOrder = async (
 
   let shippingCost = 0;
 
-  // Calcular el costo de envío basado en el método proporcionado
+  // Calcular el costo de envío según el método
   if (shippingMethod === "argentina") {
     const correoResult = await calculateShippingCostCorreo({
       cpDestino: address.zip,
@@ -40,23 +54,25 @@ export const placeOrder = async (
     if (typeof correoResult === "string") {
       return {
         ok: false,
-        message: correoResult, // Manejo de errores
+        message: correoResult, // Error en el cálculo del costo
       };
     }
 
-    shippingCost = correoResult.aDomicilio; // O puedes usar `aSucursal` según el tipo de envío.
-  } else {
+    shippingCost = correoResult.aDomicilio; // Usar aDomicilio o aSucursal según necesidad
+  } else if (shippingMethod === "international") {
     shippingCost = await calculateShippingCost(shippingMethod);
-
-    if (!shippingMethod || shippingCost < 0) {
+    if (shippingCost < 0) {
       return {
         ok: false,
-        message: "Método de envío inválido o no soportado.",
+        message: "Error al calcular el costo de envío internacional.",
       };
     }
+  } else {
+    // Showroom: envío gratis
+    shippingCost = 0;
   }
 
-  // Obtener la información de los productos
+  // Validar productos en el carrito
   const products = await prisma.product.findMany({
     where: {
       id: {
@@ -65,40 +81,57 @@ export const placeOrder = async (
     },
   });
 
-  // Calcular montos
-  const itemsInOrder = productIds.reduce((count, p) => count + p.quantity, 0);
+  if (products.length !== productIds.length) {
+    return {
+      ok: false,
+      message: "Uno o más productos en el carrito no existen.",
+    };
+  }
 
+  // Calcular subtotales y totales
   const { subTotal } = productIds.reduce(
     (totals, item) => {
       const product = products.find((p) => p.id === item.productId);
 
-      if (!product) throw new Error(`${item.productId} no encontrado`);
+      if (!product) {
+        throw new Error(`Producto con ID ${item.productId} no encontrado`);
+      }
 
-      const subTotal = product.price * item.quantity;
-      totals.subTotal += subTotal;
+      totals.subTotal += product.price * item.quantity;
       return totals;
     },
     { subTotal: 0 }
   );
 
+  const orderItems = productIds.map((p) => {
+    const colorValue = p.color ?? undefined; // Cambiar null a undefined si no es permitido
+    return {
+      quantity: p.quantity,
+      color: colorValue,
+      productId: p.productId,
+      price: products.find((pr) => pr.id === p.productId)?.price ?? 0,
+    };
+  });
+
   const total = subTotal + shippingCost;
 
-  // Transacción en Prisma
+  // Realizar transacción en Prisma
   try {
     const prismaTx = await prisma.$transaction(async (tx) => {
+      // Crear orden
       const order = await tx.order.create({
         data: {
           userId,
           subtotal: subTotal,
           total,
-          itemsInOrder,
+          itemsInOrder: productIds.reduce((count, p) => count + p.quantity, 0),
           shippingMethod,
           shippingCost,
           OrderItem: {
             createMany: {
               data: productIds.map((p) => ({
                 quantity: p.quantity,
-                color: p.color,
+                color: p.color ?? null,
                 productId: p.productId,
                 price: products.find((pr) => pr.id === p.productId)?.price ?? 0,
               })),
@@ -106,29 +139,26 @@ export const placeOrder = async (
           },
         },
       });
-  
-      
+
+      // Crear dirección asociada a la orden
       const orderAddress = await tx.orderAddress.create({
         data: {
-          address: address.address,
-          address2: address.address2,
-          city: address.city,
-          countryId: address.country,
-          provinceId: address.province,
           firstName: address.firstName,
           lastName: address.lastName,
+          address: address.address,
+          address2: address.address2 || null,
           zip: address.zip,
+          city: address.city,
           phone: address.phone,
+          countryId: address.country,
+          provinceId: address.province || null,
           orderId: order.id,
         },
       });
-  
-      return {
-        order,
-        orderAddress,
-      };
+
+      return { order, orderAddress };
     });
-  
+
     return {
       ok: true,
       order: prismaTx.order,
@@ -137,10 +167,9 @@ export const placeOrder = async (
         shippingCost,
         total,
       },
-      prismaTx,
     };
   } catch (error) {
-    console.error("Error en Prisma transaction:", error);
+    console.error("Error en la transacción Prisma:", error);
     return { ok: false, message: "Error interno al procesar la orden." };
   }
-}
+};

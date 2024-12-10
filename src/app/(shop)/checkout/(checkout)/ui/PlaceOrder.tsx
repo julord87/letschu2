@@ -17,6 +17,7 @@ export const PlaceOrder = () => {
 
   // Datos de la dirección y el carrito
   const address = useAddressStore((state) => state.address);
+  const shippingCost = useShippingMethodStore((state) => state.shippingCost);
   const shippingMethod = useShippingMethodStore(
     (state) => state.shippingMethod
   );
@@ -79,7 +80,7 @@ export const PlaceOrder = () => {
         <p>{address.zip}</p>
         <p>{address.phone}</p>
       </div>
-  
+
       <p className="mb-5 font-semibold">
         Método de envío:
         {shippingMethod === "showroom"
@@ -88,27 +89,33 @@ export const PlaceOrder = () => {
           ? " envío a domicilio nacional"
           : " envío internacional a domicilio"}
       </p>
-  
+
       {/* Divider */}
       <div className="w-full h-[1px] bg-gray-200 rounded mb-10"></div>
-  
+
       <h2 className="text-2xl mb-2 font-bold">Resumen de orden</h2>
       <div className="grid grid-cols-2">
         <span>No. Productos</span>
         <span className="text-right">{totalItems}</span>
-  
+
         <span>Subtotal</span>
         <span className="text-right">${currencyFormat(subtotal)}</span>
 
         <span className="text-sm mt-3">Costo de envío</span>
-        <span className="text-right text-sm mt-3">*El costo de envío se agregará en el siguente paso</span>
-  
+        <span className="text-right text-sm mt-3">
+          {shippingMethod === "showroom"
+            ? "Gratis"
+            : shippingMethod === "argentina"
+            ? "*El costo de envío se calculará al momento de pagar"
+            : "Calculado según la dirección internacional"}
+        </span>
+
         <span className="text-lg mt-5 font-semibold">Total</span>
         <span className="text-lg mt-5 text-right font-semibold">
           ${currencyFormat(total)}
         </span>
       </div>
-  
+
       <div className="mt-5 mb-2 w-full">
         <p className="mb-5">
           {/* Disclaimer */}
@@ -119,9 +126,9 @@ export const PlaceOrder = () => {
             </a>
           </span>
         </p>
-  
+
         <p className="text-red-500 text-sm mb-2">{errorMessage}</p>
-  
+
         <button
           onClick={onPlaceOrder}
           className={clsx({
@@ -133,5 +140,5 @@ export const PlaceOrder = () => {
         </button>
       </div>
     </div>
-  );  
+  );
 };

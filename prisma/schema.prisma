@@ -166,7 +166,8 @@ model OrderItem {
   id       String @id @default(uuid())
   quantity Int
   price    Float
-  color    Color
+  color    Color?
+  courier ShippingCompany?
 
   // Relations
   order   Order  @relation(fields: [orderId], references: [id])
@@ -189,8 +190,8 @@ model OrderAddress {
   country   Country @relation(fields: [countryId], references: [id])
   countryId String
 
-  province   ProvinceArg? @relation(fields: [provinceId], references: [id]) // <- Hacer opcional
-  provinceId String?
+  province   ProvinceArg? @relation(fields: [provinceId], references: [id]) // Opcional
+  provinceId String?                                          // Asegúrate de que sea opcional aquí
 
   Order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique

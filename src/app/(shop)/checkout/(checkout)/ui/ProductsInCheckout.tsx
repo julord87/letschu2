@@ -21,9 +21,11 @@ export const ProductsInCheckout = () => {
         return <p>Cargando...</p>
     }
 
-    const colorNameFormater = (color: string): string => {
+    const colorNameFormater = (color?: string): string => {
+      if (!color) return 'Sin color'; // Mensaje predeterminado si no hay color
       return color.replace(/_/g, ' ');
-   };
+    };
+    
   
 
   return (

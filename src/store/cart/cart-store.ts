@@ -15,6 +15,8 @@ interface State {
 
     removeProduct: (id: string, color?: string, courier?: string) => void;
 
+    removeProductsByCategory: (category: string) => number;
+
     getSummaryInformation: () => {
         subtotal: number;
         total: number;
@@ -93,7 +95,17 @@ export const useCartStore = create<State>()(
             });
 
         },
+
+        removeProductsByCategory: (category: string) => {
+            const { cart } = get();
+            const productsToRemove = cart.filter(item => item.category === category);
+            const updatedCart = cart.filter(item => item.category !== category);
+            const shippingCost = productsToRemove.reduce((acc, item) => acc + item.price * item.quantity, 0);
         
+            set({ cart: updatedCart });
+        
+            return shippingCost; // Retornamos el costo total de productos de categoría "envíos"
+        },
 
         getSummaryInformation: () => {
             const { cart } = get();
