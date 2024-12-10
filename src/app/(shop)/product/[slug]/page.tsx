@@ -2,7 +2,7 @@ export const revalidate = 604800; // 7 días
 
 import { titleFont } from "@/config/fonts";
 import { notFound } from "next/navigation";
-import { ColorSelector, ProductMobileSlideshow, ProductSlideshow, QuantitySelector } from "@/components";
+import { ProductMobileSlideshow, ProductSlideshow } from "@/components";
 import { getProductBySlug } from "@/actions";
 import { Metadata, ResolvingMetadata } from "next";
 import { AddToCart } from "./ui/AddToCart";
@@ -52,7 +52,7 @@ if( !product ) {
 }
 
   return (
-    <div className="mt-5 mb-20 grid md:grid-cols-3 gap-3">
+    <div className="mt-5 mb-20 grid md:grid-cols-3 gap-9 px-6">
       {/* Slideshow */} 
       <div className="col-span-1 md:col-span-2">
 
