@@ -1,5 +1,6 @@
 "use client";
 
+import { getCourierImage } from "@/helpers";
 import { useState } from "react";
 
 type ShippingCompanies =
@@ -47,9 +48,11 @@ export const CourierSelector = ({
               courier === selectedCourier ? "ring-1 ring-blue-600" : ""
             }`}
           >
-            <div className="w-8 h-8 rounded-full border-2 border-gray-200 bg-gray-300 flex items-center justify-center">
-              {courier.toUpperCase().slice(0, 2)}
-            </div>
+            <div
+              className={`${getCourierImage(
+                courier
+              )} w-8 h-8 rounded-full border-2 border-gray-200`}
+            />
             {hoveredCourier === courier && (
               <div className="absolute mt-2 p-2 bg-black text-white text-xs rounded shadow-lg">
                 {courierNames[courier]}

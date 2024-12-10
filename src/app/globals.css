@@ -90,13 +90,15 @@ body {
 }
 
 .bg-arcoiris {
-  background: url('https://img.freepik.com/free-vector/spectrum-gradient-abstract-background_1048-17050.jpg?semt=ais_hybrid');
+  background-image: url('/imgs/rainbow-bg.jpg');
   background-size: cover;
+  background-position: center; /* Esto asegura que la imagen esté centrada */
 }
 
 .bg-animal-print {
-  background: url('https://st2.depositphotos.com/5448718/8959/i/950/depositphotos_89592420-stock-illustration-hand-drawing-orange-brown-leopard.jpg');
+  background-image: url('/imgs/animal-print-bg.jpg');
   background-size: cover;
+  background-position: center; /* Esto asegura que la imagen esté centrada */
 }
 
 .bg-fucsia {
@@ -130,3 +132,41 @@ body {
 .bg-celeste {
   background-color: #00aaff;
 }
+
+.bg-ups {
+  background-image: url('/imgs/ups-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-color: white;
+}
+
+.bg-dhl {
+  background-image: url('/imgs/dhl-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-fedex {
+  background-image: url('/imgs/fedex-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-correo-argentino {
+  background-image: url('/imgs/correo-argentino-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-oca {
+  background-image: url('/imgs/oca-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-andreani {
+  background-image: url('/imgs/andreani-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
