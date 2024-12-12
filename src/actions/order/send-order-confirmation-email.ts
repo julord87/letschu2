@@ -48,7 +48,7 @@ export const sendOrderConfirmationEmail = async (orderId: string) => {
     const itemsHtml = order.OrderItem.map(
       (item) => `
         <tr>
-          <td>${item.product.title} - ${colorNameFormater(item.color)}</td>
+          <td>${item.product.title} - ${colorNameFormater(item.color || "")}</td>
           <td>${item.quantity}</td>
           <td>${item.price}</td>
           <td>${item.quantity * item.price}</td>
