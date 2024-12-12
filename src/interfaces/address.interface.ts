@@ -15,7 +15,7 @@ export interface Address {
 
   country: string;
 
-  province: string;
+  province?: string | null;
 
   phone: string;
 

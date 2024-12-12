@@ -131,8 +131,8 @@ model UserAddress {
   country   Country @relation(fields: [countryId], references: [id])
   countryId String
 
-  province   ProvinceArg @relation(fields: [provinceId], references: [id])
-  provinceId String
+  province   ProvinceArg? @relation(fields: [provinceId], references: [id])
+  provinceId String?
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique
@@ -190,8 +190,8 @@ model OrderAddress {
   country   Country @relation(fields: [countryId], references: [id])
   countryId String
 
-  province   ProvinceArg? @relation(fields: [provinceId], references: [id]) // Opcional
-  provinceId String?                                          // Asegúrate de que sea opcional aquí
+  province   ProvinceArg? @relation(fields: [provinceId], references: [id]) 
+  provinceId String?                                         
 
   Order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique
