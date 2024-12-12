@@ -3,7 +3,6 @@
 import { auth } from "@/auth.config";
 import { Address, Colors } from "@/interfaces";
 import prisma from "@/lib/prisma";
-import { calculateShippingCost } from "../shipping/calculate-chipping-cost";
 import { calculateShippingCostCorreo } from "../shipping/calculate-shipping-cost-correo";
 
 interface ProductToOrder {
@@ -49,7 +48,7 @@ export const placeOrder = async (
   if (shippingMethod === "argentina") {
     const correoResult = await calculateShippingCostCorreo({
       cpDestino: address.zip,
-      provinciaDestino: address.province,
+      provinciaDestino: address.province ?? address.city, // Valor predeterminado para provincia
     });
 
     if (typeof correoResult === "string") {
