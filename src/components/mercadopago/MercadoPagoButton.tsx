@@ -1,6 +1,7 @@
 "use client";
 
 import { add } from "@/actions/payments/mercadopago";
+import Image from "next/image";
 import { useState } from "react";
 
 interface Props {
@@ -39,7 +40,7 @@ export const MercadoPagoButton = ({ orderId, amount }: Props) => {
         ) : (
           <>
             <span>Pagar con Mercado Pago</span>
-            <img
+            <Image
               src="/imgs/mercadopago-logo.png"
               alt="MercadoPago"
               className="h-6"

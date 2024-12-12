@@ -47,18 +47,21 @@ export const placeOrder = async (
   // Calcular el costo de envío según el método
   if (shippingMethod === "argentina") {
     const correoResult = await calculateShippingCostCorreo({
+      cpOrigen: "1070", // Código postal de origen predeterminado
+      provinciaOrigen: "AR-C", // Provincia de origen predeterminada
       cpDestino: address.zip,
       provinciaDestino: address.province ?? address.city, // Valor predeterminado para provincia
+      peso: 0.40, // Peso predeterminado para el cálculo
     });
-
+  
     if (typeof correoResult === "string") {
       return {
         ok: false,
         message: correoResult, // Error en el cálculo del costo
       };
     }
-
-    shippingCost = correoResult.aDomicilio; // Usar aDomicilio o aSucursal según necesidad
+  
+    shippingCost = correoResult.aDomicilio;
   } else if (shippingMethod === "international") {
     if (shippingMethod === "international") {
       if (!shippingProductId) {

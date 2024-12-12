@@ -14,12 +14,16 @@ export const LoginForm = () => {
     const [state, dispatch] = useFormState(authenticate, undefined);
 
     useEffect(() => {
-      if(state === 'Success') {
+      if (state === 'Success') {
         window.location.replace('/');
       }
-    }, [state])
+      
+      return () => {
+        // Limpieza (si aplica)
+      };
+    }, [state]);
+    
 
-    console.log({state})
   return (
     <form action={dispatch} className="flex flex-col">
       <label htmlFor="email">Correo electrónico</label>
@@ -43,7 +47,7 @@ export const LoginForm = () => {
           {state === "CredentialsSignin" && (
             <div className="flex items-center flex-row mb-2">
               <IoInformationOutline className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">"Credenciales incorrectas"</p>
+              <p className="text-sm text-red-500">Credenciales incorrectas</p>
             </div>
           )}
         </div>

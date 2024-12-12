@@ -58,6 +58,7 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
   } = useForm<FormInputs>({
     defaultValues: {
       ...userStoredAddress,
+      province: userStoredAddress.province ?? undefined,
       shippingMethod: "argentina",
       rememberAddress: false,
     },
@@ -108,7 +109,7 @@ export const AddressForm = ({ countries, userStoredAddress = {} }: Props) => {
     if (storeAddress.firstName) {
       reset(storeAddress);
     }
-  }, []);
+  }, [storeAddress, reset]);  
 
   const onSubmit = async (data: FormInputs) => {
     const { rememberAddress, shippingMethod, ...restAddress } = data;
