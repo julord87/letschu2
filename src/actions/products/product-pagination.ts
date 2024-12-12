@@ -12,7 +12,7 @@ interface PaginationOptions {
 // Paginar todos los productos sin filtrar por categoría
 export const getAllPaginatedProductsWithImages = async ({
   page = 1,
-  take = 9,
+  take = 3,
 }: PaginationOptions) => {
   if (isNaN(Number(page))) page = 1;
   if (page < 1) page = 1;
@@ -50,7 +50,7 @@ export const getAllPaginatedProductsWithImages = async ({
 // Paginación por categoría
 export const getAllPaginatedProductsWithImagesByCategory = async ({
   page = 1,
-  take = 9,
+  take = 1,
   categoryName,
 }: PaginationOptions) => {
   if (isNaN(Number(page))) page = 1;
@@ -119,7 +119,7 @@ export const getAllPaginatedProductsWithImagesByCategory = async ({
 // Función para paginar productos por tipo
 export const getAllPaginatedProductsWithImagesByType = async ({
   page = 1,
-  take = 9,
+  take = 1,
   typeName,
 }: PaginationOptions) => {
   if (isNaN(Number(page))) page = 1;
