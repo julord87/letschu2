@@ -12,7 +12,7 @@ export default async function OrdersPage() {
   const { ok, orders = [] } = await getOrdersByUser();
 
   if (!ok) {
-    redirect("/auth/login");
+    redirect("/auth/login")
   }
 
   return (
