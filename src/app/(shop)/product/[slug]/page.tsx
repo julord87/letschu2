@@ -18,25 +18,29 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  // read route params
   const slug = params.slug;
-
-  // fetch data
   const product = await getProductBySlug(slug);
 
-  // optionally access and extend (rather than replace) parent metadata
-  // const previousImages = (await parent).openGraph?.images || []
-  // console.log(product?.title)
-  // console.log(product?.description)
-  // console.log([ `/${ product?.images[1] }`])
+  // Define la base URL del sitio
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
+  // Lógica similar al componente ProductImage
+  const formatImageUrl = (src?: string) =>
+    src
+      ? src.startsWith('http')
+        ? src
+        : `${baseUrl}/products/${src}`
+      : `${baseUrl}/imgs/placeholder.jpg`;
+
   return {
     title: product?.title ?? "Producto no encontrado",
     description: product?.description ?? "",
     openGraph: {
       title: product?.title ?? "Producto no encontrado",
       description: product?.description ?? "",
-      // images: [], // https://misitioweb.com/products/image.png
-      images: [`/${ product?.images[1] }`],
+      images: product?.images?.length
+        ? product.images.map(formatImageUrl)
+        : [`${baseUrl}/imgs/placeholder.jpg`],
     },
   };
 }
