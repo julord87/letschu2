@@ -33,29 +33,42 @@ export const PlaceOrder = () => {
 
   // Manejar la acción de realizar la orden
   const onPlaceOrder = async () => {
-    setIsPlacingOrder(true);
-
-    // Preparar productos para la orden
-    const productsToOrder = cart.map((product) => ({
-      productId: product.id,
-      quantity: product.quantity,
-      color: product.color,
-    }));
-
-    // Llamar a la acción del servidor, incluyendo el shippingMethod
-    const resp = await placeOrder(productsToOrder, address, shippingMethod, shippingProductId); // Pasar ID del producto de envío
-    if (!resp.ok) {
+    try {
+      setIsPlacingOrder(true);
+  
+      if (cart.length === 0) {
+        setErrorMessage("El carrito está vacío.");
+        setIsPlacingOrder(false);
+        return;
+      }
+  
+      const productsToOrder = cart.map((product) => ({
+        productId: product.id,
+        quantity: product.quantity,
+        color: product.color,
+      }));
+  
+      const resp = await placeOrder(productsToOrder, address, shippingMethod, shippingProductId);
+  
+      if (!resp.ok) {
+        setErrorMessage(resp.message || "An unexpected error occurred");
+        setIsPlacingOrder(false);
+        return;
+      }
+  
+      clearCart();
+  
+      // Usar setTimeout para evitar conflictos de render y navegación
+      setTimeout(() => {
+        router.push("/orders/" + resp.order?.id);
+      }, 100);
+    } catch (error) {
+      console.error("Error al realizar la orden:", error);
+      setErrorMessage("Hubo un error al procesar la orden. Por favor, inténtalo de nuevo.");
       setIsPlacingOrder(false);
-      setErrorMessage(resp.message || "An unexpected error occurred");
-      return;
     }
-
-    // Limpiar carrito y redirigir
-    clearCart();
-    setTimeout(() => {
-      router.replace("/orders/" + resp.order?.id);
-    }, 0);
   };
+  
 
   if (!loaded) {
     return <p>Cargando...</p>;

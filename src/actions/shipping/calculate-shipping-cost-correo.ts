@@ -52,6 +52,6 @@ export async function calculateShippingCostCorreo({
   } catch (error) {
     console.error("Error calculando el costo de envío:", error);
     const errorText = error instanceof Error ? error.message : "";
-    return `Error al calcular el costo de envío: ${errorText}`;
+    return errorText || "Ocurrió un error al calcular el costo de envío.";
   }
 }
