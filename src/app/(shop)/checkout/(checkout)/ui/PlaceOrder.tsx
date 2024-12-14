@@ -48,10 +48,11 @@ export const PlaceOrder = () => {
     // Limpiar carrito y redirigir
     if (resp.ok) {
       clearCart();
-      setTimeout(() => {
-        router.replace("/orders/" + resp.order?.id);
-      }, 0);
     }
+
+    setTimeout(() => {
+      router.push("/orders/" + resp.order?.id);
+    }, 0);
 
     if (!resp.ok) {
       setIsPlacingOrder(false);
