@@ -52,7 +52,7 @@ export const PlaceOrder = () => {
 
     setTimeout(() => {
       router.push("/orders/" + resp.order?.id);
-    }, 0);
+    }, 6000);
 
     if (!resp.ok) {
       setIsPlacingOrder(false);
