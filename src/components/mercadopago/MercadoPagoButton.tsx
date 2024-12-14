@@ -44,6 +44,8 @@ export const MercadoPagoButton = ({ orderId, amount }: Props) => {
               src="/imgs/mercadopago-logo.png"
               alt="MercadoPago"
               className="h-6"
+              width={30}
+              height={30}
             />
           </>
         )}
