@@ -36,7 +36,8 @@ export async function calculateShippingCostCorreo({
     });
 
     if (!response.ok) {
-      throw new Error(`Error en la API de Correo Argentino: ${response.statusText}`);
+      const errorText = await response.text();
+      throw new Error(`Error en la API de Correo Argentino: ${response.statusText} - ${errorText}`);
     }
 
     const data = await response.json();
@@ -50,6 +51,7 @@ export async function calculateShippingCostCorreo({
     return "No se pudo calcular el costo de envío";
   } catch (error) {
     console.error("Error calculando el costo de envío:", error);
-    return "Error al comunicarse con la API";
+    const errorText = error instanceof Error ? error.message : "";
+    return `Error al calcular el costo de envío: ${errorText}`;
   }
 }

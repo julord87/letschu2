@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { calculateShippingCostCorreo } from "@/actions/shipping/calculate-shipping-cost-correo";
+import { calculateShippingCostCorreo } from "@/actions";
 
 export async function POST(req: NextRequest) {
   try {
