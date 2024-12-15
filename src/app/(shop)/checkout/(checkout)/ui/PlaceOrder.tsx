@@ -6,8 +6,10 @@ import clsx from "clsx";
 import { placeOrder } from "@/actions";
 import { useAddressStore, useCartStore, useShippingMethodStore } from "@/store";
 import { currencyFormat } from "@/helpers/currencyFormat";
+import { useRouter } from "next/navigation";
 
 export const PlaceOrder = () => {
+  const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
@@ -49,7 +51,7 @@ export const PlaceOrder = () => {
     if (resp.ok) {
       setTimeout(() => {
         // Redirigir usando window.location
-        window.location.href = `/orders/${resp.order?.id}`;
+        router.replace(`/orders/${resp.order?.id}`);
       }, 0);
       return;
     }
@@ -124,12 +126,21 @@ export const PlaceOrder = () => {
 
         <button
           onClick={onPlaceOrder}
-          className={clsx({
-            "btn-primary": !isPlacingOrder,
-            "btn-disabled": isPlacingOrder,
-          })}
+          disabled={isPlacingOrder}
+          className={clsx(
+            "btn-primary w-full",
+            isPlacingOrder
+              ? "bg-gray-400 hover:bg-gray-400 cursor-not-allowed"
+              : "hover:bg-blue-600"
+          )}
         >
-          Realizar pago
+          {isPlacingOrder ? (
+            <div className="hover:cursor-not-allowed flex justify-center items-center gap-2">
+              <span className="loader" /> Procesando...
+            </div>
+          ) : (
+            "Realizar pago"
+          )}
         </button>
       </div>
     </div>

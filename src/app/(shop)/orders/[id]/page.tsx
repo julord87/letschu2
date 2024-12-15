@@ -10,6 +10,8 @@ import { currencyFormat } from "@/helpers/currencyFormat";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { ResumenOrder } from "../../checkout/address/ui/ResumenOrder";
+import { useCartStore } from "@/store";
+import { ClearCart } from "./ui/ClearCart";
 
 interface Props {
   params: {
@@ -57,6 +59,7 @@ export default async function OrdersByIdPage({ params }: Props) {
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
+        <ClearCart ok={ok} />
       <div className="flex flex-col w-[1000px]">
         <Title title={`Orden #${id.split("-")[0]}`} />
 
