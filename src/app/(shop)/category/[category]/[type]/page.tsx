@@ -20,7 +20,7 @@ interface Props {
 export default async function TypeByPage({ params, searchParams }: Props) {
   const { type } = params;
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
-  const take = searchParams.take ? Math.min(parseInt(searchParams.take), 100) : 1; // Limitar a 100 como máximo
+  const take = searchParams.take ? Math.min(parseInt(searchParams.take), 100) : 9; // Limitar a 100 como máximo
 
   console.log("Type:", type);
 

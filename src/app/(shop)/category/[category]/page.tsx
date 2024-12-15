@@ -20,7 +20,7 @@ interface Props {
 export default async function CategoryByPage({ params, searchParams }: Props) {
   const { category } = params;
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
-  const take = searchParams.take ? parseInt(searchParams.take) : 1; // Valor por defecto
+  const take = searchParams.take ? parseInt(searchParams.take) : 9; // Valor por defecto
 
   const { products, currentPage, totalPages } =
     await getAllPaginatedProductsWithImagesByCategory({
