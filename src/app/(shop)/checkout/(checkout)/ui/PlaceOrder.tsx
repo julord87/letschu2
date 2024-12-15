@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import clsx from "clsx";
 
 import { placeOrder } from "@/actions";
@@ -24,10 +24,9 @@ export const PlaceOrder = () => {
     state.getSummaryInformation()
   );
   const cart = useCartStore((state) => state.cart);
-  const clearCart = useCartStore((state) => state.clearCart);
 
   // Manejar la acción de realizar la orden
-  const onPlaceOrder = useCallback(async () => {
+  const onPlaceOrder = async () => {
     setIsPlacingOrder(true);
     setErrorMessage("");
 
@@ -48,7 +47,6 @@ export const PlaceOrder = () => {
 
     // Limpiar carrito y redirigir
     if (resp.ok) {
-      clearCart();
       setTimeout(() => {
         // Redirigir usando window.location
         window.location.href = `/orders/${resp.order?.id}`;
@@ -58,7 +56,7 @@ export const PlaceOrder = () => {
     // Manejar error si la respuesta no es exitosa
     setIsPlacingOrder(false);
     setErrorMessage(resp.message || "An unexpected error occurred");
-  }, [cart, address, shippingMethod, shippingProductId, clearCart]);
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-xl p-7">
