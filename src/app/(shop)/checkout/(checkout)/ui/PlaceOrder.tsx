@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import clsx from "clsx";
 
 import { placeOrder } from "@/actions";
@@ -10,15 +9,18 @@ import { currencyFormat } from "@/helpers/currencyFormat";
 import { useShippingMethodStore } from "@/store/shipping/shipping-method-store";
 
 export const PlaceOrder = () => {
-  const router = useRouter();
   const [loaded, setLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
   // Datos de la dirección y el carrito
   const address = useAddressStore((state) => state.address);
-  const shippingMethod = useShippingMethodStore((state) => state.shippingMethod);
-  const shippingProductId = useShippingMethodStore((state) => state.shippingProductId);
+  const { shippingMethod, shippingProductId } = useShippingMethodStore(
+    (state) => ({
+      shippingMethod: state.shippingMethod,
+      shippingProductId: state.shippingProductId,
+    })
+  );
 
   const { totalItems, subtotal, total } = useCartStore((state) =>
     state.getSummaryInformation()
@@ -34,6 +36,7 @@ export const PlaceOrder = () => {
   // Manejar la acción de realizar la orden
   const onPlaceOrder = async () => {
     setIsPlacingOrder(true);
+    setErrorMessage("");
 
     // Preparar productos para la orden
     const productsToOrder = cart.map((product) => ({
@@ -43,22 +46,25 @@ export const PlaceOrder = () => {
     }));
 
     // Llamar a la acción del servidor, incluyendo el shippingMethod
-    const resp = await placeOrder(productsToOrder, address, shippingMethod, shippingProductId); // Pasar ID del producto de envío
+    const resp = await placeOrder(
+      productsToOrder,
+      address,
+      shippingMethod,
+      shippingProductId
+    ); // Pasar ID del producto de envío
 
     // Limpiar carrito y redirigir
     if (resp.ok) {
       clearCart();
-    }
-
-    // setTimeout(() => {
-    //   router.push("/orders/" + resp.order?.id);
-    // }, 6000);
-
-    if (!resp.ok) {
-      setIsPlacingOrder(false);
-      setErrorMessage(resp.message || "An unexpected error occurred");
+      setTimeout(() => {
+        // Redirigir usando window.location
+        window.location.href = `/orders/${resp.order?.id}`;
+      }, 0);
       return;
     }
+    // Manejar error si la respuesta no es exitosa
+    setIsPlacingOrder(false);
+    setErrorMessage(resp.message || "An unexpected error occurred");
   };
 
   if (!loaded) {
