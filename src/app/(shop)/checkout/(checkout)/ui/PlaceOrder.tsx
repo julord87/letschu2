@@ -50,9 +50,9 @@ export const PlaceOrder = () => {
       clearCart();
     }
 
-    setTimeout(() => {
-      router.push("/orders/" + resp.order?.id);
-    }, 6000);
+    // setTimeout(() => {
+    //   router.push("/orders/" + resp.order?.id);
+    // }, 6000);
 
     if (!resp.ok) {
       setIsPlacingOrder(false);
