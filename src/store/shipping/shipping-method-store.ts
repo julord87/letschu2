@@ -11,18 +11,9 @@ interface ShippingMethodState {
 
 export const useShippingMethodStore = create<ShippingMethodState>((set) => ({
   shippingMethod: "argentina",
-  shippingCost: 500,
-  shippingProductId: undefined, // Inicializar
-  setShippingMethod: (method) =>
-    set({
-      shippingMethod: method,
-      shippingCost:
-        method === "argentina"
-          ? 500
-          : method === "international"
-          ? 1500
-          : 0,
-    }),
+  shippingCost: 0,
+  shippingProductId: "", // Inicializar
+  setShippingMethod: (method) => set({ shippingMethod: method }),
   setShippingCost: (cost) => set({ shippingCost: cost }),
   setShippingProductId: (id) => set({ shippingProductId: id }),
 }));
