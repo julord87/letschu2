@@ -9,7 +9,6 @@ import { currencyFormat } from "@/helpers/currencyFormat";
 import { useShippingMethodStore } from "@/store/shipping/shipping-method-store";
 
 export const PlaceOrder = () => {
-  const [loaded, setLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
@@ -27,11 +26,6 @@ export const PlaceOrder = () => {
   );
   const cart = useCartStore((state) => state.cart);
   const clearCart = useCartStore((state) => state.clearCart);
-
-  // Efecto para cargar el estado inicial
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
 
   // Manejar la acción de realizar la orden
   const onPlaceOrder = async () => {
@@ -66,10 +60,6 @@ export const PlaceOrder = () => {
     setIsPlacingOrder(false);
     setErrorMessage(resp.message || "An unexpected error occurred");
   };
-
-  if (!loaded) {
-    return <p>Cargando...</p>;
-  }
 
   return (
     <div className="bg-white rounded-xl shadow-xl p-7">
