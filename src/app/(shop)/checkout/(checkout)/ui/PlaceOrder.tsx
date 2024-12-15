@@ -58,7 +58,7 @@ export const PlaceOrder = () => {
     // Manejar error si la respuesta no es exitosa
     setIsPlacingOrder(false);
     setErrorMessage(resp.message || "An unexpected error occurred");
-  };
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-xl p-7">
