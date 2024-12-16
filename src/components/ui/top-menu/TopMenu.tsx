@@ -44,7 +44,7 @@ export const TopMenu = () => {
             Arnes
           </Link>
           {isDropdownOpen && (
-            <div className="absolute left-0 mt-2 w-[90vw] max-w-sm bg-white border rounded-md shadow-lg z-50">
+            <div className="absolute left-0 mt-2 w-40 bg-white border rounded-md shadow-lg z-50">
               <Link className="block px-4 py-2 hover:bg-gray-100" href={"/category/arnes/superior"}>
                 Superior
               </Link>
