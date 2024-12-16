@@ -135,7 +135,7 @@ export const PlaceOrder = () => {
           )}
         >
           {isPlacingOrder ? (
-            <div className="hover:cursor-not-allowed flex justify-center items-center gap-2">
+            <div className="bg-gray-400 hover:cursor-not-allowed flex justify-center items-center gap-2">
               <span className="loader" /> Procesando...
             </div>
           ) : (
