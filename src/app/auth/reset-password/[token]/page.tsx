@@ -9,7 +9,7 @@ export default function ResetPasswordPage({ params }: { params: { token: string 
     const { token } = params;
 
   return (
-    <div className="flex flex-col min-h-screen pt-32 sm:pt-52">
+    <div className="flex flex-col min-h-screen pt-16 sm:pt-32">
 
       <div className="px-5 mx-5">
         <Image
