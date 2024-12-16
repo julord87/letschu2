@@ -38,12 +38,12 @@ export const Sidebar = () => {
         ></div>
       )}
       {/* Sidemenu*/}
-      <nav
-        className={clsx(
-          "fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300",
-          {
-            "translate-x-full": !isSideMenuOpen,
-          }
+        <nav
+          className={clsx(
+            "fixed p-5 right-0 top-0 w-[75vw] sm:w-[400px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300",
+            {
+              "translate-x-full": !isSideMenuOpen,
+            }
         )}
       >
         <IoCloseOutline
