@@ -130,7 +130,7 @@ export const PlaceOrder = () => {
           className={clsx(
             "btn-primary w-full",
             isPlacingOrder
-              ? "bg-gray-400 hover:bg-gray-400 cursor-not-allowed"
+              ? "bg-gray-400 cursor-not-allowed"
               : "hover:bg-blue-600"
           )}
         >
